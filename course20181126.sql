@@ -25,12 +25,15 @@ DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
   `course_number` char(5) NOT NULL,
   `course_title` varchar(45) CHARACTER SET utf8 NOT NULL,
-  `instructor_name` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `instructor_number` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `course_size` tinyint(4) unsigned NOT NULL,
+  `course_weekday` tinyint(4) unsigned NOT NULL,
+  `course_classtime` varchar(15) NOT NULL,
   PRIMARY KEY (`course_number`),
   UNIQUE KEY `course_number_UNIQUE` (`course_number`),
-  KEY `instructor_name_idx` (`instructor_name`),
-  CONSTRAINT `instructor_name` FOREIGN KEY (`instructor_name`) REFERENCES `instructor` (`Instructor_name`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  UNIQUE KEY `instructor_number_UNIQUE` (`instructor_number`),
+  CONSTRAINT `instructor_number` FOREIGN KEY (`instructor_number`) REFERENCES `instructor` (`instructor_number`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +42,7 @@ CREATE TABLE `course` (
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES ('DB101','Database','Tom Cruise');
+INSERT INTO `course` VALUES ('DB101','Database',1,40,3,'1,2,3'),('MS534','Music',5,20,2,'5,6,7');
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,10 +56,11 @@ DROP TABLE IF EXISTS `instructor`;
 CREATE TABLE `instructor` (
   `Instructor_name` varchar(45) CHARACTER SET utf8 NOT NULL,
   `Instructor_office` char(4) DEFAULT NULL,
-  PRIMARY KEY (`Instructor_name`),
-  UNIQUE KEY `Instructor_name_UNIQUE` (`Instructor_name`),
+  `instructor_number` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`instructor_number`),
+  UNIQUE KEY `instructor_number_UNIQUE` (`instructor_number`),
   UNIQUE KEY `Instructor_office_UNIQUE` (`Instructor_office`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +69,7 @@ CREATE TABLE `instructor` (
 
 LOCK TABLES `instructor` WRITE;
 /*!40000 ALTER TABLE `instructor` DISABLE KEYS */;
-INSERT INTO `instructor` VALUES ('Meryl Streep',NULL),('Tom Cruise','C102');
+INSERT INTO `instructor` VALUES ('Meryl Streep',NULL,1),('Tom Cruise','C102',2),('周杰倫','D959',4),('Gail','S116',5);
 /*!40000 ALTER TABLE `instructor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,4 +135,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-21 21:27:38
+-- Dump completed on 2018-11-26 21:06:34

@@ -14,21 +14,29 @@ public class MySqlConfig {
     static final String COLUMN_STUDENT_NAME = "student_name";
     static final String COLUMN_STUDENT_GENDER = "student_gender";
 
+    static final String COLUMN_INSTRUCTOR_NUMBER = "instructor_number";
     static final String COLUMN_INSTRUCTOR_NAME = "instructor_name";
     static final String COLUMN_INSTRUCTOR_OFFICE = "instructor_office";
 
     static final String COLUMN_COURSE_NUMBER = "course_number";
     static final String COLUMN_COURSE_TITLE = "course_title";
+    static final String COLUMN_COURSE_SIZE = "course_size";
+    static final String COLUMN_COURSE_WEEKDAY = "course_weekday";
+    static final String COLUMN_COURSE_CLASSTIME = "course_classtime";
 
     // show string
     static final String SHOW_STUDENT_NUMBER = "Student Number";
     static final String SHOW_STUDENT_NAME = "Student Name";
     static final String SHOW_STUDENT_GENDER = "Student Gender";
 
+    static final String SHOW_INSTRUCTOR_NUMBER = "Instructor Number";
     static final String SHOW_INSTRUCTOR_NAME = "Instructor Name";
     static final String SHOW_INSTRUCTOR_OFFICE = "Instructor Office";
 
     static final String SHOW_COURSE_NUMBER = "Course Number";
     static final String SHOW_COURSE_TITLE = "Course Title";
+    static final String SHOW_COURSE_SIZE = "Course Size";
+    static final String SHOW_COURSE_WEEKDAY = "Course Weekday";
+    static final String SHOW_COURSE_CLASSTIME = "Course Classtime";
 }
 
