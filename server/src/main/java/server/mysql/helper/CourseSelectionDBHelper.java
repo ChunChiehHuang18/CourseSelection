@@ -1,5 +1,6 @@
 package server.mysql.helper;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.*;
@@ -8,10 +9,13 @@ import java.util.ArrayList;
 public class CourseSelectionDBHelper {
 
     private PreparedStatement addInstructorStm = null;
+    private PreparedStatement queryAllInstructorStm = null;
     private PreparedStatement addStudentStm = null;
     private PreparedStatement queryAllStudentStm = null;
     private PreparedStatement addCourseStm = null;
+    private PreparedStatement queryAllCourseStm = null;
     private PreparedStatement selectCourseStm = null;
+    private PreparedStatement queryAllSelectionStm = null;
     private PreparedStatement queryCourseByStudentStm = null;
     private PreparedStatement queryCourseByInstructorStm = null;
 
@@ -35,10 +39,13 @@ public class CourseSelectionDBHelper {
 
             System.out.println("Creating prepare statement...");
             addInstructorStm = conn.prepareStatement(PrepareStatementUtils.addInstructorStmString);
+            queryAllInstructorStm = conn.prepareStatement(PrepareStatementUtils.queryAllInstructorStmString);
             addStudentStm = conn.prepareStatement(PrepareStatementUtils.addStudentStmString);
-            addCourseStm = conn.prepareStatement(PrepareStatementUtils.addCourseStmString);
             queryAllStudentStm = conn.prepareStatement(PrepareStatementUtils.queryAllStudentStmString);
+            addCourseStm = conn.prepareStatement(PrepareStatementUtils.addCourseStmString);
+            queryAllCourseStm = conn.prepareStatement(PrepareStatementUtils.queryAllCourseStmString);
             selectCourseStm = conn.prepareStatement(PrepareStatementUtils.selectCourseStmString);
+            queryAllSelectionStm = conn.prepareStatement(PrepareStatementUtils.queryAllSelectionStmString);
             queryCourseByStudentStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByStudentStmString);
             queryCourseByInstructorStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByInstructorStmString);
 
@@ -71,6 +78,24 @@ public class CourseSelectionDBHelper {
         }
     }
 
+    public JSONArray queryAllInstructor() {
+        try {
+            ResultSet rs = queryAllInstructorStm.executeQuery();
+            JSONArray jsonArray = new JSONArray();
+            while (rs.next()) {
+                JSONObject obj = new JSONObject();
+                obj.put(MySqlConfig.SHOW_INSTRUCTOR_NUMBER, rs.getInt(MySqlConfig.COLUMN_INSTRUCTOR_NUMBER));
+                obj.put(MySqlConfig.SHOW_INSTRUCTOR_NAME, rs.getString(MySqlConfig.COLUMN_INSTRUCTOR_NAME));
+                obj.put(MySqlConfig.SHOW_INSTRUCTOR_OFFICE, rs.getString(MySqlConfig.COLUMN_INSTRUCTOR_OFFICE));
+                jsonArray.put(obj);
+            }
+            return jsonArray;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new JSONArray();
+    }
+
     public boolean addStudent(int studentNumber, String studentName, String gender) {
         if (studentName.length() <= 45 && gender.length() <= 10) {
             try {
@@ -91,11 +116,29 @@ public class CourseSelectionDBHelper {
         }
     }
 
+    public JSONArray queryAllStudent() {
+        try {
+            ResultSet rs = queryAllStudentStm.executeQuery();
+            JSONArray jsonArray = new JSONArray();
+            while (rs.next()) {
+                JSONObject obj = new JSONObject();
+                obj.put(MySqlConfig.SHOW_STUDENT_NUMBER, rs.getInt(MySqlConfig.COLUMN_STUDENT_NUMBER));
+                obj.put(MySqlConfig.SHOW_STUDENT_NAME, rs.getString(MySqlConfig.COLUMN_STUDENT_NAME));
+                obj.put(MySqlConfig.SHOW_STUDENT_GENDER, rs.getString(MySqlConfig.COLUMN_STUDENT_GENDER));
+                jsonArray.put(obj);
+            }
+            return jsonArray;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new JSONArray();
+    }
+
     private boolean checkClasstime(String classTime) {
         String[] timeArray = classTime.split(",");
-        for (String timeString:timeArray) {
+        for (String timeString : timeArray) {
             int value = Integer.valueOf(timeString);
-            if(!(value > 0 && value <= 8))
+            if (!(value > 0 && value <= 8))
                 return false;
         }
         return true;
@@ -123,6 +166,26 @@ public class CourseSelectionDBHelper {
         }
     }
 
+    public JSONArray queryAllCourse() {
+        try {
+            ResultSet rs = queryAllCourseStm.executeQuery();
+            JSONArray jsonArray = new JSONArray();
+            while (rs.next()) {
+                JSONObject obj = new JSONObject();
+                obj.put(MySqlConfig.SHOW_COURSE_NUMBER, rs.getString(MySqlConfig.COLUMN_COURSE_NUMBER));
+                obj.put(MySqlConfig.SHOW_COURSE_TITLE, rs.getString(MySqlConfig.COLUMN_COURSE_TITLE));
+                obj.put(MySqlConfig.SHOW_COURSE_SIZE, rs.getString(MySqlConfig.COLUMN_COURSE_SIZE));
+                obj.put(MySqlConfig.SHOW_COURSE_WEEKDAY, rs.getString(MySqlConfig.COLUMN_COURSE_WEEKDAY));
+                obj.put(MySqlConfig.SHOW_COURSE_CLASSTIME, rs.getString(MySqlConfig.COLUMN_COURSE_CLASSTIME));
+                jsonArray.put(obj);
+            }
+            return jsonArray;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new JSONArray();
+    }
+
     public boolean selectCourse(String courseNumber, int studentNumber) {
         if (courseNumber.length() == 5 && studentNumber > 0) {
             try {
@@ -139,22 +202,21 @@ public class CourseSelectionDBHelper {
         }
     }
 
-    public ArrayList<JSONObject> queryAllStudent() {
+    public JSONArray queryAllSelection() {
         try {
-            ResultSet rs = queryAllStudentStm.executeQuery();
-            ArrayList<JSONObject> resultJsonList = new ArrayList();
+            ResultSet rs = queryAllSelectionStm.executeQuery();
+            JSONArray jsonArray = new JSONArray();
             while (rs.next()) {
                 JSONObject obj = new JSONObject();
                 obj.put(MySqlConfig.SHOW_STUDENT_NUMBER, rs.getInt(MySqlConfig.COLUMN_STUDENT_NUMBER));
-                obj.put(MySqlConfig.SHOW_STUDENT_NAME, rs.getString(MySqlConfig.COLUMN_STUDENT_NAME));
-                obj.put(MySqlConfig.SHOW_STUDENT_GENDER, rs.getString(MySqlConfig.COLUMN_STUDENT_GENDER));
-                resultJsonList.add(obj);
+                obj.put(MySqlConfig.SHOW_COURSE_NUMBER, rs.getString(MySqlConfig.COLUMN_COURSE_NUMBER));
+                jsonArray.put(obj);
             }
-            return resultJsonList;
+            return jsonArray;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
+        return new JSONArray();
     }
 
     private JSONObject getCourseSelectionJson(ResultSet rs) {
@@ -178,45 +240,41 @@ public class CourseSelectionDBHelper {
         }
     }
 
-    public ArrayList<JSONObject> queryCourseSelectionByStudent(int studentNumber) {
+    public JSONArray queryCourseSelectionByStudent(int studentNumber) {
         try {
             queryCourseByStudentStm.setInt(1, studentNumber);
             ResultSet rs = queryCourseByStudentStm.executeQuery();
-            ArrayList<JSONObject> resultJsonList = new ArrayList<>();
+            JSONArray jsonArray = new JSONArray();
             while (rs.next()) {
                 JSONObject obj = getCourseSelectionJson(rs);
-                if(obj != null)
-                    resultJsonList.add(obj);
+                if (obj != null)
+                    jsonArray.put(obj);
                 else
-                    return new ArrayList<>();
+                    return new JSONArray();
             }
-            return resultJsonList;
+            return jsonArray;
         } catch (SQLException e) {
             e.printStackTrace();
-            return new ArrayList<>();
+            return new JSONArray();
         }
     }
 
-    public ArrayList<JSONObject> queryCourseSelectionByInstructor(String instructorName) {
-        if(instructorName.length() <= 45) {
-            try {
-                queryCourseByInstructorStm.setString(1, instructorName);
-                ResultSet rs = queryCourseByInstructorStm.executeQuery();
-                ArrayList<JSONObject> resultJsonList = new ArrayList<>();
-                while (rs.next()) {
-                    JSONObject obj = getCourseSelectionJson(rs);
-                    if(obj != null)
-                        resultJsonList.add(obj);
-                    else
-                        return new ArrayList<>();
-                }
-                return resultJsonList;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return new ArrayList<>();
+    public JSONArray queryCourseSelectionByInstructor(int instructorNumber) {
+        try {
+            queryCourseByInstructorStm.setInt(1, instructorNumber);
+            ResultSet rs = queryCourseByInstructorStm.executeQuery();
+            JSONArray jsonArray = new JSONArray();
+            while (rs.next()) {
+                JSONObject obj = getCourseSelectionJson(rs);
+                if (obj != null)
+                    jsonArray.put(obj);
+                else
+                    return new JSONArray();
             }
-        } else {
-            return new ArrayList<>();
+            return jsonArray;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new JSONArray();
         }
     }
 

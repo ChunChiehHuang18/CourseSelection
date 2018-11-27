@@ -3,22 +3,19 @@ package server;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import server.jsersey.servlet.MyEndPoint;
-import server.jsersey.servlet.WelcomeServlet;
+import server.jsersey.servlet.CourseServlet;
+import server.jsersey.servlet.InstructorServlet;
+import server.jsersey.servlet.SelectionServlet;
+import server.jsersey.servlet.StudentServlet;
 
 /**
  * Hello world!
  */
 public class JettyServer {
     public static void main(String[] args) throws Exception {
-        Server server = new Server(8080);
+        Server server = new Server(8081);
 
-        ServletHandler handler = new ServletHandler();
-        handler.addServletWithMapping(WelcomeServlet.class, "/welcome");
-
-        //server.setHandler(handler);
         server.setHandler(getJerseyHandler());
 
         server.start();
@@ -29,9 +26,21 @@ public class JettyServer {
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
         handler.setContextPath("/");
 
-        ServletHolder holder = handler.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/api/*");
-        holder.setInitOrder(0);
-        holder.setInitParameter("jersey.config.server.provider.classnames", MyEndPoint.class.getCanonicalName());
+        ServletHolder studentHolder = handler.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/student/*");
+        studentHolder.setInitOrder(0);
+        studentHolder.setInitParameter("jersey.config.server.provider.classnames", StudentServlet.class.getCanonicalName());
+
+        ServletHolder instructorHolder = handler.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/instructor/*");
+        instructorHolder.setInitOrder(0);
+        instructorHolder.setInitParameter("jersey.config.server.provider.classnames", InstructorServlet.class.getCanonicalName());
+
+        ServletHolder courseHolder = handler.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/course/*");
+        courseHolder.setInitOrder(0);
+        courseHolder.setInitParameter("jersey.config.server.provider.classnames", CourseServlet.class.getCanonicalName());
+
+        ServletHolder selectionHolder = handler.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/selection/*");
+        selectionHolder.setInitOrder(0);
+        selectionHolder.setInitParameter("jersey.config.server.provider.classnames", SelectionServlet.class.getCanonicalName());
 
 
         return handler;
