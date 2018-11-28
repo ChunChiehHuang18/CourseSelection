@@ -1,11 +1,15 @@
 package server.jsersey.servlet;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import server.mysql.helper.CourseSelectionDBHelper;
+import server.mysql.helper.MySqlConfig;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+import static server.jsersey.servlet.ServletUtils.*;
+import static server.jsersey.servlet.ServletUtils.FAIL;
 
 @Path("/")
 public class InstructorServlet {
@@ -18,4 +22,41 @@ public class InstructorServlet {
 
         return  dbHelper.queryAllInstructor().toString();
     }
+
+    @Path("/")
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String addInstructor(String postData) {
+        try {
+            JSONObject instructorObj = new JSONObject(postData);
+            if (instructorObj.getString(KEY_ACTION).equalsIgnoreCase(ACTION_ADD)) {
+                int instructorNumber = -1;
+                String instructorName;
+                String instructorOffice = MySqlConfig.VALUE_NULL;
+
+                // Get value
+                if(instructorObj.has(KEY_INSTRUCTOR_NUMBER))
+                    instructorNumber = instructorObj.getInt(KEY_INSTRUCTOR_NUMBER);
+                if(instructorObj.has(KEY_INSTRUCTOR_OFFCIE)) {
+                    String office = instructorObj.getString(KEY_INSTRUCTOR_OFFCIE);
+                    if(office.length() == 4)
+                        instructorOffice = office;
+                }
+                instructorName = instructorObj.getString(KEY_INSTRUCTOR_NAME);
+
+                // Insert student into db
+                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+                if (dbHelper.addInstructor(instructorNumber, instructorName, instructorOffice))
+                    return SUCCESS;
+                else
+                    return FAIL;
+            }
+            return instructorObj.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return FAIL;
+        }
+    }
+
 }

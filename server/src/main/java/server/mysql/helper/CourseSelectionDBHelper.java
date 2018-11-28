@@ -66,7 +66,10 @@ public class CourseSelectionDBHelper {
                 else
                     addInstructorStm.setNull(1, 0);
                 addInstructorStm.setString(2, instructorName);
-                addInstructorStm.setString(3, office);
+                if(!office.equalsIgnoreCase(MySqlConfig.VALUE_NULL))
+                    addInstructorStm.setString(3, office);
+                else
+                    addInstructorStm.setNull(3, 0);
                 addInstructorStm.executeUpdate();
                 return true;
             } catch (SQLException e) {
@@ -104,7 +107,10 @@ public class CourseSelectionDBHelper {
                 else
                     addStudentStm.setNull(1, 0);
                 addStudentStm.setString(2, studentName);
-                addStudentStm.setString(3, gender);
+                if (!gender.equalsIgnoreCase(MySqlConfig.VALUE_NULL))
+                    addStudentStm.setString(3, gender);
+                else
+                    addStudentStm.setNull(3, 0);
                 addStudentStm.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();

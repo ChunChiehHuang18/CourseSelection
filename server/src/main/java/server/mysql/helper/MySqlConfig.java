@@ -9,6 +9,8 @@ public class MySqlConfig {
     static final String USER = "root";
     static final String PASS = "imroot";
 
+    public static final String VALUE_NULL = "null";
+
     // column string
     static final String COLUMN_STUDENT_NUMBER = "student_number";
     static final String COLUMN_STUDENT_NAME = "student_name";
