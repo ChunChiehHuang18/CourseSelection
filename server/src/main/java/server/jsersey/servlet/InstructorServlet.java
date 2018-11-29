@@ -1,5 +1,6 @@
 package server.jsersey.servlet;
 
+import org.eclipse.jetty.server.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 import server.mysql.helper.CourseSelectionDBHelper;
@@ -9,7 +10,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import static server.jsersey.servlet.ServletUtils.*;
-import static server.jsersey.servlet.ServletUtils.FAIL;
 
 @Path("/")
 public class InstructorServlet {
@@ -27,7 +27,7 @@ public class InstructorServlet {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String addInstructor(String postData) {
+    public int addInstructor(String postData) {
         try {
             JSONObject instructorObj = new JSONObject(postData);
             if (instructorObj.getString(KEY_ACTION).equalsIgnoreCase(ACTION_ADD)) {
@@ -46,16 +46,16 @@ public class InstructorServlet {
                     // Insert student into db
                     CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
                     if (dbHelper.addInstructor(instructorNumber, instructorName, instructorOffice))
-                        return SUCCESS;
+                        return Response.SC_OK;
                     else
-                        return FAIL;
+                        return Response.SC_BAD_REQUEST;
                 } else
-                    return FAIL;
+                    return Response.SC_BAD_REQUEST;
             } else
-                return FAIL;
+                return Response.SC_BAD_REQUEST;
         } catch (JSONException e) {
             e.printStackTrace();
-            return FAIL;
+            return Response.SC_BAD_REQUEST;
         }
     }
 

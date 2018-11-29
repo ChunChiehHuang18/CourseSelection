@@ -1,5 +1,6 @@
 package server.jsersey.servlet;
 
+import org.eclipse.jetty.server.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 import server.mysql.helper.CourseSelectionDBHelper;
@@ -26,7 +27,7 @@ public class StudentServlet {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String addStudent(String postData) {
+    public int addStudent(String postData) {
         try {
             JSONObject studentObj = new JSONObject(postData);
             if (studentObj.getString(KEY_ACTION).equalsIgnoreCase(ACTION_ADD)) {
@@ -45,16 +46,16 @@ public class StudentServlet {
                     // Insert student into db
                     CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
                     if (dbHelper.addStudent(studentNumber, studentName, studentGender))
-                        return SUCCESS;
+                        return Response.SC_OK;
                     else
-                        return FAIL;
+                        return Response.SC_BAD_REQUEST;
                 } else
-                    return FAIL;
+                    return Response.SC_BAD_REQUEST;
             } else
-                return FAIL;
+                return Response.SC_BAD_REQUEST;
         } catch (JSONException e) {
             e.printStackTrace();
-            return FAIL;
+            return Response.SC_BAD_REQUEST;
         }
     }
 

@@ -9,10 +9,6 @@ public class ServletUtils {
     static String ACTION_DELETE = "Delete";
     static String ACTION_UPDATE = "Update";
 
-    // Response
-    static String SUCCESS = "Success!";
-    static String FAIL = "Failed!";
-
     // Student
     static String KEY_STUDENT_NUMBER = "Student_Number";
     static String KEY_STUDENT_NAME = "Student_Name";
