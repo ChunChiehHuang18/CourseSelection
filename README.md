@@ -66,6 +66,20 @@ Post data example:
 
 Query all course list
 
+#### add(@POST)
+
+* /course
+
+Add a course into DB
+
+Post data example:
+
+```java
+{"Action": "add", "Course_Number": "SA104", "Course_Title": "軟體工程", 
+"Course_Size": 10,"Course_Weekday": 5, "Instructor_Number": 5,
+ "Course_Classtime": "5,6,7" }
+```
+
 ### Selection
 
 #### query(@GET)

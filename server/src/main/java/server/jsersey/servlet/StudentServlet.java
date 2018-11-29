@@ -19,7 +19,7 @@ public class StudentServlet {
     public String queryAll() {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-        return  dbHelper.queryAllStudent().toString();
+        return dbHelper.queryAllStudent().toString();
     }
 
     @Path("/")
@@ -35,23 +35,23 @@ public class StudentServlet {
                 String studentGender = MySqlConfig.VALUE_NULL;
 
                 // Get value
-                if(studentObj.has(KEY_STUDENT_NUMBER))
+                if (studentObj.has(KEY_STUDENT_NUMBER))
                     studentNumber = studentObj.getInt(KEY_STUDENT_NUMBER);
-                if(studentObj.has(KEY_STUDENT_GENDER)) {
-                    String gender = studentObj.getString(KEY_STUDENT_GENDER);
-                    if(gender.equalsIgnoreCase(GENDER_MALE) || gender.equalsIgnoreCase(GENDER_FEMALE))
-                        studentGender = gender;
-                }
+                if (studentObj.has(KEY_STUDENT_GENDER))
+                    studentGender = studentObj.getString(KEY_STUDENT_GENDER);
                 studentName = studentObj.getString(KEY_STUDENT_NAME);
 
-                // Insert student into db
-                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-                if (dbHelper.addStudent(studentNumber, studentName, studentGender))
-                    return SUCCESS;
-                else
+                if (validStudentData(studentName, studentGender)) {
+                    // Insert student into db
+                    CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+                    if (dbHelper.addStudent(studentNumber, studentName, studentGender))
+                        return SUCCESS;
+                    else
+                        return FAIL;
+                } else
                     return FAIL;
-            }
-            return studentObj.toString();
+            } else
+                return FAIL;
         } catch (JSONException e) {
             e.printStackTrace();
             return FAIL;

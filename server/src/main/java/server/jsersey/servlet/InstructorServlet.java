@@ -38,21 +38,21 @@ public class InstructorServlet {
                 // Get value
                 if(instructorObj.has(KEY_INSTRUCTOR_NUMBER))
                     instructorNumber = instructorObj.getInt(KEY_INSTRUCTOR_NUMBER);
-                if(instructorObj.has(KEY_INSTRUCTOR_OFFCIE)) {
-                    String office = instructorObj.getString(KEY_INSTRUCTOR_OFFCIE);
-                    if(office.length() == 4)
-                        instructorOffice = office;
-                }
+                if(instructorObj.has(KEY_INSTRUCTOR_OFFCIE))
+                    instructorOffice = instructorObj.getString(KEY_INSTRUCTOR_OFFCIE);
                 instructorName = instructorObj.getString(KEY_INSTRUCTOR_NAME);
 
-                // Insert student into db
-                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-                if (dbHelper.addInstructor(instructorNumber, instructorName, instructorOffice))
-                    return SUCCESS;
-                else
+                if(validInstructorData(instructorName, instructorOffice)) {
+                    // Insert student into db
+                    CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+                    if (dbHelper.addInstructor(instructorNumber, instructorName, instructorOffice))
+                        return SUCCESS;
+                    else
+                        return FAIL;
+                } else
                     return FAIL;
-            }
-            return instructorObj.toString();
+            } else
+                return FAIL;
         } catch (JSONException e) {
             e.printStackTrace();
             return FAIL;

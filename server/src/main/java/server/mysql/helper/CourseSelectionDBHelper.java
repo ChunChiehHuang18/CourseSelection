@@ -59,24 +59,20 @@ public class CourseSelectionDBHelper {
 
 
     public boolean addInstructor(int instructorNumber, String instructorName, String office) {
-        if (instructorName.length() <= 45 && office.length() == 4) {
-            try {
-                if (instructorNumber > 0)
-                    addInstructorStm.setInt(1, instructorNumber);
-                else
-                    addInstructorStm.setNull(1, 0);
-                addInstructorStm.setString(2, instructorName);
-                if(!office.equalsIgnoreCase(MySqlConfig.VALUE_NULL))
-                    addInstructorStm.setString(3, office);
-                else
-                    addInstructorStm.setNull(3, 0);
-                addInstructorStm.executeUpdate();
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
-        } else {
+        try {
+            if (instructorNumber > 0)
+                addInstructorStm.setInt(1, instructorNumber);
+            else
+                addInstructorStm.setNull(1, 0);
+            addInstructorStm.setString(2, instructorName);
+            if (!office.equalsIgnoreCase(MySqlConfig.VALUE_NULL))
+                addInstructorStm.setString(3, office);
+            else
+                addInstructorStm.setNull(3, 0);
+            addInstructorStm.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -100,27 +96,24 @@ public class CourseSelectionDBHelper {
     }
 
     public boolean addStudent(int studentNumber, String studentName, String gender) {
-        if (studentName.length() <= 45 && gender.length() <= 10) {
-            try {
-                if (studentNumber > 0)
-                    addStudentStm.setInt(1, studentNumber);
-                else
-                    addStudentStm.setNull(1, 0);
-                addStudentStm.setString(2, studentName);
-                if (!gender.equalsIgnoreCase(MySqlConfig.VALUE_NULL))
-                    addStudentStm.setString(3, gender);
-                else
-                    addStudentStm.setNull(3, 0);
-                addStudentStm.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
+        try {
+            if (studentNumber > 0)
+                addStudentStm.setInt(1, studentNumber);
+            else
+                addStudentStm.setNull(1, 0);
+            addStudentStm.setString(2, studentName);
+            if (!gender.equalsIgnoreCase(MySqlConfig.VALUE_NULL))
+                addStudentStm.setString(3, gender);
+            else
+                addStudentStm.setNull(3, 0);
+            addStudentStm.executeUpdate();
             return true;
-        } else {
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
+
 
     public JSONArray queryAllStudent() {
         try {
@@ -140,36 +133,21 @@ public class CourseSelectionDBHelper {
         return new JSONArray();
     }
 
-    private boolean checkClasstime(String classTime) {
-        String[] timeArray = classTime.split(",");
-        for (String timeString : timeArray) {
-            int value = Integer.valueOf(timeString);
-            if (!(value > 0 && value <= 8))
-                return false;
-        }
-        return true;
-    }
 
     public boolean addCourse(String courseNumber, String courseTitle, int instructorNumber, int courseSize, int courseWeekday, String courseClasstime) {
-        if (courseNumber.length() == 5 && courseTitle.length() <= 45 &&
-                courseSize > 0 && courseSize <= 255 && courseWeekday > 0 &&
-                courseWeekday <= 7 && checkClasstime(courseClasstime)) {
-            try {
-                addCourseStm.setString(1, courseNumber);
-                addCourseStm.setString(2, courseTitle);
-                addCourseStm.setInt(3, instructorNumber);
-                addCourseStm.setInt(4, courseSize);
-                addCourseStm.setInt(5, courseWeekday);
-                addCourseStm.setString(6, courseClasstime);
-                addCourseStm.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
-            return true;
-        } else {
+        try {
+            addCourseStm.setString(1, courseNumber);
+            addCourseStm.setString(2, courseTitle);
+            addCourseStm.setInt(3, instructorNumber);
+            addCourseStm.setInt(4, courseSize);
+            addCourseStm.setInt(5, courseWeekday);
+            addCourseStm.setString(6, courseClasstime);
+            addCourseStm.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
+        return true;
     }
 
     public JSONArray queryAllCourse() {
@@ -180,6 +158,7 @@ public class CourseSelectionDBHelper {
                 JSONObject obj = new JSONObject();
                 obj.put(MySqlConfig.SHOW_COURSE_NUMBER, rs.getString(MySqlConfig.COLUMN_COURSE_NUMBER));
                 obj.put(MySqlConfig.SHOW_COURSE_TITLE, rs.getString(MySqlConfig.COLUMN_COURSE_TITLE));
+                obj.put(MySqlConfig.SHOW_INSTRUCTOR_NUMBER, rs.getString(MySqlConfig.COLUMN_INSTRUCTOR_NUMBER));
                 obj.put(MySqlConfig.SHOW_COURSE_SIZE, rs.getString(MySqlConfig.COLUMN_COURSE_SIZE));
                 obj.put(MySqlConfig.SHOW_COURSE_WEEKDAY, rs.getString(MySqlConfig.COLUMN_COURSE_WEEKDAY));
                 obj.put(MySqlConfig.SHOW_COURSE_CLASSTIME, rs.getString(MySqlConfig.COLUMN_COURSE_CLASSTIME));
