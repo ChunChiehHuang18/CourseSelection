@@ -6,6 +6,9 @@ import org.json.JSONObject;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * CourseSelectionDBHelper provide higher level API to use MySQL
+ */
 public class CourseSelectionDBHelper {
 
     private PreparedStatement addInstructorStm = null;
@@ -294,9 +297,6 @@ public class CourseSelectionDBHelper {
 //        jsonList.clear();
 //        System.out.println("Query by instructor -- end");
 
-//        System.out.println("Add student: " + dbHelper.addStudent(11, "蔡依林", "Female"));
-//        System.out.println("Add student: " + dbHelper.addInstructor(-1, "Gail", "S116"));
-//        System.out.println("Add student: " + dbHelper.addCourse("MS534", "Music", 5, 20, 2, "5,6,7"));
-//        System.out.println("Add student: " + dbHelper.selectCourse(-1, "Gail", "S116"));
+
     }
 }

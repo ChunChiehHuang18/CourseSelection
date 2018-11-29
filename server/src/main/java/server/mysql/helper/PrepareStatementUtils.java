@@ -1,5 +1,8 @@
 package server.mysql.helper;
 
+/**
+ * PrepareStatementUtils store all prepare statement string
+ */
 public class PrepareStatementUtils {
     static String addInstructorStmString =
             "INSERT INTO course_selection.instructor(instructor_number, instructor_name, instructor_office)" +

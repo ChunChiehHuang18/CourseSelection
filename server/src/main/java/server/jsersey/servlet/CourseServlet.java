@@ -10,9 +10,16 @@ import javax.ws.rs.core.MediaType;
 
 import static server.jsersey.servlet.ServletUtils.*;
 
+/**
+ * CourseServlet handle course related request
+ */
 @Path("/")
 public class CourseServlet {
 
+    /**
+     * Query all course list
+     * @return Course JSON array
+     */
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
     @GET
@@ -22,6 +29,11 @@ public class CourseServlet {
         return dbHelper.queryAllCourse().toString();
     }
 
+    /**
+     * Add a course data into DB
+     * @param postData Course JSON data
+     * @return Status code
+     */
     @Path("/")
     @POST
     @Produces(MediaType.TEXT_PLAIN)

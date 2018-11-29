@@ -1,5 +1,8 @@
 package server.mysql.helper;
 
+/**
+ * MySqlConfig store MySQL config(url, pass...) and schema related value
+ */
 public class MySqlConfig {
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";

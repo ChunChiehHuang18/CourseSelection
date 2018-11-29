@@ -10,7 +10,7 @@ import server.jsersey.servlet.SelectionServlet;
 import server.jsersey.servlet.StudentServlet;
 
 /**
- * Hello world!
+ * JettyServer can run Jetty embedded web server to handle http request and mapping request to jersey servlet
  */
 public class JettyServer {
     public static void main(String[] args) throws Exception {

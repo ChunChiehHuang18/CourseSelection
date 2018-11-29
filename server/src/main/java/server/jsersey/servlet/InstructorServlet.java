@@ -11,9 +11,17 @@ import javax.ws.rs.core.MediaType;
 
 import static server.jsersey.servlet.ServletUtils.*;
 
+
+/**
+ * InstructorServlet handle instructor related request
+ */
 @Path("/")
 public class InstructorServlet {
 
+    /**
+     * Query all instructor list
+     * @return Instructor JSON Array
+     */
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
     @GET
@@ -23,6 +31,11 @@ public class InstructorServlet {
         return  dbHelper.queryAllInstructor().toString();
     }
 
+    /**
+     * Add a instructor into DB
+     * @param postData instructor JSON data
+     * @return Status code
+     */
     @Path("/")
     @POST
     @Produces(MediaType.TEXT_PLAIN)

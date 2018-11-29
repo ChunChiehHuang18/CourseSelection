@@ -2,6 +2,9 @@ package server.jsersey.servlet;
 
 import java.util.Arrays;
 
+/**
+ * ServletUtils store servlet post data related value and check post data valid API
+ */
 public class ServletUtils {
     // Action
     static String KEY_ACTION = "Action";

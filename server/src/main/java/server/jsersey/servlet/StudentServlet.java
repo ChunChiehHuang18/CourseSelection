@@ -11,9 +11,16 @@ import javax.ws.rs.core.MediaType;
 
 import static server.jsersey.servlet.ServletUtils.*;
 
+/**
+ * StudentServlet handle student related request
+ */
 @Path("/")
 public class StudentServlet {
 
+    /**
+     * Query all student  list
+     * @return Student JSON array
+     */
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
     @GET
@@ -23,6 +30,11 @@ public class StudentServlet {
         return dbHelper.queryAllStudent().toString();
     }
 
+    /**
+     * Add a student into DB
+     * @param postData Student JSON data
+     * @return Status code
+     */
     @Path("/")
     @POST
     @Produces(MediaType.TEXT_PLAIN)
