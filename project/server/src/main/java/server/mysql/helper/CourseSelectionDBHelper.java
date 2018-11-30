@@ -17,7 +17,11 @@ public class CourseSelectionDBHelper {
     private PreparedStatement queryAllStudentStm = null;
     private PreparedStatement addCourseStm = null;
     private PreparedStatement queryAllCourseStm = null;
+    private PreparedStatement queryCourseSizeStm = null;
     private PreparedStatement selectCourseStm = null;
+    private PreparedStatement querySelectionDuplicateStm = null;
+    private PreparedStatement querySelectionCountByCourseStm = null;
+    private PreparedStatement queryStudentClasstimeStm = null;
     private PreparedStatement queryAllSelectionStm = null;
     private PreparedStatement queryCourseByStudentStm = null;
     private PreparedStatement queryCourseByInstructorStm = null;
@@ -47,7 +51,11 @@ public class CourseSelectionDBHelper {
             queryAllStudentStm = conn.prepareStatement(PrepareStatementUtils.queryAllStudentStmString);
             addCourseStm = conn.prepareStatement(PrepareStatementUtils.addCourseStmString);
             queryAllCourseStm = conn.prepareStatement(PrepareStatementUtils.queryAllCourseStmString);
+            queryCourseSizeStm = conn.prepareStatement(PrepareStatementUtils.queryCourseSizeStmString);
             selectCourseStm = conn.prepareStatement(PrepareStatementUtils.selectCourseStmString);
+            querySelectionDuplicateStm = conn.prepareStatement(PrepareStatementUtils.querySelectionDuplicateStmString);
+            querySelectionCountByCourseStm = conn.prepareStatement(PrepareStatementUtils.querySelectionCountByCourseStmString);
+            queryStudentClasstimeStm = conn.prepareStatement(PrepareStatementUtils.queryStudentClasstimeStmString);
             queryAllSelectionStm = conn.prepareStatement(PrepareStatementUtils.queryAllSelectionStmString);
             queryCourseByStudentStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByStudentStmString);
             queryCourseByInstructorStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByInstructorStmString);
@@ -174,20 +182,31 @@ public class CourseSelectionDBHelper {
         return new JSONArray();
     }
 
-    public boolean selectCourse(String courseNumber, int studentNumber) {
-        if (courseNumber.length() == 5 && studentNumber > 0) {
-            try {
-                selectCourseStm.setString(1, courseNumber);
-                selectCourseStm.setInt(2, studentNumber);
-                selectCourseStm.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
+    public int queryCourseSize(String courseNumber) {
+        try {
+            queryCourseSizeStm.setString(1, courseNumber);
+            ResultSet rs = queryCourseSizeStm.executeQuery();
+            int courseSize = -1;
+            while (rs.next()) {
+                courseSize = rs.getInt(MySqlConfig.COLUMN_COURSE_SIZE);
             }
-            return true;
-        } else {
+            return courseSize;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public boolean selectCourse(int studentNumber, String courseNumber) {
+        try {
+            selectCourseStm.setString(1, courseNumber);
+            selectCourseStm.setInt(2, studentNumber);
+            selectCourseStm.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
+        return true;
     }
 
     public JSONArray queryAllSelection() {
@@ -206,6 +225,58 @@ public class CourseSelectionDBHelper {
         }
         return new JSONArray();
     }
+
+    public boolean querySelectionDuplicate(int studentNumber, String courseNumber) {
+        try {
+            querySelectionDuplicateStm.setInt(1, studentNumber);
+            querySelectionDuplicateStm.setString(2, courseNumber);
+            ResultSet rs = querySelectionDuplicateStm.executeQuery();
+            if(rs.next()) {
+                return rs.getInt(1) > 0;
+            } else
+                return false;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int querySelectionCountByCourse(String courseNumber) {
+        int selectionCount = -1;
+        try {
+            querySelectionCountByCourseStm.setString(1, courseNumber);
+            ResultSet rs = querySelectionCountByCourseStm.executeQuery();
+            if(rs.next()) {
+                selectionCount = rs.getInt(1);
+                return selectionCount;
+            } else
+                return selectionCount;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return selectionCount;
+        }
+    }
+
+    public JSONArray queryStudentClasstime(int studentNumber) {
+        try {
+            queryStudentClasstimeStm.setInt(1, studentNumber);
+            ResultSet rs = queryStudentClasstimeStm.executeQuery();
+            JSONArray jsonArray = new JSONArray();
+            while (rs.next()) {
+                JSONObject obj = new JSONObject();
+                obj.put(MySqlConfig.SHOW_COURSE_WEEKDAY, rs.getString(MySqlConfig.COLUMN_COURSE_WEEKDAY));
+                obj.put(MySqlConfig.SHOW_COURSE_CLASSTIME, rs.getString(MySqlConfig.COLUMN_COURSE_CLASSTIME));
+                jsonArray.put(obj);
+            }
+            return jsonArray;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new JSONArray();
+        }
+    }
+
 
     private JSONObject getCourseSelectionJson(ResultSet rs) {
         try {

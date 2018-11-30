@@ -22,6 +22,10 @@ public class PrepareStatementUtils {
             "INSERT INTO course_selection.course(course_number, course_title, instructor_number, course_size, course_weekday, course_classtime)" +
                     "VALUES (?, ?, ?, ?, ?, ?);";
 
+    static String queryCourseSizeStmString =
+            "SELECT course_size FROM course_selection.course " +
+                    "WHERE course_number = ?;";
+
     static String queryAllCourseStmString =
             "SELECT * FROM course_selection.course;";
 
@@ -31,6 +35,21 @@ public class PrepareStatementUtils {
 
     static String queryAllSelectionStmString =
             "SELECT * FROM course_selection.selection;";
+
+    static String querySelectionDuplicateStmString =
+            "SELECT COUNT(course_selection.selection.student_number) " +
+            "FROM course_selection.selection " +
+            "WHERE course_selection.selection.student_number = ? AND course_selection.selection.course_number = ?";
+
+    static String querySelectionCountByCourseStmString =
+            "SELECT COUNT(course_selection.selection.student_number) " +
+                    "FROM course_selection.selection " +
+                    "WHERE course_selection.selection.course_number = ?";
+
+    static String queryStudentClasstimeStmString = "SELECT course_selection.course.course_classtime, course_selection.course.course_weekday " +
+            "FROM (course_selection.selection " +
+            "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number) " +
+            "WHERE student_number= ?";
 
     static String queryCourseByStudentStmString = "SELECT course_selection.student.student_number, " +
             "course_selection.student.student_name, course_selection.student.student_gender, course_selection.course.course_number, " +

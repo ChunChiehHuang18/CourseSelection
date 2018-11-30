@@ -1,5 +1,8 @@
 package server.jsersey.servlet;
 
+import org.json.JSONArray;
+import server.mysql.helper.CourseSelectionDBHelper;
+
 import java.util.Arrays;
 
 /**
@@ -9,7 +12,6 @@ public class ServletUtils {
     // Action
     static String KEY_ACTION = "Action";
     static String ACTION_ADD = "Add";
-    static String ACTION_DELETE = "Delete";
     static String ACTION_UPDATE = "Update";
 
     // Student
@@ -70,5 +72,24 @@ public class ServletUtils {
         }
         return true;
     }
+
+    // selection
+
+    static boolean validSelectionData(int studentNumber, String courseNumber) {
+        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+        int courseSize = dbHelper.queryCourseSize(courseNumber);
+        int selectionCount = dbHelper.querySelectionCountByCourse(courseNumber);
+        boolean duplicate = dbHelper.querySelectionDuplicate(studentNumber, courseNumber);
+        JSONArray classtime = dbHelper.queryStudentClasstime(studentNumber);
+        System.out.println("courseSize: " + courseSize);
+        System.out.println("selectionCount: " + selectionCount);
+        System.out.println("duplicate: " + duplicate);
+        System.out.println("classtime: " + classtime.toString());
+        return (studentNumber > 0);
+    }
+
+//    private static boolean validCourse(String courseNumber) {
+//        if(courseNumber.length() == 5);
+//    }
 
 }

@@ -3,10 +3,11 @@
 This is a maven project using Jetty, Jersey and MySql to practice building the back-end API of the course selection system.
 
 ## MySQL 
-You can import coursexxxx.sql file in mysql folder  into your MySQL database
+You can import coursexxxx.sql file in mysql folder  into your MySQL database.
+And modify config in MySqlConfig.java if you need.
 
 ## Java Doc
-You can find Java doc in doc folder
+You can find this Project's Java doc in doc folder
 
 ## Start Http Service
 Using IntelliJ IDEA to open project folder and run JettyServer.java 
@@ -96,4 +97,16 @@ Query selection list by student number
 * /selection/instructor/{instructor #}
 
 Query selection list by instructor number
+
+#### add(@POST)
+
+* /selection
+
+Select a course and insert into DB
+
+Post data example:
+
+```java
+{"Action": "add", "Course_Number": "DB101", "Student_Number": 1 }
+```
 
