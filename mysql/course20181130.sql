@@ -25,15 +25,15 @@ DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
   `course_number` char(5) NOT NULL,
   `course_title` varchar(45) CHARACTER SET utf8 NOT NULL,
-  `instructor_number` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `instructor_number` int(10) unsigned NOT NULL,
   `course_size` tinyint(4) unsigned NOT NULL,
   `course_weekday` tinyint(4) unsigned NOT NULL,
   `course_classtime` varchar(15) NOT NULL,
   PRIMARY KEY (`course_number`),
   UNIQUE KEY `course_number_UNIQUE` (`course_number`),
-  UNIQUE KEY `instructor_number_UNIQUE` (`instructor_number`),
+  KEY `instructor_number` (`instructor_number`),
   CONSTRAINT `instructor_number` FOREIGN KEY (`instructor_number`) REFERENCES `instructor` (`instructor_number`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `course` (
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES ('DB101','Database',1,40,3,'1,2,3'),('MS534','Music',5,20,2,'5,6,7');
+INSERT INTO `course` VALUES ('DB101','Database',1,40,3,'1,2,3'),('MS534','Music',5,20,2,'5,6,7'),('SA104','軟體工程',5,10,5,'5,6,7');
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +60,7 @@ CREATE TABLE `instructor` (
   PRIMARY KEY (`instructor_number`),
   UNIQUE KEY `instructor_number_UNIQUE` (`instructor_number`),
   UNIQUE KEY `Instructor_office_UNIQUE` (`Instructor_office`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `instructor` (
 
 LOCK TABLES `instructor` WRITE;
 /*!40000 ALTER TABLE `instructor` DISABLE KEYS */;
-INSERT INTO `instructor` VALUES ('Meryl Streep',NULL,1),('Tom Cruise','C102',2),('周杰倫','D959',4),('Gail','S116',5);
+INSERT INTO `instructor` VALUES ('Meryl Streep',NULL,1),('Tom Cruise','C102',2),('周杰倫','D959',4),('Gail','S116',5),('李安',NULL,6),('李白','B987',8);
 /*!40000 ALTER TABLE `instructor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +113,7 @@ CREATE TABLE `student` (
   `student_gender` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`student_number`),
   UNIQUE KEY `student_number_UNIQUE` (`student_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +122,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (1,'Jack',NULL),(2,'Marry','Female'),(3,'Jacky Chen','Male'),(4,'周杰倫','Male'),(12,'蔡依林','Female');
+INSERT INTO `student` VALUES (1,'Jack',NULL),(2,'Marry','Female'),(3,'Jacky Chen','Male'),(4,'周杰倫','Male'),(12,'蔡依林','Female'),(13,'Joe','Male'),(14,'Yoyo',NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -135,4 +135,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-26 21:06:34
+-- Dump completed on 2018-11-30 18:08:17
