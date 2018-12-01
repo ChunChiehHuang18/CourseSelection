@@ -64,7 +64,7 @@ public class PrepareStatementUtils {
             "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number) " +
             "WHERE student_number= ?";
 
-    static String queryCourseByStudentStmString = "SELECT course_selection.student.student_number, course_selection.selection.selection_number " +
+    static String queryCourseByStudentStmString = "SELECT course_selection.student.student_number, course_selection.selection.selection_number, " +
             "course_selection.student.student_name, course_selection.student.student_gender, course_selection.course.course_number, " +
             "course_selection.course.course_title, course_selection.course.course_size, course_selection.course.course_weekday," +
             "course_selection.course.course_classtime, course_selection.instructor.Instructor_number, " +
@@ -75,7 +75,7 @@ public class PrepareStatementUtils {
             "JOIN course_selection.instructor ON course_selection.course.instructor_number=course_selection.instructor.instructor_number) " +
             "WHERE course_selection.selection.student_number= ?";
 
-    static String queryCourseByInstructorStmString = "SELECT course_selection.student.student_number, course_selection.selection.selection_number " +
+    static String queryCourseByInstructorStmString = "SELECT course_selection.student.student_number, course_selection.selection.selection_number, " +
             "course_selection.student.student_name, course_selection.student.student_gender, course_selection.course.course_number, " +
             "course_selection.course.course_title, course_selection.course.course_size, course_selection.course.course_weekday," +
             "course_selection.course.course_classtime, course_selection.instructor.Instructor_number, " +
