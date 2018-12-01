@@ -25,7 +25,9 @@ public class ServletUtils {
     }
 
     private static boolean validGender(String gender) {
-        return (gender.equalsIgnoreCase("male") || gender.equalsIgnoreCase("female"));
+        return (gender.equalsIgnoreCase("Male") ||
+                gender.equalsIgnoreCase("Female") ||
+                gender.equalsIgnoreCase("Bisexual"));
     }
 
     // Instructor
