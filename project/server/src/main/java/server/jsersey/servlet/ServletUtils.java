@@ -98,7 +98,7 @@ public class ServletUtils {
 
     private static boolean exceedCourseSize(String courseNumber) {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-        int courseSize = dbHelper.queryCourseByCourseNumber(courseNumber).getInt(MySqlConfig.SHOW_COURSE_SIZE);
+        int courseSize = dbHelper.queryCourseByNumber(courseNumber).getInt(MySqlConfig.SHOW_COURSE_SIZE);
         int selectionCount = dbHelper.querySelectionCountByCourse(courseNumber);
 //        System.out.println("courseSize: " + courseSize);
 //        System.out.println("selectionCount: " + selectionCount);
@@ -122,8 +122,8 @@ public class ServletUtils {
         }
 
         // Get selection classtime
-        int selectiontWeekday = dbHelper.queryCourseByCourseNumber(courseNumber).getInt(MySqlConfig.SHOW_COURSE_WEEKDAY);
-        String[] selectionClassTime = dbHelper.queryCourseByCourseNumber(courseNumber).getString(MySqlConfig.SHOW_COURSE_CLASSTIME).split(",");
+        int selectiontWeekday = dbHelper.queryCourseByNumber(courseNumber).getInt(MySqlConfig.SHOW_COURSE_WEEKDAY);
+        String[] selectionClassTime = dbHelper.queryCourseByNumber(courseNumber).getString(MySqlConfig.SHOW_COURSE_CLASSTIME).split(",");
         for (String time: selectionClassTime) {
             if(classtimeOccupy[selectiontWeekday - 1][Integer.valueOf(time) - 1])
                 return true;

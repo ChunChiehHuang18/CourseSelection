@@ -31,6 +31,20 @@ public class StudentServlet {
     }
 
     /**
+     * Query  student by student number
+     * @param studentNumber Student integer type number
+     * @return Student  JSON array
+     */
+    @Path("{studentNumber}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    public String queryByNumber(@PathParam("studentNumber") String studentNumber) {
+        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+
+        return  dbHelper.queryStudentByNumber(Integer.valueOf(studentNumber)).toString();
+    }
+
+    /**
      * Add a student into DB
      * @param postData Student JSON data
      * @return Status code

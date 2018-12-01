@@ -11,13 +11,19 @@ import java.util.ArrayList;
  */
 public class CourseSelectionDBHelper {
 
+    // Instructor
     private PreparedStatement addInstructorStm = null;
     private PreparedStatement queryAllInstructorStm = null;
+    private PreparedStatement queryInstructorByNumberStm = null;
+    // Student
     private PreparedStatement addStudentStm = null;
     private PreparedStatement queryAllStudentStm = null;
+    private PreparedStatement queryStudentByNumberStm = null;
+    // Course
     private PreparedStatement addCourseStm = null;
     private PreparedStatement queryAllCourseStm = null;
-    private PreparedStatement queryCourseByCourseNumberStm = null;
+    private PreparedStatement queryCourseByNumberStm = null;
+    // Selection
     private PreparedStatement selectCourseStm = null;
     private PreparedStatement querySelectionDuplicateStm = null;
     private PreparedStatement querySelectionCountByCourseStm = null;
@@ -48,13 +54,15 @@ public class CourseSelectionDBHelper {
             // Instructor
             addInstructorStm = conn.prepareStatement(PrepareStatementUtils.addInstructorStmString);
             queryAllInstructorStm = conn.prepareStatement(PrepareStatementUtils.queryAllInstructorStmString);
+            queryInstructorByNumberStm = conn.prepareStatement(PrepareStatementUtils.queryInstructorByNumberStmString);
             // Student
             addStudentStm = conn.prepareStatement(PrepareStatementUtils.addStudentStmString);
             queryAllStudentStm = conn.prepareStatement(PrepareStatementUtils.queryAllStudentStmString);
+            queryStudentByNumberStm = conn.prepareStatement(PrepareStatementUtils.queryStudentByNumberStmString);
             // Course
             addCourseStm = conn.prepareStatement(PrepareStatementUtils.addCourseStmString);
             queryAllCourseStm = conn.prepareStatement(PrepareStatementUtils.queryAllCourseStmString);
-            queryCourseByCourseNumberStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByCourseNumberStmString);
+            queryCourseByNumberStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByNumberStmString);
             selectCourseStm = conn.prepareStatement(PrepareStatementUtils.selectCourseStmString);
             // Selection
             queryAllSelectionStm = conn.prepareStatement(PrepareStatementUtils.queryAllSelectionStmString);
@@ -110,6 +118,23 @@ public class CourseSelectionDBHelper {
         return new JSONArray();
     }
 
+    public JSONObject queryInstructorByNumber(int instructorNumber) {
+        try {
+            queryInstructorByNumberStm.setInt(1, instructorNumber);
+            ResultSet rs = queryInstructorByNumberStm.executeQuery();
+            JSONObject obj = new JSONObject();
+            while (rs.next()) {
+                obj.put(MySqlConfig.SHOW_INSTRUCTOR_NUMBER, rs.getInt(MySqlConfig.COLUMN_INSTRUCTOR_NUMBER));
+                obj.put(MySqlConfig.SHOW_INSTRUCTOR_NAME, rs.getString(MySqlConfig.COLUMN_INSTRUCTOR_NAME));
+                obj.put(MySqlConfig.SHOW_INSTRUCTOR_OFFICE, rs.getString(MySqlConfig.COLUMN_INSTRUCTOR_OFFICE));
+            }
+            return obj;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new JSONObject();
+    }
+
     public boolean addStudent(int studentNumber, String studentName, String gender) {
         try {
             if (studentNumber > 0)
@@ -146,6 +171,23 @@ public class CourseSelectionDBHelper {
             e.printStackTrace();
         }
         return new JSONArray();
+    }
+
+    public JSONObject queryStudentByNumber(int studentNumber) {
+        try {
+            queryStudentByNumberStm.setInt(1, studentNumber);
+            ResultSet rs = queryStudentByNumberStm.executeQuery();
+            JSONObject obj = new JSONObject();
+            while (rs.next()) {
+                obj.put(MySqlConfig.SHOW_STUDENT_NUMBER, rs.getInt(MySqlConfig.COLUMN_STUDENT_NUMBER));
+                obj.put(MySqlConfig.SHOW_STUDENT_NAME, rs.getString(MySqlConfig.COLUMN_STUDENT_NAME));
+                obj.put(MySqlConfig.SHOW_STUDENT_GENDER, rs.getString(MySqlConfig.COLUMN_STUDENT_GENDER));
+            }
+            return obj;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new JSONObject();
     }
 
 
@@ -186,10 +228,10 @@ public class CourseSelectionDBHelper {
         return new JSONArray();
     }
 
-    public JSONObject queryCourseByCourseNumber(String courseNumber) {
+    public JSONObject queryCourseByNumber(String courseNumber) {
         try {
-            queryCourseByCourseNumberStm.setString(1, courseNumber);
-            ResultSet rs = queryCourseByCourseNumberStm.executeQuery();
+            queryCourseByNumberStm.setString(1, courseNumber);
+            ResultSet rs = queryCourseByNumberStm.executeQuery();
             JSONObject obj = new JSONObject();
             while (rs.next()) {
                 obj.put(MySqlConfig.SHOW_COURSE_NUMBER, rs.getString(MySqlConfig.COLUMN_COURSE_NUMBER));

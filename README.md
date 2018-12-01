@@ -28,6 +28,10 @@ Using IntelliJ IDEA to open project folder and run JettyServer.java
 
 Query all student list
 
+* /student/{student #}
+
+Query student by student integer type number
+
 #### add(@POST)
 
 * /student
@@ -49,6 +53,10 @@ Post data example:
 
 Query all instructor list
 
+* /instructor/{instructor #}
+
+Query instructor by instructor integer type number
+
 #### add(@POST)
 
 * /instructor
@@ -69,6 +77,10 @@ Post data example:
 * /course/all
 
 Query all course list
+
+* /course/{course #}
+
+Query course by course string type number
 
 #### add(@POST)
 
@@ -92,11 +104,11 @@ Query all selection list
 
 * /selection/student/{student #}
 
-Query selection list by student number
+Query selection list by student integer type number
 
 * /selection/instructor/{instructor #}
 
-Query selection list by instructor number
+Query selection list by instructor integer type number
 
 #### add(@POST)
 

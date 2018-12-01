@@ -30,6 +30,20 @@ public class CourseServlet {
     }
 
     /**
+     * Query  course by course number
+     * @param courseNumber Course String type number
+     * @return Course  JSON array
+     */
+    @Path("{courseNumber}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    public String queryByNumber(@PathParam("courseNumber") String courseNumber) {
+        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+
+        return  dbHelper.queryCourseByNumber(courseNumber).toString();
+    }
+
+    /**
      * Add a course data into DB
      * @param postData Course JSON data
      * @return Status code

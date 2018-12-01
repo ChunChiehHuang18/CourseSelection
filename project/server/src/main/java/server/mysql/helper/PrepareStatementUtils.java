@@ -13,6 +13,10 @@ public class PrepareStatementUtils {
     static String queryAllInstructorStmString =
             "SELECT * FROM course_selection.instructor;";
 
+    static String queryInstructorByNumberStmString =
+            "SELECT * FROM course_selection.instructor " +
+                    "WHERE instructor_number= ?;";
+
     // Student
     static String addStudentStmString =
             "INSERT INTO course_selection.student(student_number, student_name, student_gender)" +
@@ -21,12 +25,16 @@ public class PrepareStatementUtils {
     static String queryAllStudentStmString =
             "SELECT * FROM course_selection.student;";
 
+    static String queryStudentByNumberStmString =
+            "SELECT * FROM course_selection.student " +
+                    "WHERE student_number= ?;";
+
     // Course
     static String addCourseStmString =
             "INSERT INTO course_selection.course(course_number, course_title, instructor_number, course_size, course_weekday, course_classtime)" +
                     "VALUES (?, ?, ?, ?, ?, ?);";
 
-    static String queryCourseByCourseNumberStmString =
+    static String queryCourseByNumberStmString =
             "SELECT * FROM course_selection.course " +
                     "WHERE course_number = ?;";
 
