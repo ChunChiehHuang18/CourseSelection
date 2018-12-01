@@ -4,7 +4,6 @@ import org.eclipse.jetty.server.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 import server.mysql.helper.CourseSelectionDBHelper;
-import server.mysql.helper.MySqlConfig;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -71,25 +70,22 @@ public class SelectionServlet {
         try {
             JSONObject selectionObj = new JSONObject(postData);
             if (selectionObj.getString(KEY_ACTION).equalsIgnoreCase(ACTION_ADD)) {
-                int studentNumber;
-                String courseNumber;
-
+                int selectionNumber = -1;
                 // Get value
-                studentNumber = selectionObj.getInt(KEY_STUDENT_NUMBER);
-                courseNumber = selectionObj.getString(KEY_COURSE_NUMBER);
-                if (validSelectionData(studentNumber, courseNumber))
-                    return Response.SC_OK;
-                else
+                if(selectionObj.has(KEY_SELECTION_NUMBER))
+                    selectionNumber = selectionObj.getInt(KEY_SELECTION_NUMBER);
+                int studentNumber = selectionObj.getInt(KEY_STUDENT_NUMBER);
+                String courseNumber = selectionObj.getString(KEY_COURSE_NUMBER);
+
+                if (validSelectionData(studentNumber, courseNumber)) {
+                    // Insert student into db
+                    CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+                    if (dbHelper.selectCourse(selectionNumber, studentNumber, courseNumber))
+                        return Response.SC_OK;
+                    else
+                        return Response.SC_BAD_REQUEST;
+                } else
                     return Response.SC_BAD_REQUEST;
-//                if (validSelectionData(studentNumber, courseNumber)) {
-//                    // Insert student into db
-//                    CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-//                    if (dbHelper.selectCourse(studentNumber, courseNumber))
-//                        return Response.SC_OK;
-//                    else
-//                        return Response.SC_BAD_REQUEST;
-//                } else
-//                    return Response.SC_BAD_REQUEST;
             } else
                 return Response.SC_BAD_REQUEST;
         } catch (JSONException e) {

@@ -2,6 +2,7 @@ package server.jsersey.servlet;
 
 import org.json.JSONArray;
 import server.mysql.helper.CourseSelectionDBHelper;
+import server.mysql.helper.MySqlConfig;
 
 import java.util.Arrays;
 
@@ -45,18 +46,18 @@ public class ServletUtils {
 
     static boolean validCourseData(String courseNumber, String courseTitle, int instructorNumber,
                                    int courseSize, int courseWeekday, String courseClasstime) {
-        System.out.println("courseNumber: " + courseNumber);
-        System.out.println("courseTitle: " + courseTitle);
-        System.out.println("instructorNumber: " + instructorNumber);
-        System.out.println("courseSize: " + courseSize);
-        System.out.println("courseWeekday: " + courseWeekday);
-        System.out.println("courseClasstime: " + courseClasstime);
+//        System.out.println("courseNumber: " + courseNumber);
+//        System.out.println("courseTitle: " + courseTitle);
+//        System.out.println("instructorNumber: " + instructorNumber);
+//        System.out.println("courseSize: " + courseSize);
+//        System.out.println("courseWeekday: " + courseWeekday);
+//        System.out.println("courseClasstime: " + courseClasstime);
         return (courseNumber.length() == 5 && courseTitle.length() <= 45 &&
                 instructorNumber > 0 && courseSize >= 10 && courseSize <= 255 &&
-                courseWeekday >= 1 && courseWeekday <= 5 && validClasstime(courseClasstime));
+                courseWeekday >= 1 && courseWeekday <= 5 && validClasstimeString(courseClasstime));
     }
 
-    private static boolean validClasstime(String classTime) {
+    private static boolean validClasstimeString(String classTime) {
         boolean[] classtimeOccupy = new boolean[8];
         Arrays.fill(classtimeOccupy, Boolean.FALSE);
         String[] timeArray = classTime.split(",");
@@ -74,22 +75,58 @@ public class ServletUtils {
     }
 
     // selection
-
+    static String KEY_SELECTION_NUMBER = "Selection_Number";
     static boolean validSelectionData(int studentNumber, String courseNumber) {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-        int courseSize = dbHelper.queryCourseSize(courseNumber);
-        int selectionCount = dbHelper.querySelectionCountByCourse(courseNumber);
-        boolean duplicate = dbHelper.querySelectionDuplicate(studentNumber, courseNumber);
-        JSONArray classtime = dbHelper.queryStudentClasstime(studentNumber);
-        System.out.println("courseSize: " + courseSize);
-        System.out.println("selectionCount: " + selectionCount);
-        System.out.println("duplicate: " + duplicate);
-        System.out.println("classtime: " + classtime.toString());
-        return (studentNumber > 0);
+        if(studentNumber > 0 && courseNumber.length() == 5) {
+            CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+            boolean duplicate = dbHelper.querySelectionDuplicate(studentNumber, courseNumber);
+//            System.out.println("duplicate: " + duplicate);
+
+//            if(duplicate)
+//                System.out.println("duplicate");
+//            if (exceedCourseSize(courseNumber))
+//                System.out.println("exceedCourseSize");
+//            if(occupyClasstime(studentNumber, courseNumber))
+//                System.out.println("occupyClasstime");
+
+            return (!duplicate && !exceedCourseSize(courseNumber) && !occupyClasstime(studentNumber, courseNumber));
+        } else
+            return false;
     }
 
-//    private static boolean validCourse(String courseNumber) {
-//        if(courseNumber.length() == 5);
-//    }
+    private static boolean exceedCourseSize(String courseNumber) {
+        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+        int courseSize = dbHelper.queryCourseByCourseNumber(courseNumber).getInt(MySqlConfig.SHOW_COURSE_SIZE);
+        int selectionCount = dbHelper.querySelectionCountByCourse(courseNumber);
+//        System.out.println("courseSize: " + courseSize);
+//        System.out.println("selectionCount: " + selectionCount);
+        return selectionCount + 1 > courseSize;
+    }
+
+    private static boolean occupyClasstime(int studentNumber, String courseNumber) {
+        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+
+        // Get student's current occupy classtime
+        JSONArray studenClasstime = dbHelper.queryStudentClasstime(studentNumber);
+        boolean[][] classtimeOccupy = new boolean[5][8];
+        for (boolean[] row: classtimeOccupy)
+            Arrays.fill(row, Boolean.FALSE);
+        for (int i = 0; i < studenClasstime.length(); i++) {
+            int weekday = studenClasstime.getJSONObject(i).getInt(MySqlConfig.SHOW_COURSE_WEEKDAY);
+            String[] classtime = studenClasstime.getJSONObject(i).getString(MySqlConfig.SHOW_COURSE_CLASSTIME).split(",");
+            for (String time: classtime) {
+                classtimeOccupy[weekday - 1][Integer.valueOf(time) - 1] = Boolean.TRUE;
+            }
+        }
+
+        // Get selection classtime
+        int selectiontWeekday = dbHelper.queryCourseByCourseNumber(courseNumber).getInt(MySqlConfig.SHOW_COURSE_WEEKDAY);
+        String[] selectionClassTime = dbHelper.queryCourseByCourseNumber(courseNumber).getString(MySqlConfig.SHOW_COURSE_CLASSTIME).split(",");
+        for (String time: selectionClassTime) {
+            if(classtimeOccupy[selectiontWeekday - 1][Integer.valueOf(time) - 1])
+                return true;
+        }
+        return false;
+    }
 
 }

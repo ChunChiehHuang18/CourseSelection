@@ -107,6 +107,6 @@ Select a course and insert into DB
 Post data example:
 
 ```java
-{"Action": "add", "Course_Number": "DB101", "Student_Number": 1 }
+{"Action": "add", "Selection_Number":20 , "Course_Number": "MS534", "Student_Number": 17 }
 ```
 

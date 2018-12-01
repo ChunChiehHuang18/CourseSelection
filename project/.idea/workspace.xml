@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="4" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="cc398ed3-5acf-46f4-a3fd-12b0fe32bfbe" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../mysql/course20181126.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mysql/course20181130.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../mysql/course20181201.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/ServletUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/ServletUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/MySqlConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/MySqlConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/PrepareStatementUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/PrepareStatementUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/server/jsersey/servlet/SelectionServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/server/jsersey/servlet/SelectionServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/server/jsersey/servlet/ServletUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/server/jsersey/servlet/ServletUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/server/mysql/helper/CourseSelectionDBHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/server/mysql/helper/CourseSelectionDBHelper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/server/mysql/helper/MySqlConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/server/mysql/helper/MySqlConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/classes/server/mysql/helper/PrepareStatementUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/server/mysql/helper/PrepareStatementUtils.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/server/target/" />
@@ -18,8 +33,8 @@
       <file leaf-file-name="CourseSelectionDBHelper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1021">
-              <caret line="211" column="42" lean-forward="true" selection-start-line="211" selection-start-column="42" selection-end-line="211" selection-end-column="42" />
+            <state relative-caret-position="139">
+              <caret line="326" column="43" lean-forward="true" selection-start-line="326" selection-start-column="43" selection-end-line="326" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -30,17 +45,17 @@
       <file leaf-file-name="MySqlConfig.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/MySqlConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+            <state relative-caret-position="744">
+              <caret line="31" column="52" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrepareStatementUtils.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PrepareStatementUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/PrepareStatementUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
+            <state relative-caret-position="864">
+              <caret line="36" column="16" lean-forward="true" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -48,8 +63,20 @@
       <file leaf-file-name="JettyServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/JettyServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+            <state relative-caret-position="187">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StudentServlet.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/StudentServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="612">
+              <caret line="58" column="91" lean-forward="true" selection-start-line="58" selection-start-column="91" selection-end-line="58" selection-end-column="91" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -60,8 +87,8 @@
       <file leaf-file-name="SelectionServlet.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="82" column="51" selection-start-line="82" selection-start-column="51" selection-end-line="82" selection-end-column="51" />
+            <state relative-caret-position="259">
+              <caret line="79" column="34" lean-forward="true" selection-start-line="79" selection-start-column="34" selection-end-line="79" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -69,11 +96,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ServletUtils.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ServletUtils.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/ServletUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="485">
-              <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+            <state relative-caret-position="-1757">
+              <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -84,8 +111,8 @@
       <file leaf-file-name="CourseServlet.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/CourseServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="53" selection-start-line="53" selection-end-line="53" />
+            <state relative-caret-position="214">
+              <caret line="28" column="31" lean-forward="true" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -96,8 +123,8 @@
       <file leaf-file-name="InstructorServlet.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/InstructorServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="648">
-              <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
+            <state relative-caret-position="216">
+              <caret line="48" column="64" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -119,6 +146,7 @@
       <find>sqlType</find>
       <find>queryCourseSizeSt</find>
       <find>WHERE course_selection.selection.student_number=</find>
+      <find>selectCourseStm</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -132,15 +160,15 @@
         <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/MyEndPoint.java" />
         <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/WelcomeServlet.java" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/MySqlConfig.java" />
         <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/CourseServlet.java" />
         <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/InstructorServlet.java" />
         <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/StudentServlet.java" />
         <option value="$PROJECT_DIR$/server/src/main/java/server/JettyServer.java" />
-        <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java" />
+        <option value="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/MySqlConfig.java" />
         <option value="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/PrepareStatementUtils.java" />
-        <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/ServletUtils.java" />
+        <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java" />
         <option value="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java" />
+        <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/ServletUtils.java" />
       </list>
     </option>
   </component>
@@ -351,12 +379,12 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2764505" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29465303" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26852846" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26852846" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.093287826" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -379,26 +407,6 @@
     </ignored-roots>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/InstructorServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/JettyServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="12" column="109" lean-forward="true" selection-start-line="12" selection-start-column="109" selection-end-line="12" selection-end-column="109" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="912">
@@ -689,20 +697,58 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md" />
-    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/InstructorServlet.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-server/9.4.12.v20180830/jetty-server-9.4.12.v20180830-sources.jar!/org/eclipse/jetty/server/Response.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
+        <state relative-caret-position="216">
+          <caret line="68" column="13" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/CourseServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="28" column="31" lean-forward="true" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_65/src.zip!/java/util/Arrays.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="3127" column="23" selection-start-line="3127" selection-start-column="23" selection-end-line="3127" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/MySqlConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="744">
+          <caret line="31" column="52" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/PrepareStatementUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="864">
+          <caret line="36" column="16" lean-forward="true" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server/src/main/java/server/JettyServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+        <state relative-caret-position="187">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/InstructorServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="48" column="64" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -711,7 +757,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/StudentServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
+        <state relative-caret-position="612">
           <caret line="58" column="91" lean-forward="true" selection-start-line="58" selection-start-column="91" selection-end-line="58" selection-end-column="91" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -719,10 +765,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/CourseServlet.java">
+    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
+        <state relative-caret-position="139">
+          <caret line="326" column="43" lean-forward="true" selection-start-line="326" selection-start-column="43" selection-end-line="326" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -731,8 +777,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="82" column="51" selection-start-line="82" selection-start-column="51" selection-end-line="82" selection-end-column="51" />
+        <state relative-caret-position="259">
+          <caret line="79" column="34" lean-forward="true" selection-start-line="79" selection-start-column="34" selection-end-line="79" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -741,35 +787,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/ServletUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="485">
-          <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+        <state relative-caret-position="-1757">
+          <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/MySqlConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1021">
-          <caret line="211" column="42" lean-forward="true" selection-start-line="211" selection-start-column="42" selection-end-line="211" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/PrepareStatementUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
         </state>
       </provider>
     </entry>

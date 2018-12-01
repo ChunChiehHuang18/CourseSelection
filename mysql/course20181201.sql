@@ -81,13 +81,16 @@ DROP TABLE IF EXISTS `selection`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `selection` (
+  `selection_number` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `course_number` char(5) NOT NULL,
   `student_number` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`student_number`),
+  PRIMARY KEY (`selection_number`),
+  UNIQUE KEY `selection_number_UNIQUE` (`selection_number`),
   KEY `course_number_idx` (`course_number`),
+  KEY `student_number_idx` (`student_number`),
   CONSTRAINT `course_number` FOREIGN KEY (`course_number`) REFERENCES `course` (`course_number`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `student_number` FOREIGN KEY (`student_number`) REFERENCES `student` (`student_number`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +99,7 @@ CREATE TABLE `selection` (
 
 LOCK TABLES `selection` WRITE;
 /*!40000 ALTER TABLE `selection` DISABLE KEYS */;
-INSERT INTO `selection` VALUES ('DB101',1),('DB101',2),('DB101',12);
+INSERT INTO `selection` VALUES (1,'DB101',1),(2,'DB101',2),(3,'DB101',12),(4,'SA104',1),(5,'SA104',2),(6,'SA104',3),(7,'SA104',4),(8,'SA104',12),(9,'SA104',13),(10,'SA104',14),(11,'SA104',15),(12,'SA104',16),(13,'SA104',17),(14,'MS534',18),(20,'MS534',17);
 /*!40000 ALTER TABLE `selection` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +116,7 @@ CREATE TABLE `student` (
   `student_gender` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`student_number`),
   UNIQUE KEY `student_number_UNIQUE` (`student_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +125,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (1,'Jack',NULL),(2,'Marry','Female'),(3,'Jacky Chen','Male'),(4,'周杰倫','Male'),(12,'蔡依林','Female'),(13,'Joe','Male'),(14,'Yoyo',NULL);
+INSERT INTO `student` VALUES (1,'Jack',NULL),(2,'Marry','Female'),(3,'Jacky Chen','Male'),(4,'周杰倫','Male'),(12,'蔡依林','Female'),(13,'Joe','Male'),(14,'Yoyo',NULL),(15,'Harry','male'),(16,'Oliver','male'),(17,'Jacob','male'),(18,'Thomas','male'),(19,'Amelia','female');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -135,4 +138,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-30 18:08:17
+-- Dump completed on 2018-12-01 17:09:50
