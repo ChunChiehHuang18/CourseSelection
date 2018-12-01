@@ -38,6 +38,12 @@ Query student by student integer type number
 
 Add a student into DB
 
+Post data: 
+1. Ation: add
+2. Student_Number: Integer
+3. Student_Name: Less than 45 char and can be used in Chinese
+4. Student_Gender: Gender can be Male or Female or Bisexual
+
 Post data example:
 
 ```java
@@ -63,6 +69,12 @@ Query instructor by instructor integer type number
 
 Add a instructor into DB
 
+Post data: 
+1. Ation: add
+2. Instructor_Number: Integer
+3. Instructor_Name: Less than 45 char and can be used in Chinese
+4. Instructor_Office: Fixed to 4 char
+
 Post data example:
 
 ```java
@@ -87,6 +99,14 @@ Query course by course string type number
 * /course
 
 Add a course into DB
+
+Post data: 
+1. Ation: add
+2. Course_Number: Fixed to 5 char
+3. Course_Title: Less than 45 char and can be used in Chinese
+4. Course_Size: 10 ~ 255 (Integer)
+5. Course_Weekday: 1 ~ 5 (Integer)
+6. Course_Classtime: Use","separate each class time (1~8)
 
 Post data example:
 
@@ -115,6 +135,12 @@ Query selection list by instructor integer type number
 * /selection
 
 Select a course and insert into DB
+
+Post data: 
+1. Ation: add
+2. Selection_Number: Integer
+2. Course_Number: Fixed to 5 char
+3. Student_Number: Integer
 
 Post data example:
 

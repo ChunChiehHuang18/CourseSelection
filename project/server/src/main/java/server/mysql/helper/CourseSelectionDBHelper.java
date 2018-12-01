@@ -36,6 +36,10 @@ public class CourseSelectionDBHelper {
         private static final CourseSelectionDBHelper INSTANCE = new CourseSelectionDBHelper();
     }
 
+    /**
+     * Generate CourseSelectionDBHelper single instance
+     * @return CourseSelectionDBHelper instance
+     */
     public static CourseSelectionDBHelper getInstance() {
         return SingletonHolder.INSTANCE;
     }
@@ -81,6 +85,13 @@ public class CourseSelectionDBHelper {
     }
 
 
+    /**
+     * Add a instructor into MySql
+     * @param instructorNumber Instructor's number
+     * @param instructorName Instructor's name
+     * @param office Instructor's office (can be null)
+     * @return boolean
+     */
     public boolean addInstructor(int instructorNumber, String instructorName, String office) {
         try {
             if (instructorNumber > 0)
@@ -100,6 +111,10 @@ public class CourseSelectionDBHelper {
         }
     }
 
+    /**
+     * Query all instructor list
+     * @return Instructor JSONArray
+     */
     public JSONArray queryAllInstructor() {
         try {
             ResultSet rs = queryAllInstructorStm.executeQuery();
@@ -118,6 +133,11 @@ public class CourseSelectionDBHelper {
         return new JSONArray();
     }
 
+    /**
+     * Query instructor by instructor's number
+     * @param instructorNumber Instructor's number
+     * @return Instructor JSONObject
+     */
     public JSONObject queryInstructorByNumber(int instructorNumber) {
         try {
             queryInstructorByNumberStm.setInt(1, instructorNumber);
@@ -135,6 +155,13 @@ public class CourseSelectionDBHelper {
         return new JSONObject();
     }
 
+    /**
+     * Add a student into MySql
+     * @param studentNumber Student's number
+     * @param studentName Student's name
+     * @param gender Student's gender(Male, Female, Bisexual) (can be null)
+     * @return boolean
+     */
     public boolean addStudent(int studentNumber, String studentName, String gender) {
         try {
             if (studentNumber > 0)
@@ -154,7 +181,10 @@ public class CourseSelectionDBHelper {
         }
     }
 
-
+    /**
+     * Query all student
+     * @return Student JSONArray
+     */
     public JSONArray queryAllStudent() {
         try {
             ResultSet rs = queryAllStudentStm.executeQuery();
@@ -173,6 +203,11 @@ public class CourseSelectionDBHelper {
         return new JSONArray();
     }
 
+    /**
+     * Query student by student number
+     * @param studentNumber Student's number
+     * @return Student JSONObject
+     */
     public JSONObject queryStudentByNumber(int studentNumber) {
         try {
             queryStudentByNumberStm.setInt(1, studentNumber);
@@ -191,6 +226,16 @@ public class CourseSelectionDBHelper {
     }
 
 
+    /**
+     * Add a Course into MySql
+     * @param courseNumber Course's number(Fixed to 4 char)
+     * @param courseTitle Course's title
+     * @param instructorNumber Instructor's number
+     * @param courseSize Course's size (10~ 255)
+     * @param courseWeekday Course's week day (1 ~ 5)
+     * @param courseClasstime Course's class time (1~8), can be multiple(2,3,4,)
+     * @return boolean
+     */
     public boolean addCourse(String courseNumber, String courseTitle, int instructorNumber, int courseSize, int courseWeekday, String courseClasstime) {
         try {
             addCourseStm.setString(1, courseNumber);
@@ -207,6 +252,10 @@ public class CourseSelectionDBHelper {
         return true;
     }
 
+    /**
+     * Query all course list
+     * @return Course JSONArray
+     */
     public JSONArray queryAllCourse() {
         try {
             ResultSet rs = queryAllCourseStm.executeQuery();
@@ -228,6 +277,11 @@ public class CourseSelectionDBHelper {
         return new JSONArray();
     }
 
+    /**
+     * Query course by course's number
+     * @param courseNumber Course's number
+     * @return Course JSONObject
+     */
     public JSONObject queryCourseByNumber(String courseNumber) {
         try {
             queryCourseByNumberStm.setString(1, courseNumber);
@@ -248,6 +302,13 @@ public class CourseSelectionDBHelper {
         }
     }
 
+    /**
+     * Select a Course and insert into MySql
+     * @param selectionNumber Selection's number
+     * @param studentNumber Student's number
+     * @param courseNumber Course's number
+     * @return boolean
+     */
     public boolean selectCourse(int selectionNumber, int studentNumber, String courseNumber) {
         try {
             if(selectionNumber > 0)
@@ -264,6 +325,10 @@ public class CourseSelectionDBHelper {
         return true;
     }
 
+    /**
+     * Query all selection list
+     * @return Selection JSONArray
+     */
     public JSONArray queryAllSelection() {
         try {
             ResultSet rs = queryAllSelectionStm.executeQuery();
@@ -282,6 +347,12 @@ public class CourseSelectionDBHelper {
         return new JSONArray();
     }
 
+    /**
+     * Check duplicate selection
+     * @param studentNumber Student's number
+     * @param courseNumber Course's number
+     * @return boolean
+     */
     public boolean querySelectionDuplicate(int studentNumber, String courseNumber) {
         try {
             querySelectionDuplicateStm.setInt(1, studentNumber);
@@ -298,6 +369,11 @@ public class CourseSelectionDBHelper {
         }
     }
 
+    /**
+     * Query selection counts by course number
+     * @param courseNumber Course's number
+     * @return selection counts
+     */
     public int querySelectionCountByCourse(String courseNumber) {
         int selectionCount = -1;
         try {
@@ -315,6 +391,11 @@ public class CourseSelectionDBHelper {
         }
     }
 
+    /**
+     * Query student's all class time
+     * @param studentNumber Student's number
+     * @return Weekday and Class time JSONObject
+     */
     public JSONArray queryStudentClasstime(int studentNumber) {
         try {
             queryStudentClasstimeStm.setInt(1, studentNumber);
@@ -356,6 +437,11 @@ public class CourseSelectionDBHelper {
         }
     }
 
+    /**
+     * Query selection by student's number
+     * @param studentNumber Student's number
+     * @return Detail course selection information
+     */
     public JSONArray queryCourseSelectionByStudent(int studentNumber) {
         try {
             queryCourseByStudentStm.setInt(1, studentNumber);
@@ -375,6 +461,11 @@ public class CourseSelectionDBHelper {
         }
     }
 
+    /**
+     * Query selection by instructor's number
+     * @param instructorNumber Instructor's number
+     * @return Detail course selection information
+     */
     public JSONArray queryCourseSelectionByInstructor(int instructorNumber) {
         try {
             queryCourseByInstructorStm.setInt(1, instructorNumber);
