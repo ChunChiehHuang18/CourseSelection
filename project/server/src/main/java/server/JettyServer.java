@@ -22,6 +22,10 @@ public class JettyServer {
         server.join();
     }
 
+    /**
+     * Generate ServletContextHandler to mapping routing path with Jersey servlet
+     * @return Jersey handler
+     */
     private static Handler getJerseyHandler() {
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
         handler.setContextPath("/");

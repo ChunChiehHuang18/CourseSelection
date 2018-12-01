@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * CourseSelectionDBHelper provide higher level API to use MySQL
+ * CourseSelectionDBHelper provide higher level API to interact with MySQL
  */
 public class CourseSelectionDBHelper {
 

@@ -72,7 +72,7 @@ public class CourseServlet {
                 courseClasstime = courseObj.getString(KEY_COURSE_CLASSTIME);
 
 
-                if (validCourseData(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime)) {
+                if (ServletUtils.getInstance().validCourseData(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime)) {
                     // Insert student into db
                     CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
                     if (dbHelper.addCourse(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime))

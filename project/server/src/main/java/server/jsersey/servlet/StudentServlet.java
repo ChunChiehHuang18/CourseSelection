@@ -68,7 +68,7 @@ public class StudentServlet {
                     studentGender = studentObj.getString(KEY_STUDENT_GENDER);
                 studentName = studentObj.getString(KEY_STUDENT_NAME);
 
-                if (validStudentData(studentName, studentGender)) {
+                if (ServletUtils.getInstance().validStudentData(studentName, studentGender)) {
                     // Insert student into db
                     CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
                     if (dbHelper.addStudent(studentNumber, studentName, studentGender))

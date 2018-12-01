@@ -69,7 +69,7 @@ public class InstructorServlet {
                     instructorOffice = instructorObj.getString(KEY_INSTRUCTOR_OFFCIE);
                 instructorName = instructorObj.getString(KEY_INSTRUCTOR_NAME);
 
-                if(validInstructorData(instructorName, instructorOffice)) {
+                if(ServletUtils.getInstance().validInstructorData(instructorName, instructorOffice)) {
                     // Insert student into db
                     CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
                     if (dbHelper.addInstructor(instructorNumber, instructorName, instructorOffice))

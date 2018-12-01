@@ -1,7 +1,7 @@
 package server.mysql.helper;
 
 /**
- * PrepareStatementUtils store all prepare statement string
+ * PrepareStatementUtils place all prepare statement string
  */
 public class PrepareStatementUtils {
 

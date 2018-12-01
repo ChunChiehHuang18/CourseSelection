@@ -1,7 +1,7 @@
 package server.mysql.helper;
 
 /**
- * MySqlConfig store MySQL config(url, pass...) and schema related value
+ * MySqlConfig place MySQL config(url, pass...) and schema related value
  */
 public class MySqlConfig {
     // JDBC driver name and database URL

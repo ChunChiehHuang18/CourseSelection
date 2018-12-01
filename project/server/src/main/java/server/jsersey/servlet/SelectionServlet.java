@@ -77,7 +77,7 @@ public class SelectionServlet {
                 int studentNumber = selectionObj.getInt(KEY_STUDENT_NUMBER);
                 String courseNumber = selectionObj.getString(KEY_COURSE_NUMBER);
 
-                if (validSelectionData(studentNumber, courseNumber)) {
+                if (ServletUtils.getInstance().validSelectionData(studentNumber, courseNumber)) {
                     // Insert student into db
                     CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
                     if (dbHelper.selectCourse(selectionNumber, studentNumber, courseNumber))
