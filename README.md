@@ -10,7 +10,8 @@ And modify config in MySqlConfig.java if you need.
 You can find this Project's Java doc in doc folder
 
 ## Start Http Service
-Using IntelliJ IDEA to open project folder and run JettyServer.java 
+1. Open uber-jar folder and use **java -jar server-xxxx.jar** command to run service 
+2. Using IntelliJ IDEA to open project folder and run **JettyServer.java** 
 
 ## Web service API
 
