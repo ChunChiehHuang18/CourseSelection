@@ -141,60 +141,28 @@ public class ServletUtils {
 
 //            if(duplicate)
 //                System.out.println("duplicate");
-//            if (exceedCourseSize(courseNumber))
-//                System.out.println("exceedCourseSize");
+//            if (deductCourseRemain(courseNumber))
+//                System.out.println("deductCourseRemain");
 //            if(occupyClasstime(studentNumber, courseNumber))
 //                System.out.println("occupyClasstime");
 
-            return (!duplicate && !exceedCourseSize(courseNumber) && !occupyClasstime(studentNumber, courseNumber));
+            return (!duplicate && validClassTimeAndCourseRemain(studentNumber, courseNumber));
         } else
             return false;
     }
 
     /**
-     * Make sure not exceed the class size
+     * Using locking reads to  deduct course remain and verify course selection times do not repeat
+     * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
+     * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
      * @param courseNumber Course's number
-     * @return boolean
-     */
-    private boolean exceedCourseSize(String courseNumber) {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-        int courseSize = dbHelper.queryCourseByNumber(courseNumber).getInt(MySqlConfig.SHOW_COURSE_SIZE);
-        int selectionCount = dbHelper.querySelectionCountByCourse(courseNumber);
-//        System.out.println("courseSize: " + courseSize);
-//        System.out.println("selectionCount: " + selectionCount);
-        return selectionCount + 1 > courseSize;
-    }
-
-    /**
-     * Verify course selection times do not repeat
      * @param studentNumber Student's number
-     * @param courseNumber Course's number
      * @return boolean
      */
-    private boolean occupyClasstime(int studentNumber, String courseNumber) {
+    private boolean validClassTimeAndCourseRemain(int studentNumber, String courseNumber) {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
-        // Get student's current occupy classtime
-        JSONArray studenClasstime = dbHelper.queryStudentClasstime(studentNumber);
-        boolean[][] classtimeOccupy = new boolean[5][8];
-        for (boolean[] row: classtimeOccupy)
-            Arrays.fill(row, Boolean.FALSE);
-        for (int i = 0; i < studenClasstime.length(); i++) {
-            int weekday = studenClasstime.getJSONObject(i).getInt(MySqlConfig.SHOW_COURSE_WEEKDAY);
-            String[] classtime = studenClasstime.getJSONObject(i).getString(MySqlConfig.SHOW_COURSE_CLASSTIME).split(",");
-            for (String time: classtime) {
-                classtimeOccupy[weekday - 1][Integer.valueOf(time) - 1] = Boolean.TRUE;
-            }
-        }
-
-        // Get selection classtime
-        int selectiontWeekday = dbHelper.queryCourseByNumber(courseNumber).getInt(MySqlConfig.SHOW_COURSE_WEEKDAY);
-        String[] selectionClassTime = dbHelper.queryCourseByNumber(courseNumber).getString(MySqlConfig.SHOW_COURSE_CLASSTIME).split(",");
-        for (String time: selectionClassTime) {
-            if(classtimeOccupy[selectiontWeekday - 1][Integer.valueOf(time) - 1])
-                return true;
-        }
-        return false;
+        return dbHelper.validClassTimeAndCourseRemain(studentNumber, courseNumber);
     }
+
 
 }

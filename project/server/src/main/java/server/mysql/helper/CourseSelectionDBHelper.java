@@ -5,11 +5,14 @@ import org.json.JSONObject;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * CourseSelectionDBHelper provide higher level API to interact with MySQL
  */
 public class CourseSelectionDBHelper {
+
+    Connection conn = null;
 
     // Instructor
     private PreparedStatement addInstructorStm = null;
@@ -26,7 +29,8 @@ public class CourseSelectionDBHelper {
     // Selection
     private PreparedStatement selectCourseStm = null;
     private PreparedStatement querySelectionDuplicateStm = null;
-    private PreparedStatement querySelectionCountByCourseStm = null;
+    private PreparedStatement deductCourseRemainSelectStm = null;
+    private PreparedStatement deductCourseRemainUpdateStm = null;
     private PreparedStatement queryStudentClasstimeStm = null;
     private PreparedStatement queryAllSelectionStm = null;
     private PreparedStatement queryCourseByStudentStm = null;
@@ -51,7 +55,6 @@ public class CourseSelectionDBHelper {
 
             // Open a connection
             System.out.println("Connecting to database...");
-            Connection conn = null;
             conn = DriverManager.getConnection(MySqlConfig.DB_URL, MySqlConfig.USER, MySqlConfig.PASS);
 
             System.out.println("Creating prepare statement...");
@@ -71,7 +74,8 @@ public class CourseSelectionDBHelper {
             // Selection
             queryAllSelectionStm = conn.prepareStatement(PrepareStatementUtils.queryAllSelectionStmString);
             querySelectionDuplicateStm = conn.prepareStatement(PrepareStatementUtils.querySelectionDuplicateStmString);
-            querySelectionCountByCourseStm = conn.prepareStatement(PrepareStatementUtils.querySelectionCountByCourseStmString);
+            deductCourseRemainSelectStm = conn.prepareStatement(PrepareStatementUtils.deductCourseRemainSelectionString);
+            deductCourseRemainUpdateStm = conn.prepareStatement(PrepareStatementUtils.deductCourseRemainUpdateString);
             queryStudentClasstimeStm = conn.prepareStatement(PrepareStatementUtils.queryStudentClasstimeStmString);
             queryCourseByStudentStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByStudentStmString);
             queryCourseByInstructorStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByInstructorStmString);
@@ -242,8 +246,9 @@ public class CourseSelectionDBHelper {
             addCourseStm.setString(2, courseTitle);
             addCourseStm.setInt(3, instructorNumber);
             addCourseStm.setInt(4, courseSize);
-            addCourseStm.setInt(5, courseWeekday);
-            addCourseStm.setString(6, courseClasstime);
+            addCourseStm.setInt(5, courseSize);
+            addCourseStm.setInt(6, courseWeekday);
+            addCourseStm.setString(7, courseClasstime);
             addCourseStm.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -266,6 +271,7 @@ public class CourseSelectionDBHelper {
                 obj.put(MySqlConfig.SHOW_COURSE_TITLE, rs.getString(MySqlConfig.COLUMN_COURSE_TITLE));
                 obj.put(MySqlConfig.SHOW_INSTRUCTOR_NUMBER, rs.getInt(MySqlConfig.COLUMN_INSTRUCTOR_NUMBER));
                 obj.put(MySqlConfig.SHOW_COURSE_SIZE, rs.getInt(MySqlConfig.COLUMN_COURSE_SIZE));
+                obj.put(MySqlConfig.SHOW_COURSE_REMAIN, rs.getInt(MySqlConfig.COLUMN_COURSE_REMAIN));
                 obj.put(MySqlConfig.SHOW_COURSE_WEEKDAY, rs.getInt(MySqlConfig.COLUMN_COURSE_WEEKDAY));
                 obj.put(MySqlConfig.SHOW_COURSE_CLASSTIME, rs.getString(MySqlConfig.COLUMN_COURSE_CLASSTIME));
                 jsonArray.put(obj);
@@ -292,6 +298,7 @@ public class CourseSelectionDBHelper {
                 obj.put(MySqlConfig.SHOW_COURSE_TITLE, rs.getString(MySqlConfig.COLUMN_COURSE_TITLE));
                 obj.put(MySqlConfig.SHOW_INSTRUCTOR_NUMBER, rs.getInt(MySqlConfig.COLUMN_INSTRUCTOR_NUMBER));
                 obj.put(MySqlConfig.SHOW_COURSE_SIZE, rs.getInt(MySqlConfig.COLUMN_COURSE_SIZE));
+                obj.put(MySqlConfig.SHOW_COURSE_REMAIN, rs.getInt(MySqlConfig.COLUMN_COURSE_REMAIN));
                 obj.put(MySqlConfig.SHOW_COURSE_WEEKDAY, rs.getInt(MySqlConfig.COLUMN_COURSE_WEEKDAY));
                 obj.put(MySqlConfig.SHOW_COURSE_CLASSTIME, rs.getString(MySqlConfig.COLUMN_COURSE_CLASSTIME));
             }
@@ -370,24 +377,67 @@ public class CourseSelectionDBHelper {
     }
 
     /**
-     * Query selection counts by course number
+     * Using locking reads to  deduct course remain and verify course selection times do not repeat
+     * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
+     * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
      * @param courseNumber Course's number
-     * @return selection counts
+     * @[param studentNumber Student's number
+     * @return boolean
      */
-    public int querySelectionCountByCourse(String courseNumber) {
-        int selectionCount = -1;
+    public boolean validClassTimeAndCourseRemain(int studentNumber, String courseNumber) {
         try {
-            querySelectionCountByCourseStm.setString(1, courseNumber);
-            ResultSet rs = querySelectionCountByCourseStm.executeQuery();
-            if(rs.next()) {
-                selectionCount = rs.getInt(1);
-                return selectionCount;
-            } else
-                return selectionCount;
+            conn.setAutoCommit(false);
+            // Get student's current class time
+            JSONArray studenClasstime = queryStudentClasstime(studentNumber);
+            boolean[][] classtimeOccupy = new boolean[5][8];
+            for (boolean[] row: classtimeOccupy)
+                Arrays.fill(row, Boolean.FALSE);
+            for (int i = 0; i < studenClasstime.length(); i++) {
+                int weekday = studenClasstime.getJSONObject(i).getInt(MySqlConfig.SHOW_COURSE_WEEKDAY);
+                String[] classtime = studenClasstime.getJSONObject(i).getString(MySqlConfig.SHOW_COURSE_CLASSTIME).split(",");
+                for (String time: classtime) {
+                    classtimeOccupy[weekday - 1][Integer.valueOf(time) - 1] = Boolean.TRUE;
+                }
+            }
 
+            // Get selection class time
+            int selectiontWeekday = queryCourseByNumber(courseNumber).getInt(MySqlConfig.SHOW_COURSE_WEEKDAY);
+            String[] selectionClassTime = queryCourseByNumber(courseNumber).getString(MySqlConfig.SHOW_COURSE_CLASSTIME).split(",");
+
+            // Check class time occupy
+            for (String time: selectionClassTime) {
+                if(classtimeOccupy[selectiontWeekday - 1][Integer.valueOf(time) - 1]) {
+                    conn.commit();
+                    return false;
+                }
+            }
+
+            // Try to deduct course remain and check affect row number
+            deductCourseRemainSelectStm.setString(1, courseNumber);
+            deductCourseRemainUpdateStm.setString(1, courseNumber);
+            int affectedRow = 0;
+            if(deductCourseRemainSelectStm.executeQuery().next()) {
+                affectedRow =  deductCourseRemainUpdateStm.executeUpdate() ;
+            }
+            conn.commit();
+            return affectedRow > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-            return selectionCount;
+            if (conn != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    conn.rollback();
+                } catch(SQLException excep) {
+                    excep.printStackTrace();
+                }
+            }
+            return false;
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -425,6 +475,7 @@ public class CourseSelectionDBHelper {
             obj.put(MySqlConfig.SHOW_COURSE_NUMBER, rs.getString(MySqlConfig.COLUMN_COURSE_NUMBER));
             obj.put(MySqlConfig.SHOW_COURSE_TITLE, rs.getString(MySqlConfig.COLUMN_COURSE_TITLE));
             obj.put(MySqlConfig.SHOW_COURSE_SIZE, rs.getInt(MySqlConfig.COLUMN_COURSE_SIZE));
+            obj.put(MySqlConfig.SHOW_COURSE_REMAIN, rs.getInt(MySqlConfig.COLUMN_COURSE_REMAIN));
             obj.put(MySqlConfig.SHOW_COURSE_WEEKDAY, rs.getInt(MySqlConfig.COLUMN_COURSE_WEEKDAY));
             obj.put(MySqlConfig.SHOW_COURSE_CLASSTIME, rs.getString(MySqlConfig.COLUMN_COURSE_CLASSTIME));
             obj.put(MySqlConfig.SHOW_INSTRUCTOR_NUMBER, rs.getInt(MySqlConfig.COLUMN_INSTRUCTOR_NUMBER));

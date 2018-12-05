@@ -26,6 +26,7 @@ public class MySqlConfig {
     static final String COLUMN_COURSE_NUMBER = "course_number";
     static final String COLUMN_COURSE_TITLE = "course_title";
     static final String COLUMN_COURSE_SIZE = "course_size";
+    static final String COLUMN_COURSE_REMAIN = "course_remain";
     static final String COLUMN_COURSE_WEEKDAY = "course_weekday";
     static final String COLUMN_COURSE_CLASSTIME = "course_classtime";
 
@@ -43,6 +44,7 @@ public class MySqlConfig {
     static final String SHOW_COURSE_NUMBER = "Course Number";
     static final String SHOW_COURSE_TITLE = "Course Title";
     public static final String SHOW_COURSE_SIZE = "Course Size";
+    static final String SHOW_COURSE_REMAIN = "Course Remain";
     public static final String SHOW_COURSE_WEEKDAY = "Course Weekday";
     public static final String SHOW_COURSE_CLASSTIME = "Course Classtime";
 

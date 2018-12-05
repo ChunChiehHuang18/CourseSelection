@@ -31,8 +31,8 @@ public class PrepareStatementUtils {
 
     // Course
     static String addCourseStmString =
-            "INSERT INTO course_selection.course(course_number, course_title, instructor_number, course_size, course_weekday, course_classtime)" +
-                    "VALUES (?, ?, ?, ?, ?, ?);";
+            "INSERT INTO course_selection.course(course_number, course_title, instructor_number, course_size, course_remain, course_weekday, course_classtime)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
     static String queryCourseByNumberStmString =
             "SELECT * FROM course_selection.course " +
@@ -43,9 +43,14 @@ public class PrepareStatementUtils {
 
 
     // Selection
+    static String deductCourseRemainSelectionString = "SELECT course_remain FROM course_selection.course where course_number=? AND course_remain > 0 for UPDATE;";
+
+    static String deductCourseRemainUpdateString =  "UPDATE course_selection.course set course_remain = course_remain - 1 where course_number=? AND course_remain > 0;";
+
     static String selectCourseStmString =
             "INSERT INTO course_selection.selection(selection_number, course_number, student_number)" +
                     "VALUES (?, ?, ?);";
+
     static String queryAllSelectionStmString =
             "SELECT * FROM course_selection.selection;";
 
@@ -54,32 +59,19 @@ public class PrepareStatementUtils {
             "FROM course_selection.selection " +
             "WHERE course_selection.selection.student_number = ? AND course_selection.selection.course_number = ?";
 
-    static String querySelectionCountByCourseStmString =
-            "SELECT COUNT(course_selection.selection.student_number) " +
-                    "FROM course_selection.selection " +
-                    "WHERE course_selection.selection.course_number = ?";
-
     static String queryStudentClasstimeStmString = "SELECT course_selection.course.course_classtime, course_selection.course.course_weekday " +
             "FROM (course_selection.selection " +
             "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number) " +
-            "WHERE student_number= ?";
+            "WHERE student_number= ? FOR UPDATE;";
 
-    static String queryCourseByStudentStmString = "SELECT course_selection.student.student_number, course_selection.selection.selection_number, " +
-            "course_selection.student.student_name, course_selection.student.student_gender, course_selection.course.course_number, " +
-            "course_selection.course.course_title, course_selection.course.course_size, course_selection.course.course_weekday," +
-            "course_selection.course.course_classtime, course_selection.instructor.Instructor_number, " +
-            "course_selection.instructor.Instructor_name, course_selection.instructor.Instructor_office " +
+    static String queryCourseByStudentStmString = "SELECT * " +
             "FROM (course_selection.selection " +
             "JOIN course_selection.student ON course_selection.student.student_number=course_selection.selection.student_number " +
             "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number " +
             "JOIN course_selection.instructor ON course_selection.course.instructor_number=course_selection.instructor.instructor_number) " +
             "WHERE course_selection.selection.student_number= ?";
 
-    static String queryCourseByInstructorStmString = "SELECT course_selection.student.student_number, course_selection.selection.selection_number, " +
-            "course_selection.student.student_name, course_selection.student.student_gender, course_selection.course.course_number, " +
-            "course_selection.course.course_title, course_selection.course.course_size, course_selection.course.course_weekday," +
-            "course_selection.course.course_classtime, course_selection.instructor.Instructor_number, " +
-            "course_selection.instructor.Instructor_name, course_selection.instructor.Instructor_office " +
+    static String queryCourseByInstructorStmString = "SELECT * " +
             "FROM (course_selection.selection " +
             "JOIN course_selection.student ON course_selection.student.student_number=course_selection.selection.student_number " +
             "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number " +
