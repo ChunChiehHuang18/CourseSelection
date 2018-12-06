@@ -53,9 +53,12 @@ Example: http://localhost:8081/student/19/selection
 Add a student into DB
 
 JSON format: 
-* Student_Number: Integer (Optional)
-* Student_Name: Less than 45 char and can be used in Chinese
-* Student_Gender: Gender can be Male or Female or Bisexual (Optional)
+
+KEY | Type | Description
+---------|----------|---------
+ Student_Number | Integer | Student's number (Optional)
+ Student_Name | String | Less than 45 char and can be used in Chinese
+ Student_Gender | Stirng | Male or Female or Bisexual (Optional)
 
 Example:
 
@@ -91,10 +94,11 @@ Example: http://localhost:8081/instructor/2/course
 Add a instructor into DB
 
 JSON format: 
-* Instructor_Number: Integer (Optional)
-* Instructor_Name: Less than 45 char and can be used in Chinese
-* Instructor_Office: Fixed to 4 char (Optional)
-
+KEY | Type | Description
+---------|----------|---------
+ Instructor_Number | Integer | Instructor's number (Optional)
+ Instructor_Name | String | Less than 45 char and can be used in Chinese
+ Instructor_Office | Stirng | Fixed to 4 char (Optional) 
 Example:
 
 ```java
@@ -123,11 +127,14 @@ Example: http://localhost:8081/course/BS777
 Add a course into DB
 
 JSON format: 
-* Course_Number: Fixed to 5 char
-* Course_Title: Less than 45 char and can be used in Chinese
-* Course_Size: Integer 10 ~ 255
-* Course_Weekday: Integer 1 ~ 5
-* Course_Classtime: Use","separate each class time 1 ~ 8
+
+KEY | Type | Description
+---------|----------|---------
+ Course_Number | String | Fixed to 5 char
+ Course_Title | String | Less than 45 char and can be used in Chinese
+ Course_Size | Integer | 10 ~ 255 
+ Course_Weekday | Integer | 1 ~ 5 
+ Course_Classtime | String | 1 ~ 8, Use","separate each class time 
 
 Example:
 
@@ -167,9 +174,13 @@ Example: http://localhost:8081/selection/query?studentid=20&instructorid=5
 Select a course and insert into DB
 
 JSON format: 
-* Selection_Number: Integer (Optional)
-* Course_Number: Fixed to 5 char
-* Student_Number: Integer
+
+KEY | Type | Description
+---------|----------|---------
+ Selection_Number | Integer | Selection's number (Optional)
+ Course_Number | String | Fixed to 5 char
+ Student_Number | Integer | 10 ~ 255 
+
 
 Example:
 
