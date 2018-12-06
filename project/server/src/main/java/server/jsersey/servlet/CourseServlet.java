@@ -18,6 +18,7 @@ public class CourseServlet {
 
     /**
      * Query all course list
+     *
      * @return Course JSON array
      */
     @Path("/")
@@ -31,6 +32,7 @@ public class CourseServlet {
 
     /**
      * Query  course by course number
+     *
      * @param courseNumber Course String type number
      * @return Course  JSON array
      */
@@ -40,11 +42,12 @@ public class CourseServlet {
     public String queryByNumber(@PathParam("courseNumber") String courseNumber) {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-        return  dbHelper.queryCourseByNumber(courseNumber).toString();
+        return dbHelper.queryCourseByNumber(courseNumber).toString();
     }
 
     /**
      * Add a course data into DB
+     *
      * @param postData Course JSON data
      * @return Status code
      */
@@ -55,31 +58,28 @@ public class CourseServlet {
     public int addCourse(String postData) {
         try {
             JSONObject courseObj = new JSONObject(postData);
-            if (courseObj.getString(KEY_ACTION).equalsIgnoreCase(ACTION_ADD)) {
-                String courseNumber;
-                String courseTitle;
-                int instructorNumber;
-                int courseSize;
-                int courseWeekday;
-                String courseClasstime;
+            String courseNumber;
+            String courseTitle;
+            int instructorNumber;
+            int courseSize;
+            int courseWeekday;
+            String courseClasstime;
 
-                // Get value
-                courseNumber = courseObj.getString(KEY_COURSE_NUMBER);
-                courseTitle = courseObj.getString(KEY_COURSE_TITLE);
-                instructorNumber = courseObj.getInt(KEY_INSTRUCTOR_NUMBER);
-                courseSize = courseObj.getInt(KEY_COURSE_SIZE);
-                courseWeekday = courseObj.getInt(KEY_COURSE_WEEKDAY);
-                courseClasstime = courseObj.getString(KEY_COURSE_CLASSTIME);
+            // Get value
+            courseNumber = courseObj.getString(KEY_COURSE_NUMBER);
+            courseTitle = courseObj.getString(KEY_COURSE_TITLE);
+            instructorNumber = courseObj.getInt(KEY_INSTRUCTOR_NUMBER);
+            courseSize = courseObj.getInt(KEY_COURSE_SIZE);
+            courseWeekday = courseObj.getInt(KEY_COURSE_WEEKDAY);
+            courseClasstime = courseObj.getString(KEY_COURSE_CLASSTIME);
 
 
-                if (ServletUtils.getInstance().validCourseData(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime)) {
-                    // Insert student into db
-                    CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-                    if (dbHelper.addCourse(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime))
-                        return Response.SC_OK;
-                    else
-                        return Response.SC_BAD_REQUEST;
-                } else
+            if (ServletUtils.getInstance().validCourseData(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime)) {
+                // Insert student into db
+                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+                if (dbHelper.addCourse(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime))
+                    return Response.SC_OK;
+                else
                     return Response.SC_BAD_REQUEST;
             } else
                 return Response.SC_BAD_REQUEST;

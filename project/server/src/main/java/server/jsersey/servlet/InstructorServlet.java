@@ -20,6 +20,7 @@ public class InstructorServlet {
 
     /**
      * Query all instructor list
+     *
      * @return Instructor JSON Array
      */
     @Path("/")
@@ -28,11 +29,12 @@ public class InstructorServlet {
     public String queryAll() {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-        return  dbHelper.queryAllInstructor().toString();
+        return dbHelper.queryAllInstructor().toString();
     }
 
     /**
      * Query  instructor by instructor number
+     *
      * @param instructorNumber Instructor integer type number
      * @return Instructor  JSON array
      */
@@ -42,11 +44,12 @@ public class InstructorServlet {
     public String queryByNumber(@PathParam("instructorNumber") String instructorNumber) {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-        return  dbHelper.queryInstructorByNumber(Integer.valueOf(instructorNumber)).toString();
+        return dbHelper.queryInstructorByNumber(Integer.valueOf(instructorNumber)).toString();
     }
 
     /**
      * Add a instructor into DB
+     *
      * @param postData instructor JSON data
      * @return Status code
      */
@@ -57,26 +60,23 @@ public class InstructorServlet {
     public int addInstructor(String postData) {
         try {
             JSONObject instructorObj = new JSONObject(postData);
-            if (instructorObj.getString(KEY_ACTION).equalsIgnoreCase(ACTION_ADD)) {
-                int instructorNumber = -1;
-                String instructorName;
-                String instructorOffice = MySqlConfig.VALUE_NULL;
+            int instructorNumber = -1;
+            String instructorName;
+            String instructorOffice = MySqlConfig.VALUE_NULL;
 
-                // Get value
-                if(instructorObj.has(KEY_INSTRUCTOR_NUMBER))
-                    instructorNumber = instructorObj.getInt(KEY_INSTRUCTOR_NUMBER);
-                if(instructorObj.has(KEY_INSTRUCTOR_OFFCIE))
-                    instructorOffice = instructorObj.getString(KEY_INSTRUCTOR_OFFCIE);
-                instructorName = instructorObj.getString(KEY_INSTRUCTOR_NAME);
+            // Get value
+            if (instructorObj.has(KEY_INSTRUCTOR_NUMBER))
+                instructorNumber = instructorObj.getInt(KEY_INSTRUCTOR_NUMBER);
+            if (instructorObj.has(KEY_INSTRUCTOR_OFFCIE))
+                instructorOffice = instructorObj.getString(KEY_INSTRUCTOR_OFFCIE);
+            instructorName = instructorObj.getString(KEY_INSTRUCTOR_NAME);
 
-                if(ServletUtils.getInstance().validInstructorData(instructorName, instructorOffice)) {
-                    // Insert student into db
-                    CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-                    if (dbHelper.addInstructor(instructorNumber, instructorName, instructorOffice))
-                        return Response.SC_OK;
-                    else
-                        return Response.SC_BAD_REQUEST;
-                } else
+            if (ServletUtils.getInstance().validInstructorData(instructorName, instructorOffice)) {
+                // Insert student into db
+                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+                if (dbHelper.addInstructor(instructorNumber, instructorName, instructorOffice))
+                    return Response.SC_OK;
+                else
                     return Response.SC_BAD_REQUEST;
             } else
                 return Response.SC_BAD_REQUEST;

@@ -25,11 +25,6 @@ public class ServletUtils {
         return ServletUtils.SingletonHolder.INSTANCE;
     }
 
-    // Action
-    final static String KEY_ACTION = "Action";
-    final static String ACTION_ADD = "Add";
-    final static String ACTION_UPDATE = "Update";
-
     // Student
     final static String KEY_STUDENT_NUMBER = "Student_Number";
     final static String KEY_STUDENT_NAME = "Student_Name";
@@ -85,7 +80,7 @@ public class ServletUtils {
      * @param instructorNumber Instructor's number
      * @param courseSize Course's course size (10 ~ 255)
      * @param courseWeekday  Course's week day(1~5)
-     * @param courseClasstime  Course's class time (1~8), can be multiple(2,3,4,)
+     * @param courseClasstime  Course's class time (1~8), can be multiple(2,3,4)
      * @return boolean
      */
     boolean validCourseData(String courseNumber, String courseTitle, int instructorNumber,

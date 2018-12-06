@@ -19,6 +19,7 @@ public class StudentServlet {
 
     /**
      * Query all student  list
+     *
      * @return Student JSON array
      */
     @Path("/")
@@ -32,6 +33,7 @@ public class StudentServlet {
 
     /**
      * Query  student by student number
+     *
      * @param studentNumber Student integer type number
      * @return Student  JSON array
      */
@@ -41,11 +43,12 @@ public class StudentServlet {
     public String queryByNumber(@PathParam("studentNumber") String studentNumber) {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-        return  dbHelper.queryStudentByNumber(Integer.valueOf(studentNumber)).toString();
+        return dbHelper.queryStudentByNumber(Integer.valueOf(studentNumber)).toString();
     }
 
     /**
      * Add a student into DB
+     *
      * @param postData Student JSON data
      * @return Status code
      */
@@ -56,26 +59,23 @@ public class StudentServlet {
     public int addStudent(String postData) {
         try {
             JSONObject studentObj = new JSONObject(postData);
-            if (studentObj.getString(KEY_ACTION).equalsIgnoreCase(ACTION_ADD)) {
-                int studentNumber = -1;
-                String studentName;
-                String studentGender = MySqlConfig.VALUE_NULL;
+            int studentNumber = -1;
+            String studentName;
+            String studentGender = MySqlConfig.VALUE_NULL;
 
-                // Get value
-                if (studentObj.has(KEY_STUDENT_NUMBER))
-                    studentNumber = studentObj.getInt(KEY_STUDENT_NUMBER);
-                if (studentObj.has(KEY_STUDENT_GENDER))
-                    studentGender = studentObj.getString(KEY_STUDENT_GENDER);
-                studentName = studentObj.getString(KEY_STUDENT_NAME);
+            // Get value
+            if (studentObj.has(KEY_STUDENT_NUMBER))
+                studentNumber = studentObj.getInt(KEY_STUDENT_NUMBER);
+            if (studentObj.has(KEY_STUDENT_GENDER))
+                studentGender = studentObj.getString(KEY_STUDENT_GENDER);
+            studentName = studentObj.getString(KEY_STUDENT_NAME);
 
-                if (ServletUtils.getInstance().validStudentData(studentName, studentGender)) {
-                    // Insert student into db
-                    CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-                    if (dbHelper.addStudent(studentNumber, studentName, studentGender))
-                        return Response.SC_OK;
-                    else
-                        return Response.SC_BAD_REQUEST;
-                } else
+            if (ServletUtils.getInstance().validStudentData(studentName, studentGender)) {
+                // Insert student into db
+                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+                if (dbHelper.addStudent(studentNumber, studentName, studentGender))
+                    return Response.SC_OK;
+                else
                     return Response.SC_BAD_REQUEST;
             } else
                 return Response.SC_BAD_REQUEST;

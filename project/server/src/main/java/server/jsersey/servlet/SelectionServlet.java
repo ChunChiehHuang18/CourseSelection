@@ -19,6 +19,7 @@ public class SelectionServlet {
 
     /**
      * Query all selection course list
+     *
      * @return Course JSON array
      */
     @Path("/")
@@ -27,12 +28,13 @@ public class SelectionServlet {
     public String queryAll() {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-        return  dbHelper.queryAllSelection().toString();
+        return dbHelper.queryAllSelection().toString();
     }
 
     /**
      * Query all selection course list by student number
-     * @param studentNumber Student integer type number
+     *
+     * @param studentNumber    Student integer type number
      * @param instructorNumber Instructor integer type number
      * @return Detail course related  JSON array
      */
@@ -43,10 +45,10 @@ public class SelectionServlet {
                                  @QueryParam("instructorid") int instructorNumber) {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-        if(studentNumber != 0 && instructorNumber != 0)
+        if (studentNumber != 0 && instructorNumber != 0)
             return dbHelper.querySelectionByStudentAndInstructor(studentNumber, instructorNumber).toString();
-        else if(studentNumber != 0)
-            return  dbHelper.querySelectionByStudent(studentNumber).toString();
+        else if (studentNumber != 0)
+            return dbHelper.querySelectionByStudent(studentNumber).toString();
         else if (instructorNumber != 0)
             return dbHelper.querySelectionByInstructor(instructorNumber).toString();
         else
@@ -55,6 +57,7 @@ public class SelectionServlet {
 
     /**
      * Select a course and insert into DB
+     *
      * @param postData Select course JSON data
      * @return Status code
      */
@@ -65,22 +68,19 @@ public class SelectionServlet {
     public int selectCourse(String postData) {
         try {
             JSONObject selectionObj = new JSONObject(postData);
-            if (selectionObj.getString(KEY_ACTION).equalsIgnoreCase(ACTION_ADD)) {
-                int selectionNumber = -1;
-                // Get value
-                if(selectionObj.has(KEY_SELECTION_NUMBER))
-                    selectionNumber = selectionObj.getInt(KEY_SELECTION_NUMBER);
-                int studentNumber = selectionObj.getInt(KEY_STUDENT_NUMBER);
-                String courseNumber = selectionObj.getString(KEY_COURSE_NUMBER);
+            int selectionNumber = -1;
+            // Get value
+            if (selectionObj.has(KEY_SELECTION_NUMBER))
+                selectionNumber = selectionObj.getInt(KEY_SELECTION_NUMBER);
+            int studentNumber = selectionObj.getInt(KEY_STUDENT_NUMBER);
+            String courseNumber = selectionObj.getString(KEY_COURSE_NUMBER);
 
-                if (ServletUtils.getInstance().validSelectionData(studentNumber, courseNumber)) {
-                    // Insert student into db
-                    CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-                    if (dbHelper.selectCourse(selectionNumber, studentNumber, courseNumber))
-                        return Response.SC_OK;
-                    else
-                        return Response.SC_BAD_REQUEST;
-                } else
+            if (ServletUtils.getInstance().validSelectionData(studentNumber, courseNumber)) {
+                // Insert student into db
+                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+                if (dbHelper.selectCourse(selectionNumber, studentNumber, courseNumber))
+                    return Response.SC_OK;
+                else
                     return Response.SC_BAD_REQUEST;
             } else
                 return Response.SC_BAD_REQUEST;
