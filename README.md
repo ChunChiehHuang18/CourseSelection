@@ -94,6 +94,7 @@ Example: http://localhost:8081/instructor/2/course
 Add a instructor into DB
 
 JSON format: 
+
 KEY | Type | Description
 ---------|----------|---------
  Instructor_Number | Integer | Instructor's number (Optional)
