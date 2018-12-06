@@ -57,7 +57,7 @@ public class PrepareStatementUtils {
     static String querySelectionDuplicateStmString =
             "SELECT COUNT(course_selection.selection.student_number) " +
             "FROM course_selection.selection " +
-            "WHERE course_selection.selection.student_number = ? AND course_selection.selection.course_number = ?";
+            "WHERE course_selection.selection.student_number = ? AND course_selection.selection.course_number = ? FOR UPDATE;";
 
     static String queryStudentClasstimeStmString = "SELECT course_selection.course.course_classtime, course_selection.course.course_weekday " +
             "FROM (course_selection.selection " +

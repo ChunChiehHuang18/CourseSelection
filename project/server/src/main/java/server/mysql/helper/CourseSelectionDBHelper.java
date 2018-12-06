@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -12,7 +11,7 @@ import java.util.Arrays;
  */
 public class CourseSelectionDBHelper {
 
-    Connection conn = null;
+    private Connection conn = null;
 
     // Instructor
     private PreparedStatement addInstructorStm = null;
@@ -355,38 +354,32 @@ public class CourseSelectionDBHelper {
     }
 
     /**
-     * Check duplicate selection
-     * @param studentNumber Student's number
+     * Using locking reads to ...
+     * 1. Check duplicate selection
+     * 2. Verify course selection times do not conflict
+     * 3. Deduct course remain
+     * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
+     * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
      * @param courseNumber Course's number
-     * @return boolean
+     * @param studentNumber Student's number
+     * @return True: Valid, False: Invalid
      */
-    public boolean querySelectionDuplicate(int studentNumber, String courseNumber) {
+    public boolean validSelectionData(int studentNumber, String courseNumber) {
         try {
+            conn.setAutoCommit(false);
+
+            // 1. Check duplicate selection
             querySelectionDuplicateStm.setInt(1, studentNumber);
             querySelectionDuplicateStm.setString(2, courseNumber);
             ResultSet rs = querySelectionDuplicateStm.executeQuery();
             if(rs.next()) {
-                return rs.getInt(1) > 0;
-            } else
-                return false;
+                if (rs.getInt(1) > 0) {
+                    conn.commit();
+                    return false;
+                }
+            }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
-     * Using locking reads to  deduct course remain and verify course selection times do not repeat
-     * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
-     * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
-     * @param courseNumber Course's number
-     * @[param studentNumber Student's number
-     * @return boolean
-     */
-    public boolean validClassTimeAndCourseRemain(int studentNumber, String courseNumber) {
-        try {
-            conn.setAutoCommit(false);
+            // 2. Verify course selection times do not conflict
             // Get student's current class time
             JSONArray studenClasstime = queryStudentClasstime(studentNumber);
             boolean[][] classtimeOccupy = new boolean[5][8];
@@ -399,11 +392,9 @@ public class CourseSelectionDBHelper {
                     classtimeOccupy[weekday - 1][Integer.valueOf(time) - 1] = Boolean.TRUE;
                 }
             }
-
             // Get selection class time
             int selectiontWeekday = queryCourseByNumber(courseNumber).getInt(MySqlConfig.SHOW_COURSE_WEEKDAY);
             String[] selectionClassTime = queryCourseByNumber(courseNumber).getString(MySqlConfig.SHOW_COURSE_CLASSTIME).split(",");
-
             // Check class time occupy
             for (String time: selectionClassTime) {
                 if(classtimeOccupy[selectiontWeekday - 1][Integer.valueOf(time) - 1]) {
@@ -412,6 +403,7 @@ public class CourseSelectionDBHelper {
                 }
             }
 
+            // 3. Deduct course remain
             // Try to deduct course remain and check affect row number
             deductCourseRemainSelectStm.setString(1, courseNumber);
             deductCourseRemainUpdateStm.setString(1, courseNumber);
@@ -419,6 +411,7 @@ public class CourseSelectionDBHelper {
             if(deductCourseRemainSelectStm.executeQuery().next()) {
                 affectedRow =  deductCourseRemainUpdateStm.executeUpdate() ;
             }
+
             conn.commit();
             return affectedRow > 0;
         } catch (SQLException e) {
@@ -536,37 +529,4 @@ public class CourseSelectionDBHelper {
         }
     }
 
-
-    public static void main(String[] args) {
-
-        CourseSelectionDBHelper dbHelper = getInstance();
-        ArrayList<JSONObject> jsonList;
-
-//        System.out.println("Student list -- begin");
-//        jsonList = dbHelper.queryAllStudent();
-//        for (JSONObject obj:jsonList) {
-//            System.out.println(obj.toString());
-//        }
-//        jsonList.clear();
-//        System.out.println("Student list -- end");
-//
-//        System.out.println("Query by student -- begin");
-//        jsonList = dbHelper.queryCourseSelectionByStudent(2);
-//        for (JSONObject obj:jsonList) {
-//            System.out.println(obj.toString());
-//        }
-//        jsonList.clear();
-//        System.out.println("Query by student -- end");
-//
-//
-//        System.out.println("Query by instructor -- begin");
-//        jsonList = dbHelper.queryCourseSelectionByInstructor("Meryl Streep");
-//        for (JSONObject obj:jsonList) {
-//            System.out.println(obj.toString());
-//        }
-//        jsonList.clear();
-//        System.out.println("Query by instructor -- end");
-
-
-    }
 }

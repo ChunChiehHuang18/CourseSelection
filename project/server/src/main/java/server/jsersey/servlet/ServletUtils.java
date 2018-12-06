@@ -1,6 +1,5 @@
 package server.jsersey.servlet;
 
-import org.json.JSONArray;
 import server.mysql.helper.CourseSelectionDBHelper;
 import server.mysql.helper.MySqlConfig;
 
@@ -128,41 +127,25 @@ public class ServletUtils {
     final static String KEY_SELECTION_NUMBER = "Selection_Number";
 
     /**
-     * Check selection data is valid
-     * @param studentNumber Student's number
-     * @param courseNumber Course's number
-     * @return boolean
-     */
-    boolean validSelectionData(int studentNumber, String courseNumber) {
-        if(studentNumber > 0 && courseNumber.length() == 5) {
-            CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-            boolean duplicate = dbHelper.querySelectionDuplicate(studentNumber, courseNumber);
-//            System.out.println("duplicate: " + duplicate);
-
-//            if(duplicate)
-//                System.out.println("duplicate");
-//            if (deductCourseRemain(courseNumber))
-//                System.out.println("deductCourseRemain");
-//            if(occupyClasstime(studentNumber, courseNumber))
-//                System.out.println("occupyClasstime");
-
-            return (!duplicate && validClassTimeAndCourseRemain(studentNumber, courseNumber));
-        } else
-            return false;
-    }
-
-    /**
-     * Using locking reads to  deduct course remain and verify course selection times do not repeat
+     * Using locking reads to ...
+     * 1. Check duplicate selection 
+     * 2. Verify course selection times do not conflict
+     * 3. Deduct course remain
      * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
      * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
      * @param courseNumber Course's number
      * @param studentNumber Student's number
      * @return boolean
      */
-    private boolean validClassTimeAndCourseRemain(int studentNumber, String courseNumber) {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-        return dbHelper.validClassTimeAndCourseRemain(studentNumber, courseNumber);
+    boolean validSelectionData(int studentNumber, String courseNumber) {
+        if(studentNumber > 0 && courseNumber.length() == 5) {
+            CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+
+            return (dbHelper.validSelectionData(studentNumber, courseNumber));
+        } else
+            return false;
     }
+    
 
 
 }
