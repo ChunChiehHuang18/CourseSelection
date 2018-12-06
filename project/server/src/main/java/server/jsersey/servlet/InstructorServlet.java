@@ -22,7 +22,7 @@ public class InstructorServlet {
      * Query all instructor list
      * @return Instructor JSON Array
      */
-    @Path("all")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     public String queryAll() {

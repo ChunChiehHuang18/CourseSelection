@@ -10,8 +10,13 @@ And modify config in MySqlConfig.java if you need.
 You can find this Project's Java doc in doc folder
 
 ## Start Http Service
-1. Open uber-jar folder and use **java -jar server-xxxx.jar** command to run service 
-2. Using IntelliJ IDEA to open project folder and run **JettyServer.java** 
+Method 1: Uber-jar
+
+Open uber-jar folder and use **java -jar server-xxxx.jar** command to start service 
+
+Method 2: Maven project
+
+Using IntelliJ IDEA to open project folder and run **JettyServer.java** to start service
 
 ## Web service API
 
@@ -25,13 +30,15 @@ You can find this Project's Java doc in doc folder
 
 #### query(@GET)
 
-* /student/all
+* /student
 
 Query all student list
 
 * /student/{student #}
 
 Query student by student integer type number
+
+Example: http://localhost:8081/student/19
 
 #### add(@POST)
 
@@ -64,6 +71,8 @@ Query all instructor list
 
 Query instructor by instructor integer type number
 
+Example: http://localhost:8081/instructor/2
+
 #### add(@POST)
 
 * /instructor
@@ -87,13 +96,15 @@ Post data example:
 
 #### query(@GET)
 
-* /course/all
+* /course
 
 Query all course list
 
 * /course/{course #}
 
 Query course by course string type number
+
+Example: http://localhost:8081/course/BS777
 
 #### add(@POST)
 
@@ -119,17 +130,26 @@ Post data example:
 
 #### query(@GET)
 
-* /selection/all
+* /selection
 
 Query all selection list
 
-* /selection/student/{student #}
+* /selection/query?studentid={id}&instructorid={id}
 
-Query selection list by student integer type number
+Query selection list by filter 
 
-* /selection/instructor/{instructor #}
+1. Filter by student type number
 
-Query selection list by instructor integer type number
+Example: http://localhost:8081/selection/query?studentid=20
+
+2. Filter by instrutor type number
+
+Example: http://localhost:8081/selection/query?instructorid=5
+
+3. Filter by intersection of student and instructor integer type number
+
+Example: http://localhost:8081/selection/query?studentid=20&instructorid=5
+
 
 #### add(@POST)
 

@@ -20,7 +20,7 @@ public class CourseServlet {
      * Query all course list
      * @return Course JSON array
      */
-    @Path("all")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     public String queryAll() {

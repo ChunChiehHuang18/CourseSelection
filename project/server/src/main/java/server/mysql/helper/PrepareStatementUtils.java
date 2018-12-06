@@ -64,18 +64,25 @@ public class PrepareStatementUtils {
             "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number) " +
             "WHERE student_number= ? FOR UPDATE;";
 
-    static String queryCourseByStudentStmString = "SELECT * " +
+    static String querySelectionByStudentStmString = "SELECT * " +
             "FROM (course_selection.selection " +
             "JOIN course_selection.student ON course_selection.student.student_number=course_selection.selection.student_number " +
             "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number " +
             "JOIN course_selection.instructor ON course_selection.course.instructor_number=course_selection.instructor.instructor_number) " +
             "WHERE course_selection.selection.student_number= ?";
 
-    static String queryCourseByInstructorStmString = "SELECT * " +
+    static String querySelectionByInstructorStmString = "SELECT * " +
             "FROM (course_selection.selection " +
             "JOIN course_selection.student ON course_selection.student.student_number=course_selection.selection.student_number " +
             "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number " +
             "JOIN course_selection.instructor ON course_selection.course.instructor_number=course_selection.instructor.instructor_number) " +
             "WHERE course_selection.instructor.Instructor_number= ?";
+
+    static String querySelectionByStudentAndInstructorStmString = "SELECT * " +
+            "FROM (course_selection.selection " +
+            "JOIN course_selection.student ON course_selection.student.student_number=course_selection.selection.student_number " +
+            "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number " +
+            "JOIN course_selection.instructor ON course_selection.course.instructor_number=course_selection.instructor.instructor_number) " +
+            "WHERE course_selection.selection.student_number= ? AND course_selection.instructor.Instructor_number= ?";
 }
 

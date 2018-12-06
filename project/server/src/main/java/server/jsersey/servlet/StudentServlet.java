@@ -21,7 +21,7 @@ public class StudentServlet {
      * Query all student  list
      * @return Student JSON array
      */
-    @Path("all")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     public String queryAll() {

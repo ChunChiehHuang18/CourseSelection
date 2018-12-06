@@ -32,8 +32,9 @@ public class CourseSelectionDBHelper {
     private PreparedStatement deductCourseRemainUpdateStm = null;
     private PreparedStatement queryStudentClasstimeStm = null;
     private PreparedStatement queryAllSelectionStm = null;
-    private PreparedStatement queryCourseByStudentStm = null;
-    private PreparedStatement queryCourseByInstructorStm = null;
+    private PreparedStatement querySelectionByStudentStm = null;
+    private PreparedStatement querySelectionByInstructorStm = null;
+    private PreparedStatement querySelectionByStudentAndInstructorStm = null;
 
     private static class SingletonHolder {
         private static final CourseSelectionDBHelper INSTANCE = new CourseSelectionDBHelper();
@@ -76,8 +77,9 @@ public class CourseSelectionDBHelper {
             deductCourseRemainSelectStm = conn.prepareStatement(PrepareStatementUtils.deductCourseRemainSelectionString);
             deductCourseRemainUpdateStm = conn.prepareStatement(PrepareStatementUtils.deductCourseRemainUpdateString);
             queryStudentClasstimeStm = conn.prepareStatement(PrepareStatementUtils.queryStudentClasstimeStmString);
-            queryCourseByStudentStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByStudentStmString);
-            queryCourseByInstructorStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByInstructorStmString);
+            querySelectionByStudentStm = conn.prepareStatement(PrepareStatementUtils.querySelectionByStudentStmString);
+            querySelectionByInstructorStm = conn.prepareStatement(PrepareStatementUtils.querySelectionByInstructorStmString);
+            querySelectionByStudentAndInstructorStm = conn.prepareStatement(PrepareStatementUtils.querySelectionByStudentAndInstructorStmString);
 
         } catch (SQLException se) {
             //Handle errors for JDBC
@@ -486,10 +488,10 @@ public class CourseSelectionDBHelper {
      * @param studentNumber Student's number
      * @return Detail course selection information
      */
-    public JSONArray queryCourseSelectionByStudent(int studentNumber) {
+    public JSONArray querySelectionByStudent(int studentNumber) {
         try {
-            queryCourseByStudentStm.setInt(1, studentNumber);
-            ResultSet rs = queryCourseByStudentStm.executeQuery();
+            querySelectionByStudentStm.setInt(1, studentNumber);
+            ResultSet rs = querySelectionByStudentStm.executeQuery();
             JSONArray jsonArray = new JSONArray();
             while (rs.next()) {
                 JSONObject obj = getCourseSelectionJson(rs);
@@ -510,10 +512,35 @@ public class CourseSelectionDBHelper {
      * @param instructorNumber Instructor's number
      * @return Detail course selection information
      */
-    public JSONArray queryCourseSelectionByInstructor(int instructorNumber) {
+    public JSONArray querySelectionByInstructor(int instructorNumber) {
         try {
-            queryCourseByInstructorStm.setInt(1, instructorNumber);
-            ResultSet rs = queryCourseByInstructorStm.executeQuery();
+            querySelectionByInstructorStm.setInt(1, instructorNumber);
+            ResultSet rs = querySelectionByInstructorStm.executeQuery();
+            JSONArray jsonArray = new JSONArray();
+            while (rs.next()) {
+                JSONObject obj = getCourseSelectionJson(rs);
+                if (obj != null)
+                    jsonArray.put(obj);
+                else
+                    return new JSONArray();
+            }
+            return jsonArray;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new JSONArray();
+        }
+    }
+
+    /**
+     * Query selection by student and instructor's number
+     * @param instructorNumber Instructor's number
+     * @return Detail course selection information
+     */
+    public JSONArray querySelectionByStudentAndInstructor(int studentNumber, int instructorNumber) {
+        try {
+            querySelectionByStudentAndInstructorStm.setInt(1, studentNumber);
+            querySelectionByStudentAndInstructorStm.setInt(2, instructorNumber);
+            ResultSet rs = querySelectionByStudentAndInstructorStm.executeQuery();
             JSONArray jsonArray = new JSONArray();
             while (rs.next()) {
                 JSONObject obj = getCourseSelectionJson(rs);
