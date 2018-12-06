@@ -40,18 +40,24 @@ Query student by student integer type number
 
 Example: http://localhost:8081/student/19
 
+* /student/{student #}/selection
+
+Query courses selected by student number
+
+Example: http://localhost:8081/student/19/selection
+
 #### add(@POST)
 
 * /student
 
 Add a student into DB
 
-Post data: 
+JSON format: 
 * Student_Number: Integer (Optional)
 * Student_Name: Less than 45 char and can be used in Chinese
 * Student_Gender: Gender can be Male or Female or Bisexual (Optional)
 
-Post data example:
+Example:
 
 ```java
  {"Student_Name": "Harry", "Student_Number": 5, "Student_Gender": "male"}
@@ -72,18 +78,24 @@ Query instructor by instructor integer type number
 
 Example: http://localhost:8081/instructor/2
 
+* /instructor/{instructor #}/course
+
+Query course offered by instructor integer type number
+
+Example: http://localhost:8081/instructor/2/course
+
 #### add(@POST)
 
 * /instructor
 
 Add a instructor into DB
 
-Post data: 
+JSON format: 
 * Instructor_Number: Integer (Optional)
 * Instructor_Name: Less than 45 char and can be used in Chinese
 * Instructor_Office: Fixed to 4 char (Optional)
 
-Post data example:
+Example:
 
 ```java
 {"Instructor_Name": "李白", "Instructor_Number": 8, "Instructor_Office": "C102"}
@@ -110,14 +122,14 @@ Example: http://localhost:8081/course/BS777
 
 Add a course into DB
 
-Post data: 
+JSON format: 
 * Course_Number: Fixed to 5 char
 * Course_Title: Less than 45 char and can be used in Chinese
 * Course_Size: Integer 10 ~ 255
 * Course_Weekday: Integer 1 ~ 5
 * Course_Classtime: Use","separate each class time 1 ~ 8
 
-Post data example:
+Example:
 
 ```java
 {"Course_Number": "SA104", "Course_Title": "軟體工程","Course_Size": 10,"Course_Weekday": 5,"Instructor_Number": 5,"Course_Classtime": "5,6,7" }
@@ -154,12 +166,12 @@ Example: http://localhost:8081/selection/query?studentid=20&instructorid=5
 
 Select a course and insert into DB
 
-Post data: 
+JSON format: 
 * Selection_Number: Integer (Optional)
 * Course_Number: Fixed to 5 char
 * Student_Number: Integer
 
-Post data example:
+Example:
 
 ```java
 {"Selection_Number":20 , "Course_Number": "MS534", "Student_Number": 17 }

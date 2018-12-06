@@ -25,6 +25,7 @@ public class CourseSelectionDBHelper {
     private PreparedStatement addCourseStm = null;
     private PreparedStatement queryAllCourseStm = null;
     private PreparedStatement queryCourseByNumberStm = null;
+    private PreparedStatement queryCourseByInstructorStm = null;
     // Selection
     private PreparedStatement selectCourseStm = null;
     private PreparedStatement querySelectionDuplicateStm = null;
@@ -70,6 +71,7 @@ public class CourseSelectionDBHelper {
             addCourseStm = conn.prepareStatement(PrepareStatementUtils.addCourseStmString);
             queryAllCourseStm = conn.prepareStatement(PrepareStatementUtils.queryAllCourseStmString);
             queryCourseByNumberStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByNumberStmString);
+            queryCourseByInstructorStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByInstructorStmString);
             selectCourseStm = conn.prepareStatement(PrepareStatementUtils.selectCourseStmString);
             // Selection
             queryAllSelectionStm = conn.prepareStatement(PrepareStatementUtils.queryAllSelectionStmString);
@@ -307,6 +309,34 @@ public class CourseSelectionDBHelper {
         } catch (SQLException e) {
             e.printStackTrace();
             return new JSONObject();
+        }
+    }
+
+    /**
+     * Query course by instructor's number
+     * @param instructorNumber Course's number
+     * @return Course JSONArray
+     */
+    public JSONArray queryCourseByInstructor(int instructorNumber) {
+        try {
+            queryCourseByInstructorStm.setInt(1, instructorNumber);
+            ResultSet rs = queryCourseByInstructorStm.executeQuery();
+            JSONArray jsonArray = new JSONArray();
+            while (rs.next()) {
+                JSONObject obj = new JSONObject();
+                obj.put(MySqlConfig.SHOW_COURSE_NUMBER, rs.getString(MySqlConfig.COLUMN_COURSE_NUMBER));
+                obj.put(MySqlConfig.SHOW_COURSE_TITLE, rs.getString(MySqlConfig.COLUMN_COURSE_TITLE));
+                obj.put(MySqlConfig.SHOW_INSTRUCTOR_NUMBER, rs.getInt(MySqlConfig.COLUMN_INSTRUCTOR_NUMBER));
+                obj.put(MySqlConfig.SHOW_COURSE_SIZE, rs.getInt(MySqlConfig.COLUMN_COURSE_SIZE));
+                obj.put(MySqlConfig.SHOW_COURSE_REMAIN, rs.getInt(MySqlConfig.COLUMN_COURSE_REMAIN));
+                obj.put(MySqlConfig.SHOW_COURSE_WEEKDAY, rs.getInt(MySqlConfig.COLUMN_COURSE_WEEKDAY));
+                obj.put(MySqlConfig.SHOW_COURSE_CLASSTIME, rs.getString(MySqlConfig.COLUMN_COURSE_CLASSTIME));
+                jsonArray.put(obj);
+            }
+            return jsonArray;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new JSONArray();
         }
     }
 

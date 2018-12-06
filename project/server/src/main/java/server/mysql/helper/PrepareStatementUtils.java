@@ -38,6 +38,10 @@ public class PrepareStatementUtils {
             "SELECT * FROM course_selection.course " +
                     "WHERE course_number = ?;";
 
+    static String queryCourseByInstructorStmString =
+            "SELECT * FROM course_selection.course " +
+                    "WHERE instructor_number = ?;";
+
     static String queryAllCourseStmString =
             "SELECT * FROM course_selection.course;";
 

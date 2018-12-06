@@ -48,6 +48,21 @@ public class InstructorServlet {
     }
 
     /**
+     * Query  course offered by instructor number
+     *
+     * @param instructorNumber Instructor integer type number
+     * @return Instructor  JSON array
+     */
+    @Path("{instructorNumber}/course")
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    public String queryCourseByInstructor(@PathParam("instructorNumber") String instructorNumber) {
+        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+
+        return dbHelper.queryCourseByInstructor(Integer.valueOf(instructorNumber)).toString();
+    }
+
+    /**
      * Add a instructor into DB
      *
      * @param postData instructor JSON data
