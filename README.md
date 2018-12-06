@@ -99,7 +99,8 @@ KEY | Type | Description
 ---------|----------|---------
  Instructor_Number | Integer | Instructor's number (Optional)
  Instructor_Name | String | Less than 45 char and can be used in Chinese
- Instructor_Office | Stirng | Fixed to 4 char (Optional) 
+ Instructor_Office | Stirng | Fixed to 4 char (Optional)
+ 
 Example:
 
 ```java
