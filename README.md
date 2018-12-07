@@ -28,24 +28,6 @@ Using IntelliJ IDEA to open project folder and run **JettyServer.java** to start
 
 ### Student
 
-#### query(@GET)
-
-* /student
-
-Query all student list
-
-* /student/{student #}
-
-Query student by student integer type number
-
-Example: http://localhost:8081/student/19
-
-* /student/{student #}/selection
-
-Query courses selected by student number
-
-Example: http://localhost:8081/student/19/selection
-
 #### add(@POST)
 
 * /student
@@ -65,27 +47,28 @@ Example:
 ```java
  {"Student_Name": "Harry", "Student_Number": 5, "Student_Gender": "male"}
  ```
-
-
-### Instructor
+ 
 
 #### query(@GET)
 
-* /instructor/all
+* /student
 
-Query all instructor list
+Query all student list
 
-* /instructor/{instructor #}
+* /student/{student #}
 
-Query instructor by instructor integer type number
+Query student by student integer type number
 
-Example: http://localhost:8081/instructor/2
+Example: http://localhost:8081/student/19
 
-* /instructor/{instructor #}/course
+* /student/{student #}/selection
 
-Query course offered by instructor integer type number
+Query courses selected by student number
 
-Example: http://localhost:8081/instructor/2/course
+Example: http://localhost:8081/student/19/selection
+
+
+### Instructor
 
 #### add(@POST)
 
@@ -107,20 +90,26 @@ Example:
 {"Instructor_Name": "李白", "Instructor_Number": 8, "Instructor_Office": "C102"}
 ```
 
-
-### Course
-
 #### query(@GET)
 
-* /course
+* /instructor/all
 
-Query all course list
+Query all instructor list
 
-* /course/{course #}
+* /instructor/{instructor #}
 
-Query course by course string type number
+Query instructor by instructor integer type number
 
-Example: http://localhost:8081/course/BS777
+Example: http://localhost:8081/instructor/2
+
+* /instructor/{instructor #}/course
+
+Query course offered by instructor integer type number
+
+Example: http://localhost:8081/instructor/2/course
+
+
+### Course
 
 #### add(@POST)
 
@@ -144,30 +133,20 @@ Example:
 {"Course_Number": "SA104", "Course_Title": "軟體工程","Course_Size": 10,"Course_Weekday": 5,"Instructor_Number": 5,"Course_Classtime": "5,6,7" }
 ```
 
-### Selection
-
 #### query(@GET)
 
-* /selection
+* /course
 
-Query all selection list
+Query all course list
 
-* /selection/query?studentid={id}&instructorid={id}
+* /course/{course #}
 
-Query selection list by filter 
+Query course by course string type number
 
-1. Filter by student type number
+Example: http://localhost:8081/course/BS777
 
-Example: http://localhost:8081/selection/query?studentid=20
 
-2. Filter by instrutor type number
-
-Example: http://localhost:8081/selection/query?instructorid=5
-
-3. Filter by intersection of student and instructor integer type number
-
-Example: http://localhost:8081/selection/query?studentid=20&instructorid=5
-
+### Selection
 
 #### add(@POST)
 
@@ -208,4 +187,33 @@ Example:
 ```java
 {"Selection_Number":68 }
 ```
+
+#### query(@GET)
+
+* /selection
+
+Query all selection list
+
+* /selection/{selection #}
+
+Query selection by selection number
+
+Example: http://localhost:8081/selection/66
+
+* /selection/query?studentid={id}&instructorid={id}
+
+Query selection list by filter 
+
+1. Filter by student type number
+
+Example: http://localhost:8081/selection/query?studentid=20
+
+2. Filter by instrutor type number
+
+Example: http://localhost:8081/selection/query?instructorid=5
+
+3. Filter by intersection of student and instructor integer type number
+
+Example: http://localhost:8081/selection/query?studentid=20&instructorid=5
+
 

@@ -32,6 +32,20 @@ public class SelectionServlet {
     }
 
     /**
+     * Query  selection by selection number
+     *
+     * @return Course JSONObject
+     */
+    @Path("/{selectionNumber}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    public String queryByNumber(@PathParam("selectionNumber") int selectionNumber) {
+        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+
+        return dbHelper.querySelectionByNumber(selectionNumber).toString();
+    }
+
+    /**
      * Query all selection course list by student number
      *
      * @param studentNumber    Student integer type number
