@@ -76,9 +76,42 @@ public class SelectionServlet {
             String courseNumber = selectionObj.getString(KEY_COURSE_NUMBER);
 
             if (ServletUtils.getInstance().validSelectionData(studentNumber, courseNumber)) {
-                // Insert student into db
+                // Insert selection into db
                 CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-                if (dbHelper.selectCourse(selectionNumber, studentNumber, courseNumber))
+                if (dbHelper.addSelection(selectionNumber, studentNumber, courseNumber))
+                    return Response.SC_OK;
+                else
+                    return Response.SC_BAD_REQUEST;
+            } else
+                return Response.SC_BAD_REQUEST;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return Response.SC_BAD_REQUEST;
+        }
+    }
+
+
+    /**
+     * Delete the selection
+     *
+     * @param postData Select course JSON data
+     * @return Status code
+     */
+    @Path("/")
+    @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public int deleteSelection(String postData) {
+        try {
+            JSONObject selectionObj = new JSONObject(postData);
+
+            // Get value
+            int selectionNumber = selectionObj.getInt(KEY_SELECTION_NUMBER);
+
+            if (ServletUtils.getInstance().validDeleteData(selectionNumber)) {
+                // Delete selection
+                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+                if (dbHelper.deleteSelection(selectionNumber))
                     return Response.SC_OK;
                 else
                     return Response.SC_BAD_REQUEST;

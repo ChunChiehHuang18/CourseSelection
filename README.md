@@ -190,3 +190,22 @@ Example:
 {"Selection_Number":20 , "Course_Number": "MS534", "Student_Number": 17 }
 ```
 
+#### delete(@DELETE)
+
+* /selection
+
+Delete a selection and update DB
+
+JSON format: 
+
+KEY | Type | Description
+---------|----------|---------
+ Selection_Number | Integer | Selection's number 
+
+
+Example:
+
+```java
+{"Selection_Number":68 }
+```
+

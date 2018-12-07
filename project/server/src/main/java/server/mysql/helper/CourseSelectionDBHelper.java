@@ -14,25 +14,41 @@ public class CourseSelectionDBHelper {
     private Connection conn = null;
 
     // Instructor
+    // add
     private PreparedStatement addInstructorStm = null;
+    // query
     private PreparedStatement queryAllInstructorStm = null;
     private PreparedStatement queryInstructorByNumberStm = null;
+
     // Student
+    // add
     private PreparedStatement addStudentStm = null;
+    // query
     private PreparedStatement queryAllStudentStm = null;
     private PreparedStatement queryStudentByNumberStm = null;
+
     // Course
+    // add
     private PreparedStatement addCourseStm = null;
+    // query
     private PreparedStatement queryAllCourseStm = null;
     private PreparedStatement queryCourseByNumberStm = null;
     private PreparedStatement queryCourseByInstructorStm = null;
+
     // Selection
-    private PreparedStatement selectCourseStm = null;
-    private PreparedStatement querySelectionDuplicateStm = null;
+    // add
     private PreparedStatement deductCourseRemainSelectStm = null;
     private PreparedStatement deductCourseRemainUpdateStm = null;
+    private PreparedStatement addSelectionStm = null;
     private PreparedStatement queryStudentClasstimeStm = null;
+    private PreparedStatement querySelectionDuplicateStm = null;
+    // delete
+    private PreparedStatement addCourseRemainSelectionStm = null;
+    private PreparedStatement addCourseRemainUpdateStm = null;
+    private PreparedStatement deleteSelectionStm = null;
+    // query
     private PreparedStatement queryAllSelectionStm = null;
+    private PreparedStatement querySelectionByNumberStm = null;
     private PreparedStatement querySelectionByStudentStm = null;
     private PreparedStatement querySelectionByInstructorStm = null;
     private PreparedStatement querySelectionByStudentAndInstructorStm = null;
@@ -72,12 +88,16 @@ public class CourseSelectionDBHelper {
             queryAllCourseStm = conn.prepareStatement(PrepareStatementUtils.queryAllCourseStmString);
             queryCourseByNumberStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByNumberStmString);
             queryCourseByInstructorStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByInstructorStmString);
-            selectCourseStm = conn.prepareStatement(PrepareStatementUtils.selectCourseStmString);
+            addSelectionStm = conn.prepareStatement(PrepareStatementUtils.addSelectionStmString);
             // Selection
             queryAllSelectionStm = conn.prepareStatement(PrepareStatementUtils.queryAllSelectionStmString);
             querySelectionDuplicateStm = conn.prepareStatement(PrepareStatementUtils.querySelectionDuplicateStmString);
-            deductCourseRemainSelectStm = conn.prepareStatement(PrepareStatementUtils.deductCourseRemainSelectionString);
-            deductCourseRemainUpdateStm = conn.prepareStatement(PrepareStatementUtils.deductCourseRemainUpdateString);
+            deductCourseRemainSelectStm = conn.prepareStatement(PrepareStatementUtils.deductCourseRemainSelectionStmString);
+            deductCourseRemainUpdateStm = conn.prepareStatement(PrepareStatementUtils.deductCourseRemainUpdateStmString);
+            addCourseRemainSelectionStm = conn.prepareStatement(PrepareStatementUtils.addCourseRemainSelectionStmString);
+            addCourseRemainUpdateStm = conn.prepareStatement(PrepareStatementUtils.addCourseRemainUpdateStmString);
+            deleteSelectionStm = conn.prepareStatement(PrepareStatementUtils.deleteSelectionStmString);
+            querySelectionByNumberStm = conn.prepareStatement(PrepareStatementUtils.querySelectionByNumberStmString);
             queryStudentClasstimeStm = conn.prepareStatement(PrepareStatementUtils.queryStudentClasstimeStmString);
             querySelectionByStudentStm = conn.prepareStatement(PrepareStatementUtils.querySelectionByStudentStmString);
             querySelectionByInstructorStm = conn.prepareStatement(PrepareStatementUtils.querySelectionByInstructorStmString);
@@ -347,15 +367,32 @@ public class CourseSelectionDBHelper {
      * @param courseNumber Course's number
      * @return boolean
      */
-    public boolean selectCourse(int selectionNumber, int studentNumber, String courseNumber) {
+    public boolean addSelection(int selectionNumber, int studentNumber, String courseNumber) {
         try {
             if(selectionNumber > 0)
-                selectCourseStm.setInt(1, selectionNumber);
+                addSelectionStm.setInt(1, selectionNumber);
             else
-                selectCourseStm.setNull(1, 0);
-            selectCourseStm.setString(2, courseNumber);
-            selectCourseStm.setInt(3, studentNumber);
-            selectCourseStm.executeUpdate();
+                addSelectionStm.setNull(1, 0);
+            addSelectionStm.setString(2, courseNumber);
+            addSelectionStm.setInt(3, studentNumber);
+            addSelectionStm.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * Remove  selection
+     * @param selectionNumber Selection's number
+     * @return boolean
+     */
+    public boolean deleteSelection(int selectionNumber) {
+        try {
+            deleteSelectionStm.setInt(1, selectionNumber);
+            deleteSelectionStm.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -383,6 +420,29 @@ public class CourseSelectionDBHelper {
             e.printStackTrace();
         }
         return new JSONArray();
+    }
+
+    /**
+     * Query  selection by selection number
+     * @param selectionNumber Selection's number
+     * @return Selection JSONObject
+     */
+    public JSONObject querySelectionByNumber(int selectionNumber) {
+        try {
+            querySelectionByNumberStm.setInt(1, selectionNumber);
+            ResultSet rs = querySelectionByNumberStm.executeQuery();
+            if (rs.next()) {
+                JSONObject obj = new JSONObject();
+                obj.put(MySqlConfig.SHOW_SELECTION_NUMBER, rs.getInt(MySqlConfig.COLUMN_SELECTION_NUMBER));
+                obj.put(MySqlConfig.SHOW_STUDENT_NUMBER, rs.getInt(MySqlConfig.COLUMN_STUDENT_NUMBER));
+                obj.put(MySqlConfig.SHOW_COURSE_NUMBER, rs.getString(MySqlConfig.COLUMN_COURSE_NUMBER));
+                return obj;
+            }
+            return new JSONObject();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new JSONObject();
     }
 
     /**
@@ -442,6 +502,75 @@ public class CourseSelectionDBHelper {
             int affectedRow = 0;
             if(deductCourseRemainSelectStm.executeQuery().next()) {
                 affectedRow =  deductCourseRemainUpdateStm.executeUpdate() ;
+            }
+
+            conn.commit();
+            return affectedRow > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (conn != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    conn.rollback();
+                } catch(SQLException excep) {
+                    excep.printStackTrace();
+                }
+            }
+            return false;
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    /**
+     * Using locking reads to ...
+     * 1. Get Student and Course's number
+     * 2. Check selection exist
+     * 3. Add course remain
+     * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
+     * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
+     * @param selectionNumber Selection's number
+     * @return True: Valid, False: Invalid
+     */
+    public boolean validDeleteSelectionData(int selectionNumber) {
+        try {
+            conn.setAutoCommit(false);
+
+            // 1.  Get student and instructor's number
+            JSONObject obj = querySelectionByNumber(selectionNumber);
+            if(obj.isEmpty()) {
+                conn.commit();
+                return false;
+            }
+            int studentNumber = obj.getInt(MySqlConfig.SHOW_STUDENT_NUMBER);
+            String courseNumber = obj.getString(MySqlConfig.SHOW_COURSE_NUMBER);
+
+            // 2. Check  selection exist
+            querySelectionDuplicateStm.setInt(1, studentNumber);
+            querySelectionDuplicateStm.setString(2, courseNumber);
+            ResultSet rs = querySelectionDuplicateStm.executeQuery();
+            if(rs.next()) {
+                if (rs.getInt(1) == 0) {
+                    conn.commit();
+                    return false;
+                }
+            } else {
+                conn.commit();
+                return false;
+            }
+
+            // 3. Add course remain
+            // Try to add course remain and check affect row number
+            addCourseRemainSelectionStm.setString(1, courseNumber);
+            addCourseRemainUpdateStm.setString(1, courseNumber);
+            int affectedRow = 0;
+            if(addCourseRemainSelectionStm.executeQuery().next()) {
+                affectedRow =  addCourseRemainUpdateStm.executeUpdate() ;
             }
 
             conn.commit();

@@ -130,7 +130,7 @@ public class ServletUtils {
      * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
      * @param courseNumber Course's number
      * @param studentNumber Student's number
-     * @return boolean
+     * @return True: Valid, False: Invalid
      */
     boolean validSelectionData(int studentNumber, String courseNumber) {
         if(studentNumber > 0 && courseNumber.length() == 5) {
@@ -140,7 +140,26 @@ public class ServletUtils {
         } else
             return false;
     }
-    
+
+
+    /**
+     * Using locking reads to ...
+     * 1. Get Student and Course's number
+     * 2. Check selection exist
+     * 3. Add course remain
+     * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
+     * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
+     * @param selectionNumber Selection's number
+     * @return True: Valid, False: Invalid
+     */
+    boolean validDeleteData(int selectionNumber) {
+        if(selectionNumber > 0 ) {
+            CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+
+            return (dbHelper.validDeleteSelectionData(selectionNumber));
+        } else
+            return false;
+    }
 
 
 }
