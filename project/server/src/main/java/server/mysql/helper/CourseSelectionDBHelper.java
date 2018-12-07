@@ -6,6 +6,9 @@ import org.json.JSONObject;
 import java.sql.*;
 import java.util.Arrays;
 
+import static server.mysql.helper.PrepareStatementUtils.*;
+
+
 /**
  * CourseSelectionDBHelper provide higher level API to interact with MySQL
  */
@@ -30,6 +33,8 @@ public class CourseSelectionDBHelper {
     // Course
     // add
     private PreparedStatement addCourseStm = null;
+    //
+    private PreparedStatement deleteCourseStm = null;
     // query
     private PreparedStatement queryAllCourseStm = null;
     private PreparedStatement queryCourseByNumberStm = null;
@@ -45,7 +50,8 @@ public class CourseSelectionDBHelper {
     // delete
     private PreparedStatement addCourseRemainSelectionStm = null;
     private PreparedStatement addCourseRemainUpdateStm = null;
-    private PreparedStatement deleteSelectionStm = null;
+    private PreparedStatement deleteSelectionByNumberStm = null;
+    private PreparedStatement deleteSelectionByCourseStm = null;
     // query
     private PreparedStatement queryAllSelectionStm = null;
     private PreparedStatement querySelectionByNumberStm = null;
@@ -76,32 +82,45 @@ public class CourseSelectionDBHelper {
 
             System.out.println("Creating prepare statement...");
             // Instructor
-            addInstructorStm = conn.prepareStatement(PrepareStatementUtils.addInstructorStmString);
-            queryAllInstructorStm = conn.prepareStatement(PrepareStatementUtils.queryAllInstructorStmString);
-            queryInstructorByNumberStm = conn.prepareStatement(PrepareStatementUtils.queryInstructorByNumberStmString);
+            // add
+            addInstructorStm = conn.prepareStatement(ADD_INSTRUCTOR_STM_STRING);
+            // query
+            queryAllInstructorStm = conn.prepareStatement(QUERY_ALL_INSTRUCTOR_STM_STRING);
+            queryInstructorByNumberStm = conn.prepareStatement(QUERY_INSTRUCTOR_BY_NUMBER_STM_STRING);
             // Student
-            addStudentStm = conn.prepareStatement(PrepareStatementUtils.addStudentStmString);
-            queryAllStudentStm = conn.prepareStatement(PrepareStatementUtils.queryAllStudentStmString);
-            queryStudentByNumberStm = conn.prepareStatement(PrepareStatementUtils.queryStudentByNumberStmString);
+            // add
+            addStudentStm = conn.prepareStatement(ADD_STUDENT_STM_STRING);
+            // query
+            queryAllStudentStm = conn.prepareStatement(QUERY_ALL_STUDENT_STM_STRING);
+            queryStudentByNumberStm = conn.prepareStatement(QUERY_STUDENT_BY_NUMBER_STM_STRING);
             // Course
-            addCourseStm = conn.prepareStatement(PrepareStatementUtils.addCourseStmString);
-            queryAllCourseStm = conn.prepareStatement(PrepareStatementUtils.queryAllCourseStmString);
-            queryCourseByNumberStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByNumberStmString);
-            queryCourseByInstructorStm = conn.prepareStatement(PrepareStatementUtils.queryCourseByInstructorStmString);
-            addSelectionStm = conn.prepareStatement(PrepareStatementUtils.addSelectionStmString);
+            // add
+            addCourseStm = conn.prepareStatement(ADD_COURSE_STM_STRING);
+            // delete
+            deleteCourseStm = conn.prepareStatement(DELETE_COURSE_STM_STRING);
+            // query
+            queryAllCourseStm = conn.prepareStatement(QUERY_ALL_COURSE_STM_STRING);
+            queryCourseByNumberStm = conn.prepareStatement(QUERY_COURSE_BY_NUMBER_STM_STRING);
+            queryCourseByInstructorStm = conn.prepareStatement(QUERY_COURSE_BY_INSTRUCTOR_STM_STRING);
             // Selection
-            queryAllSelectionStm = conn.prepareStatement(PrepareStatementUtils.queryAllSelectionStmString);
-            querySelectionDuplicateStm = conn.prepareStatement(PrepareStatementUtils.querySelectionDuplicateStmString);
-            deductCourseRemainSelectStm = conn.prepareStatement(PrepareStatementUtils.deductCourseRemainSelectionStmString);
-            deductCourseRemainUpdateStm = conn.prepareStatement(PrepareStatementUtils.deductCourseRemainUpdateStmString);
-            addCourseRemainSelectionStm = conn.prepareStatement(PrepareStatementUtils.addCourseRemainSelectionStmString);
-            addCourseRemainUpdateStm = conn.prepareStatement(PrepareStatementUtils.addCourseRemainUpdateStmString);
-            deleteSelectionStm = conn.prepareStatement(PrepareStatementUtils.deleteSelectionStmString);
-            querySelectionByNumberStm = conn.prepareStatement(PrepareStatementUtils.querySelectionByNumberStmString);
-            queryStudentClasstimeStm = conn.prepareStatement(PrepareStatementUtils.queryStudentClasstimeStmString);
-            querySelectionByStudentStm = conn.prepareStatement(PrepareStatementUtils.querySelectionByStudentStmString);
-            querySelectionByInstructorStm = conn.prepareStatement(PrepareStatementUtils.querySelectionByInstructorStmString);
-            querySelectionByStudentAndInstructorStm = conn.prepareStatement(PrepareStatementUtils.querySelectionByStudentAndInstructorStmString);
+            // add
+            addSelectionStm = conn.prepareStatement(ADD_SELECTION_STM_STRING);
+            deductCourseRemainSelectStm = conn.prepareStatement(DEDUCT_COURSE_REMAIN_SELECTION_STM_STRING);
+            deductCourseRemainUpdateStm = conn.prepareStatement(DEDUCT_COURSE_REMAIN_UPDATE_STM_STRING);
+            queryStudentClasstimeStm = conn.prepareStatement(QUERY_STUDENT_CLASSTIME_STM_STRING);
+            querySelectionDuplicateStm = conn.prepareStatement(QUERY_SELECTION_DUPLICATE_STM_STRING);
+            // delete
+            addCourseRemainSelectionStm = conn.prepareStatement(ADD_COURSE_REMAIN_SELECTION_STM_STRING);
+            addCourseRemainUpdateStm = conn.prepareStatement(ADD_COURSE_REMAIN_UPDATE_STM_STRING);
+            deleteSelectionByNumberStm = conn.prepareStatement(DELETE_SELECTION_BY_NUMBER_STM_STRING);
+            deleteSelectionByCourseStm = conn.prepareStatement(DELETE_SELECTION_BY_COURSE_STM_STRING);
+            // query
+            queryAllSelectionStm = conn.prepareStatement(QUERY_ALL_SELECTION_STM_STRING);
+            querySelectionByNumberStm = conn.prepareStatement(QUERY_SELECTION_BY_NUMBER_STM_STRING);
+
+            querySelectionByStudentStm = conn.prepareStatement(QUERY_SELECTION_BY_STUDENT_STM_STRING);
+            querySelectionByInstructorStm = conn.prepareStatement(QUERY_SELECTION_BY_INSTRUCTOR_STM_STRING);
+            querySelectionByStudentAndInstructorStm = conn.prepareStatement(QUERY_SELECTION_BY_STUDENT_AND_INSTRUCTOR_STM_STRING);
 
         } catch (SQLException se) {
             //Handle errors for JDBC
@@ -255,7 +274,7 @@ public class CourseSelectionDBHelper {
 
     /**
      * Add a Course into MySql
-     * @param courseNumber Course's number(Fixed to 4 char)
+     * @param courseNumber Course's number(Fixed to 5 char)
      * @param courseTitle Course's title
      * @param instructorNumber Instructor's number
      * @param courseSize Course's size (10~ 255)
@@ -278,6 +297,46 @@ public class CourseSelectionDBHelper {
             return false;
         }
         return true;
+    }
+
+
+    /**
+     * Delete the course and course's selection data
+     * @param courseNumber Course's number(Fixed to 5 char)
+     * @return boolean
+     */
+    public boolean deleteCourse(String courseNumber) {
+        try {
+            conn.setAutoCommit(false);
+
+            // delete selection by course
+            deleteSelectionByCourse(courseNumber);
+
+            // delete course
+            deleteCourseStm.setString(1, courseNumber);
+            int affectedRow = deleteCourseStm.executeUpdate();
+
+
+            conn.commit();
+            return affectedRow > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (conn != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    conn.rollback();
+                } catch(SQLException excep) {
+                    excep.printStackTrace();
+                }
+            }
+            return false;
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -385,14 +444,30 @@ public class CourseSelectionDBHelper {
 
 
     /**
-     * Remove  selection
+     * Delete  selection by selection number
      * @param selectionNumber Selection's number
      * @return boolean
      */
-    public boolean deleteSelection(int selectionNumber) {
+    public boolean deleteSelectionByNumber(int selectionNumber) {
         try {
-            deleteSelectionStm.setInt(1, selectionNumber);
-            deleteSelectionStm.executeUpdate();
+            deleteSelectionByNumberStm.setInt(1, selectionNumber);
+            deleteSelectionByNumberStm.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Delete  selection by course number
+     * @param courseNumber Course's number
+     * @return boolean
+     */
+    private boolean deleteSelectionByCourse(String courseNumber) {
+        try {
+            deleteSelectionByCourseStm.setString(1, courseNumber);
+            deleteSelectionByCourseStm.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -537,7 +612,7 @@ public class CourseSelectionDBHelper {
      * @param selectionNumber Selection's number
      * @return True: Valid, False: Invalid
      */
-    public boolean validDeleteSelectionData(int selectionNumber) {
+    public boolean validDeleteByNumberSelectionData(int selectionNumber) {
         try {
             conn.setAutoCommit(false);
 

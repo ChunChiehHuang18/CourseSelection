@@ -8,106 +8,115 @@ public class PrepareStatementUtils {
     // Instructor
 
     // ADD
-    static String addInstructorStmString =
+    static String ADD_INSTRUCTOR_STM_STRING =
             "INSERT INTO course_selection.instructor(instructor_number, instructor_name, instructor_office)" +
                     "VALUES (?, ?, ?);";
 
     // Query
-    static String queryAllInstructorStmString =
+    static String QUERY_ALL_INSTRUCTOR_STM_STRING =
             "SELECT * FROM course_selection.instructor;";
 
-    static String queryInstructorByNumberStmString =
+    static String QUERY_INSTRUCTOR_BY_NUMBER_STM_STRING =
             "SELECT * FROM course_selection.instructor " +
                     "WHERE instructor_number= ?;";
 
     // Student
 
     // ADD
-    static String addStudentStmString =
+    static String ADD_STUDENT_STM_STRING =
             "INSERT INTO course_selection.student(student_number, student_name, student_gender)" +
                     "VALUES (?, ?, ?);";
 
     // Query
-    static String queryAllStudentStmString =
+    static String QUERY_ALL_STUDENT_STM_STRING =
             "SELECT * FROM course_selection.student;";
 
-    static String queryStudentByNumberStmString =
+    static String QUERY_STUDENT_BY_NUMBER_STM_STRING =
             "SELECT * FROM course_selection.student " +
                     "WHERE student_number= ?;";
 
     // Course
 
     // ADD
-    static String addCourseStmString =
+    static String ADD_COURSE_STM_STRING =
             "INSERT INTO course_selection.course(course_number, course_title, instructor_number, course_size, course_remain, course_weekday, course_classtime)" +
                     "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
+    // Delete
+    static String DELETE_COURSE_STM_STRING =
+            "DELETE FROM course_selection.course " +
+                    "WHERE course_number = ?;";
+
     // Query
-    static String queryCourseByNumberStmString =
+    static String QUERY_COURSE_BY_NUMBER_STM_STRING =
             "SELECT * FROM course_selection.course " +
                     "WHERE course_number = ?;";
 
-    static String queryCourseByInstructorStmString =
+    static String QUERY_COURSE_BY_INSTRUCTOR_STM_STRING =
             "SELECT * FROM course_selection.course " +
                     "WHERE instructor_number = ?;";
 
-    static String queryAllCourseStmString =
+    static String QUERY_ALL_COURSE_STM_STRING =
             "SELECT * FROM course_selection.course;";
 
 
     // Selection
 
     // ADD
-    static String deductCourseRemainSelectionStmString = "SELECT course_remain FROM course_selection.course where course_number=? AND course_remain > 0 for UPDATE;";
+    static String DEDUCT_COURSE_REMAIN_SELECTION_STM_STRING = "SELECT course_remain FROM course_selection.course where course_number=? AND course_remain > 0 for UPDATE;";
 
-    static String deductCourseRemainUpdateStmString =  "UPDATE course_selection.course set course_remain = course_remain - 1 where course_number=? AND course_remain > 0;";
+    static String DEDUCT_COURSE_REMAIN_UPDATE_STM_STRING =  "UPDATE course_selection.course set course_remain = course_remain - 1 where course_number=? AND course_remain > 0;";
 
-    static String addSelectionStmString =
+    static String ADD_SELECTION_STM_STRING =
             "INSERT INTO course_selection.selection(selection_number, course_number, student_number)" +
                     "VALUES (?, ?, ?);";
 
-    static String querySelectionDuplicateStmString =
+    static String QUERY_SELECTION_DUPLICATE_STM_STRING =
             "SELECT COUNT(course_selection.selection.student_number) " +
                     "FROM course_selection.selection " +
                     "WHERE course_selection.selection.student_number = ? AND course_selection.selection.course_number = ? FOR UPDATE;";
 
-    static String queryStudentClasstimeStmString = "SELECT course_selection.course.course_classtime, course_selection.course.course_weekday " +
+    static String QUERY_STUDENT_CLASSTIME_STM_STRING = "SELECT course_selection.course.course_classtime, course_selection.course.course_weekday " +
             "FROM (course_selection.selection " +
             "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number) " +
             "WHERE student_number= ? FOR UPDATE;";
 
     // Delete
-    static String addCourseRemainSelectionStmString = "SELECT course_remain FROM course_selection.course where course_number=? for UPDATE;";
+    static String ADD_COURSE_REMAIN_SELECTION_STM_STRING = "SELECT course_remain FROM course_selection.course where course_number=? for UPDATE;";
 
-    static String addCourseRemainUpdateStmString =  "UPDATE course_selection.course set course_remain = course_remain + 1 where course_number=? ;";
+    static String ADD_COURSE_REMAIN_UPDATE_STM_STRING =  "UPDATE course_selection.course set course_remain = course_remain + 1 where course_number=? ;";
 
-    static String deleteSelectionStmString =
+    static String DELETE_SELECTION_BY_NUMBER_STM_STRING =
             "DELETE FROM course_selection.selection " +
             "WHERE selection_number = ?;";
 
+    static String DELETE_SELECTION_BY_COURSE_STM_STRING =
+            "DELETE FROM course_selection.selection " +
+                    "WHERE course_number = ?;";
+
     // Query
-    static String queryAllSelectionStmString =
+    static String QUERY_ALL_SELECTION_STM_STRING =
             "SELECT * FROM course_selection.selection;";
 
-    static String querySelectionByNumberStmString =
+    static String QUERY_SELECTION_BY_NUMBER_STM_STRING =
             "SELECT * FROM course_selection.selection " +
             "WHERE selection_number = ?; ";
 
-    static String querySelectionByStudentStmString = "SELECT * " +
+    static String QUERY_SELECTION_BY_STUDENT_STM_STRING = "SELECT * " +
             "FROM (course_selection.selection " +
             "JOIN course_selection.student ON course_selection.student.student_number=course_selection.selection.student_number " +
             "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number " +
             "JOIN course_selection.instructor ON course_selection.course.instructor_number=course_selection.instructor.instructor_number) " +
             "WHERE course_selection.selection.student_number= ?";
 
-    static String querySelectionByInstructorStmString = "SELECT * " +
+    static String QUERY_SELECTION_BY_INSTRUCTOR_STM_STRING = "SELECT * " +
             "FROM (course_selection.selection " +
             "JOIN course_selection.student ON course_selection.student.student_number=course_selection.selection.student_number " +
             "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number " +
             "JOIN course_selection.instructor ON course_selection.course.instructor_number=course_selection.instructor.instructor_number) " +
             "WHERE course_selection.instructor.Instructor_number= ?";
 
-    static String querySelectionByStudentAndInstructorStmString = "SELECT * " +
+    static String QUERY_SELECTION_BY_STUDENT_AND_INSTRUCTOR_STM_STRING = "SELECT * " +
             "FROM (course_selection.selection " +
             "JOIN course_selection.student ON course_selection.student.student_number=course_selection.selection.student_number " +
             "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number " +

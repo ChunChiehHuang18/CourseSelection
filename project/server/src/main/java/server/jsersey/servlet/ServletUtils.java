@@ -97,6 +97,21 @@ public class ServletUtils {
     }
 
     /**
+     * 1.Check length
+     * 2.Check course exist
+     * @param courseNumber Course's number
+     * @return True: Valid, False: Invalid
+     */
+    boolean validDeleteCourseData(String courseNumber) {
+        if(courseNumber.length() == 5 ) {
+            CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+
+            return !dbHelper.queryCourseByNumber(courseNumber).isEmpty();
+        } else
+            return false;
+    }
+
+    /**
      * Check class time string is valid
      * @param classTime Class time can be between 1 and 8 and cannot be repeated
      * @return boolean
@@ -152,11 +167,11 @@ public class ServletUtils {
      * @param selectionNumber Selection's number
      * @return True: Valid, False: Invalid
      */
-    boolean validDeleteData(int selectionNumber) {
+    boolean validDeleteSelectionData(int selectionNumber) {
         if(selectionNumber > 0 ) {
             CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-            return (dbHelper.validDeleteSelectionData(selectionNumber));
+            return (dbHelper.validDeleteByNumberSelectionData(selectionNumber));
         } else
             return false;
     }

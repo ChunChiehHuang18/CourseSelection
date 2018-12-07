@@ -47,7 +47,7 @@ Example:
 ```java
  {"Student_Name": "Harry", "Student_Number": 5, "Student_Gender": "male"}
  ```
- 
+
 
 #### query(@GET)
 
@@ -131,6 +131,24 @@ Example:
 
 ```java
 {"Course_Number": "SA104", "Course_Title": "軟體工程","Course_Size": 10,"Course_Weekday": 5,"Instructor_Number": 5,"Course_Classtime": "5,6,7" }
+```
+
+#### delete(@DELETE)
+
+* /course
+
+Delete the course and course's selection data
+
+JSON format: 
+
+KEY | Type | Description
+---------|----------|---------
+ Course_Number | String | Fixed to 5 char
+
+Example:
+
+```java
+{"Course_Number": "SA104"}
 ```
 
 #### query(@GET)

@@ -88,4 +88,38 @@ public class CourseServlet {
             return Response.SC_BAD_REQUEST;
         }
     }
+
+    /**
+     * Delete a course data
+     *
+     * @param postData Course JSON data
+     * @return Status code
+     */
+    @Path("/")
+    @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public int deleteCourse(String postData) {
+        try {
+            JSONObject courseObj = new JSONObject(postData);
+            String courseNumber;
+            // Get value
+            courseNumber = courseObj.getString(KEY_COURSE_NUMBER);
+
+
+            if (ServletUtils.getInstance().validDeleteCourseData(courseNumber)) {
+                // Delete the course
+                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+                if (dbHelper.deleteCourse(courseNumber))
+                    return Response.SC_OK;
+                else
+                    return Response.SC_BAD_REQUEST;
+            } else
+                return Response.SC_BAD_REQUEST;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return Response.SC_BAD_REQUEST;
+        }
+    }
+
 }

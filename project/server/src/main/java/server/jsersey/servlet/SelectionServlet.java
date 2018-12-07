@@ -122,10 +122,10 @@ public class SelectionServlet {
             // Get value
             int selectionNumber = selectionObj.getInt(KEY_SELECTION_NUMBER);
 
-            if (ServletUtils.getInstance().validDeleteData(selectionNumber)) {
+            if (ServletUtils.getInstance().validDeleteSelectionData(selectionNumber)) {
                 // Delete selection
                 CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-                if (dbHelper.deleteSelection(selectionNumber))
+                if (dbHelper.deleteSelectionByNumber(selectionNumber))
                     return Response.SC_OK;
                 else
                     return Response.SC_BAD_REQUEST;
