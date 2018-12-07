@@ -65,7 +65,7 @@ public class StudentServlet {
      * Add a student into DB
      *
      * @param postData Student JSON data
-     * @return Status code
+     * @return Status code, 200: Success, 400: Failed
      */
     @Path("/")
     @POST

@@ -34,7 +34,7 @@ public class ServletUtils {
      * Check student insert data is valid
      * @param studentName Student's number
      * @param gender Student's gender
-     * @return boolean
+     * @return True: Valid, False: Invalid
      */
     boolean validStudentData(String studentName, String gender) {
         return (studentName.length() <= 45 && validGender(gender));
@@ -43,7 +43,7 @@ public class ServletUtils {
     /**
      * Check gender string is valid
      * @param gender Gender can be Male or Female or Bisexual
-     * @return boolean
+     * @return True: Valid, False: Invalid
      */
     private boolean validGender(String gender) {
         return (gender.equalsIgnoreCase("Male") ||
@@ -59,8 +59,8 @@ public class ServletUtils {
     /**
      * Check instructor insert data is valid
      * @param instructorName Instructor's name
-     * @param office Instructor's office
-     * @return boolean
+     * @param office Instructor's office, fixed to 4 char
+     * @return True: Valid, False: Invalid
      */
     boolean validInstructorData(String instructorName, String office) {
         return (instructorName.length() <= 45 && (office.equalsIgnoreCase(MySqlConfig.VALUE_NULL) || office.length() == 4));
@@ -75,13 +75,13 @@ public class ServletUtils {
 
     /**
      * Check course insert data is valid
-     * @param courseNumber Course's number(4 char)
+     * @param courseNumber Course's number, fixed to 5 char
      * @param courseTitle Course's title
      * @param instructorNumber Instructor's number
      * @param courseSize Course's course size (10 ~ 255)
      * @param courseWeekday  Course's week day(1~5)
      * @param courseClasstime  Course's class time (1~8), can be multiple(2,3,4)
-     * @return boolean
+     * @return True: Valid, False: Invalid
      */
     boolean validCourseData(String courseNumber, String courseTitle, int instructorNumber,
                                    int courseSize, int courseWeekday, String courseClasstime) {
@@ -97,7 +97,7 @@ public class ServletUtils {
     }
 
     /**
-     * 1.Check length
+     * 1.Check course number length, fixed to 5 char
      * 2.Check course exist
      * @param courseNumber Course's number
      * @return True: Valid, False: Invalid
@@ -114,7 +114,7 @@ public class ServletUtils {
     /**
      * Check class time string is valid
      * @param classTime Class time can be between 1 and 8 and cannot be repeated
-     * @return boolean
+     * @return True: Valid, False: Invalid
      */
     private boolean validClasstimeString(String classTime) {
         boolean[] classtimeOccupy = new boolean[8];

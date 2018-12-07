@@ -49,7 +49,7 @@ public class CourseServlet {
      * Add a course data into DB
      *
      * @param postData Course JSON data
-     * @return Status code
+     * @return Status code, 200: Success, 400: Failed
      */
     @Path("/")
     @POST
@@ -93,7 +93,7 @@ public class CourseServlet {
      * Delete a course data
      *
      * @param postData Course JSON data
-     * @return Status code
+     * @return Status code, 200: Success, 400: Failed
      */
     @Path("/")
     @DELETE

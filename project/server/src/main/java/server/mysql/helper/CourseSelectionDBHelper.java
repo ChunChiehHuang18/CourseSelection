@@ -136,7 +136,7 @@ public class CourseSelectionDBHelper {
      * @param instructorNumber Instructor's number
      * @param instructorName Instructor's name
      * @param office Instructor's office (can be null)
-     * @return boolean
+     * @return True: Success, False: Failed
      */
     public boolean addInstructor(int instructorNumber, String instructorName, String office) {
         try {
@@ -206,7 +206,7 @@ public class CourseSelectionDBHelper {
      * @param studentNumber Student's number
      * @param studentName Student's name
      * @param gender Student's gender(Male, Female, Bisexual) (can be null)
-     * @return boolean
+     * @return True: Success, False: Failed
      */
     public boolean addStudent(int studentNumber, String studentName, String gender) {
         try {
@@ -280,7 +280,7 @@ public class CourseSelectionDBHelper {
      * @param courseSize Course's size (10~ 255)
      * @param courseWeekday Course's week day (1 ~ 5)
      * @param courseClasstime Course's class time (1~8), can be multiple(2,3,4,)
-     * @return boolean
+     * @return True: Success, False: Failed
      */
     public boolean addCourse(String courseNumber, String courseTitle, int instructorNumber, int courseSize, int courseWeekday, String courseClasstime) {
         try {
@@ -303,7 +303,7 @@ public class CourseSelectionDBHelper {
     /**
      * Delete the course and course's selection data
      * @param courseNumber Course's number(Fixed to 5 char)
-     * @return boolean
+     * @return True: Success, False: Failed
      */
     public boolean deleteCourse(String courseNumber) {
         try {
@@ -424,7 +424,7 @@ public class CourseSelectionDBHelper {
      * @param selectionNumber Selection's number
      * @param studentNumber Student's number
      * @param courseNumber Course's number
-     * @return boolean
+     * @return True: Success, False: Failed
      */
     public boolean addSelection(int selectionNumber, int studentNumber, String courseNumber) {
         try {
@@ -446,7 +446,7 @@ public class CourseSelectionDBHelper {
     /**
      * Delete  selection by selection number
      * @param selectionNumber Selection's number
-     * @return boolean
+     * @return True: Success, False: Failed
      */
     public boolean deleteSelectionByNumber(int selectionNumber) {
         try {
@@ -462,7 +462,7 @@ public class CourseSelectionDBHelper {
     /**
      * Delete  selection by course number
      * @param courseNumber Course's number
-     * @return boolean
+     * @return True: Success, False: Failed
      */
     private boolean deleteSelectionByCourse(String courseNumber) {
         try {

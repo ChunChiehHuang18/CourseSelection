@@ -73,7 +73,7 @@ public class SelectionServlet {
      * Select a course and insert into DB
      *
      * @param postData Select course JSON data
-     * @return Status code
+     * @return Status code, 200: Success, 400: Failed
      */
     @Path("/")
     @POST
@@ -109,7 +109,7 @@ public class SelectionServlet {
      * Delete the selection
      *
      * @param postData Select course JSON data
-     * @return Status code
+     * @return Status code, 200: Success, 400: Failed
      */
     @Path("/")
     @DELETE
