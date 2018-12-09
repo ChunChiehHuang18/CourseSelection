@@ -1,51 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AnalysisUIOptions">
-    <option name="SCOPE_TYPE" value="4" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc398ed3-5acf-46f4-a3fd-12b0fe32bfbe" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../doc/allclasses-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/allclasses-frame.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/allclasses-noframe.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/allclasses-noframe.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/constant-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/constant-values.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/deprecated-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/deprecated-list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/help-doc.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-10.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-11.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-11.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-8.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-9.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/overview-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/overview-frame.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/overview-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/overview-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/overview-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/JettyServer.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/JettyServer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/CourseServlet.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/CourseServlet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/InstructorServlet.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/InstructorServlet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/SelectionServlet.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/SelectionServlet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/ServletUtils.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/ServletUtils.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/StudentServlet.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/StudentServlet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/package-frame.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/mysql/helper/CourseSelectionDBHelper.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/mysql/helper/CourseSelectionDBHelper.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/mysql/helper/MySqlConfig.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/mysql/helper/MySqlConfig.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/mysql/helper/PrepareStatementUtils.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/mysql/helper/PrepareStatementUtils.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/mysql/helper/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/mysql/helper/package-frame.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/mysql/helper/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/mysql/helper/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/mysql/helper/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/mysql/helper/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/package-frame.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/server/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java" afterDir="false" />
-    </list>
+    <list default="true" id="cc398ed3-5acf-46f4-a3fd-12b0fe32bfbe" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/server/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -122,8 +78,8 @@
       <file leaf-file-name="CourseServlet.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/CourseServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="77">
+              <caret line="19" column="28" lean-forward="true" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -438,11 +394,11 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32992035" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.17861205" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.17861205" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32992035" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22180451" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22180451" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.34584755" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -852,8 +808,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/CourseServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="77">
+          <caret line="19" column="28" lean-forward="true" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
