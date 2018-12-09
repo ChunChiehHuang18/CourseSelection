@@ -4,7 +4,48 @@
     <option name="SCOPE_TYPE" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc398ed3-5acf-46f4-a3fd-12b0fe32bfbe" name="Default" comment="" />
+    <list default="true" id="cc398ed3-5acf-46f4-a3fd-12b0fe32bfbe" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../doc/allclasses-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/allclasses-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/allclasses-noframe.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/allclasses-noframe.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/constant-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/constant-values.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/deprecated-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/deprecated-list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/help-doc.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-10.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-11.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-11.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-5.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-6.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-7.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-8.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index-files/index-9.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/overview-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/overview-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/overview-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/overview-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/overview-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/JettyServer.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/JettyServer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/CourseServlet.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/CourseServlet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/InstructorServlet.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/InstructorServlet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/SelectionServlet.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/SelectionServlet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/ServletUtils.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/ServletUtils.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/StudentServlet.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/StudentServlet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/jsersey/servlet/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/jsersey/servlet/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/mysql/helper/CourseSelectionDBHelper.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/mysql/helper/CourseSelectionDBHelper.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/mysql/helper/MySqlConfig.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/mysql/helper/MySqlConfig.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/mysql/helper/PrepareStatementUtils.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/mysql/helper/PrepareStatementUtils.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/mysql/helper/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/mysql/helper/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/mysql/helper/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/mysql/helper/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/mysql/helper/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/mysql/helper/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/server/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/server/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/server/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,11 +57,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="CourseSelectionDBHelper.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CourseSelectionDBHelper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="416" column="32" lean-forward="true" selection-start-line="416" selection-start-column="32" selection-end-line="416" selection-end-column="32" />
+            <state relative-caret-position="451">
+              <caret line="420" lean-forward="true" selection-start-line="420" selection-end-line="420" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -31,8 +72,8 @@
       <file leaf-file-name="ServletUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/ServletUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="154" column="27" selection-start-line="154" selection-start-column="27" selection-end-line="154" selection-end-column="27" />
+            <state relative-caret-position="408">
+              <caret line="19" column="7" lean-forward="true" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5743#5744#0" expanded="true" />
@@ -45,8 +86,8 @@
       <file leaf-file-name="SelectionServlet.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="127" column="52" selection-start-line="127" selection-start-column="29" selection-end-line="127" selection-end-column="52" />
+            <state relative-caret-position="-1088">
+              <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -78,11 +119,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CourseServlet.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CourseServlet.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/CourseServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1133">
-              <caret line="51" column="53" selection-start-line="51" selection-start-column="53" selection-end-line="51" selection-end-column="53" />
+            <state relative-caret-position="293">
+              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -124,11 +165,11 @@
     <findStrings>
       <find>sqlType</find>
       <find>queryCourseSizeSt</find>
-      <find />
+      <find>WHERE course_selection.selection.student_number=</find>
       <find>selectCourseStm</find>
       <find>.student.student_number=</find>
       <find>Bisexugal</find>
-      <find />
+      <find>.student.student_name, course_selection.student.student_gender</find>
       <find>deductCourseRemainStm</find>
       <find>queryStudentClasstimeStm</find>
       <find>querySelectionDuplicateStm</find>
@@ -156,10 +197,10 @@
         <option value="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/PrepareStatementUtils.java" />
         <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/CourseServlet.java" />
         <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/InstructorServlet.java" />
-        <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java" />
         <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/StudentServlet.java" />
         <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/ServletUtils.java" />
         <option value="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java" />
+        <option value="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java" />
       </list>
     </option>
   </component>
@@ -170,7 +211,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-110" />
     <option name="y" value="47" />
     <option name="width" value="1938" />
@@ -397,11 +438,11 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32992035" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.17861205" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.17861205" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32992035" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22180451" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22180451" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.34584755" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -757,16 +798,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/CourseServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1133">
-          <caret line="51" column="53" selection-start-line="51" selection-start-column="53" selection-end-line="51" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/InstructorServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-187">
@@ -787,10 +818,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="420" lean-forward="true" selection-start-line="420" selection-end-line="420" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1088">
+          <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/ServletUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="154" column="27" selection-start-line="154" selection-start-column="27" selection-end-line="154" selection-end-column="27" />
+        <state relative-caret-position="408">
+          <caret line="19" column="7" lean-forward="true" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#5743#5744#0" expanded="true" />
@@ -799,20 +850,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/SelectionServlet.java">
+    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/CourseServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="293">
-          <caret line="127" column="52" selection-start-line="127" selection-start-column="29" selection-end-line="127" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="416" column="32" lean-forward="true" selection-start-line="416" selection-start-column="32" selection-end-line="416" selection-end-column="32" />
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -70,7 +70,7 @@ public class SelectionServlet {
     }
 
     /**
-     * Select a course and insert into DB
+     * Add a selection and insert into DB
      *
      * @param postData Select course JSON data
      * @return Status code, 200: Success, 400: Failed
@@ -79,7 +79,7 @@ public class SelectionServlet {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public int selectCourse(String postData) {
+    public int addSelection(String postData) {
         try {
             JSONObject selectionObj = new JSONObject(postData);
             int selectionNumber = -1;
