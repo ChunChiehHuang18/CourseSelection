@@ -1,2 +1,4 @@
 project/target/
 project/server/target/
+test-script/.idea/
+test-script/venv

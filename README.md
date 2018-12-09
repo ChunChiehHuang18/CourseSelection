@@ -9,6 +9,14 @@ And modify config in MySqlConfig.java if you need.
 ## Java Doc
 You can find this Project's Java doc in doc folder
 
+## Test Script
+You can find the Python version of test script in the test-script folder. It allows you to insert multiple data at once and includes test script of all available API.
+
+Start test script
+1. pip install -r requirements.txt
+2. python test.py
+
+
 ## Start Http Service
 Method 1: Uber-jar
 

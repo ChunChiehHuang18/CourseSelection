@@ -4,14 +4,7 @@
     <option name="SCOPE_TYPE" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc398ed3-5acf-46f4-a3fd-12b0fe32bfbe" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../TestScript/test_script.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/ServletUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/jsersey/servlet/ServletUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/target/classes/server/jsersey/servlet/ServletUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/server/jsersey/servlet/ServletUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/target/classes/server/mysql/helper/CourseSelectionDBHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/classes/server/mysql/helper/CourseSelectionDBHelper.class" afterDir="false" />
-    </list>
+    <list default="true" id="cc398ed3-5acf-46f4-a3fd-12b0fe32bfbe" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/server/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,8 +19,8 @@
       <file leaf-file-name="CourseSelectionDBHelper.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="585" column="26" selection-start-line="585" selection-start-column="26" selection-end-line="585" selection-end-column="26" />
+            <state relative-caret-position="355">
+              <caret line="416" column="32" lean-forward="true" selection-start-line="416" selection-start-column="32" selection-end-line="416" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -131,11 +124,11 @@
     <findStrings>
       <find>sqlType</find>
       <find>queryCourseSizeSt</find>
-      <find>WHERE course_selection.selection.student_number=</find>
+      <find />
       <find>selectCourseStm</find>
       <find>.student.student_number=</find>
       <find>Bisexugal</find>
-      <find>.student.student_name, course_selection.student.student_gender</find>
+      <find />
       <find>deductCourseRemainStm</find>
       <find>queryStudentClasstimeStm</find>
       <find>querySelectionDuplicateStm</find>
@@ -177,7 +170,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-110" />
     <option name="y" value="47" />
     <option name="width" value="1938" />
@@ -818,8 +811,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/src/main/java/server/mysql/helper/CourseSelectionDBHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="585" column="26" selection-start-line="585" selection-start-column="26" selection-end-line="585" selection-end-column="26" />
+        <state relative-caret-position="355">
+          <caret line="416" column="32" lean-forward="true" selection-start-line="416" selection-start-column="32" selection-end-line="416" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
