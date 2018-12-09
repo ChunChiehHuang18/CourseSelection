@@ -137,43 +137,23 @@ public class ServletUtils {
     final static String KEY_SELECTION_NUMBER = "Selection_Number";
 
     /**
-     * Using locking reads to ...
-     * 1. Check duplicate selection 
-     * 2. Verify course selection times do not conflict
-     * 3. Deduct course remain
-     * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
-     * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
+     * Check basic student number and course course  is legal
      * @param courseNumber Course's number
      * @param studentNumber Student's number
      * @return True: Valid, False: Invalid
      */
     boolean validSelectionData(int studentNumber, String courseNumber) {
-        if(studentNumber > 0 && courseNumber.length() == 5) {
-            CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
-            return (dbHelper.validSelectionData(studentNumber, courseNumber));
-        } else
-            return false;
+        return (studentNumber > 0 && courseNumber.length() == 5);
     }
 
 
     /**
-     * Using locking reads to ...
-     * 1. Get Student and Course's number
-     * 2. Check selection exist
-     * 3. Add course remain
-     * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
-     * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
+     * Check basic selection number is legal
      * @param selectionNumber Selection's number
      * @return True: Valid, False: Invalid
      */
     boolean validDeleteSelectionData(int selectionNumber) {
-        if(selectionNumber > 0 ) {
-            CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
-            return (dbHelper.validDeleteByNumberSelectionData(selectionNumber));
-        } else
-            return false;
+        return selectionNumber > 0;
     }
 
 

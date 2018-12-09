@@ -420,46 +420,6 @@ public class CourseSelectionDBHelper {
     }
 
     /**
-     * Select a Course and insert into MySql
-     * @param selectionNumber Selection's number
-     * @param studentNumber Student's number
-     * @param courseNumber Course's number
-     * @return True: Success, False: Failed
-     */
-    public boolean addSelection(int selectionNumber, int studentNumber, String courseNumber) {
-        try {
-            if(selectionNumber > 0)
-                addSelectionStm.setInt(1, selectionNumber);
-            else
-                addSelectionStm.setNull(1, 0);
-            addSelectionStm.setString(2, courseNumber);
-            addSelectionStm.setInt(3, studentNumber);
-            addSelectionStm.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-
-    /**
-     * Delete  selection by selection number
-     * @param selectionNumber Selection's number
-     * @return True: Success, False: Failed
-     */
-    public boolean deleteSelectionByNumber(int selectionNumber) {
-        try {
-            deleteSelectionByNumberStm.setInt(1, selectionNumber);
-            deleteSelectionByNumberStm.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * Delete  selection by course number
      * @param courseNumber Course's number
      * @return True: Success, False: Failed
@@ -521,17 +481,20 @@ public class CourseSelectionDBHelper {
     }
 
     /**
+     * Add a selection
      * Using locking reads to ...
      * 1. Check duplicate selection
      * 2. Verify course selection times do not conflict
      * 3. Deduct course remain
+     * 4. Insert a selection
      * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
      * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
+     * @param selectionNumber  Selection's number
      * @param courseNumber Course's number
      * @param studentNumber Student's number
      * @return True: Valid, False: Invalid
      */
-    public boolean validSelectionData(int studentNumber, String courseNumber) {
+    public boolean addSelection(int selectionNumber, int studentNumber, String courseNumber) {
         try {
             conn.setAutoCommit(false);
 
@@ -574,13 +537,25 @@ public class CourseSelectionDBHelper {
             // Try to deduct course remain and check affect row number
             deductCourseRemainSelectStm.setString(1, courseNumber);
             deductCourseRemainUpdateStm.setString(1, courseNumber);
-            int affectedRow = 0;
+            int deductAffectedRow = 0;
             if(deductCourseRemainSelectStm.executeQuery().next()) {
-                affectedRow =  deductCourseRemainUpdateStm.executeUpdate() ;
+                deductAffectedRow =  deductCourseRemainUpdateStm.executeUpdate() ;
+            }
+
+            // 4. Insert selection
+            int selectionAffectedRow = 0;
+            if(deductAffectedRow > 0) {
+                if (selectionNumber > 0)
+                    addSelectionStm.setInt(1, selectionNumber);
+                else
+                    addSelectionStm.setNull(1, 0);
+                addSelectionStm.setString(2, courseNumber);
+                addSelectionStm.setInt(3, studentNumber);
+                selectionAffectedRow = addSelectionStm.executeUpdate();
             }
 
             conn.commit();
-            return affectedRow > 0;
+            return (deductAffectedRow > 0 && selectionAffectedRow > 0);
         } catch (SQLException e) {
             e.printStackTrace();
             if (conn != null) {
@@ -603,16 +578,18 @@ public class CourseSelectionDBHelper {
 
 
     /**
+     * Delete selection by selection number
      * Using locking reads to ...
      * 1. Get Student and Course's number
      * 2. Check selection exist
      * 3. Add course remain
+     * 4. Delete selection
      * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
      * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
      * @param selectionNumber Selection's number
      * @return True: Valid, False: Invalid
      */
-    public boolean validDeleteByNumberSelectionData(int selectionNumber) {
+    public boolean deleteSelectionByNumber(int selectionNumber) {
         try {
             conn.setAutoCommit(false);
 
@@ -643,13 +620,20 @@ public class CourseSelectionDBHelper {
             // Try to add course remain and check affect row number
             addCourseRemainSelectionStm.setString(1, courseNumber);
             addCourseRemainUpdateStm.setString(1, courseNumber);
-            int affectedRow = 0;
+            int addAffectedRow = 0;
             if(addCourseRemainSelectionStm.executeQuery().next()) {
-                affectedRow =  addCourseRemainUpdateStm.executeUpdate() ;
+                addAffectedRow =  addCourseRemainUpdateStm.executeUpdate() ;
+            }
+
+            // 4. Delete selection by selection number
+            int deleteAffectedRow = 0;
+            if(addAffectedRow > 0) {
+                deleteSelectionByNumberStm.setInt(1, selectionNumber);
+                deleteAffectedRow = deleteSelectionByNumberStm.executeUpdate();
             }
 
             conn.commit();
-            return affectedRow > 0;
+            return (addAffectedRow > 0 && deleteAffectedRow > 0);
         } catch (SQLException e) {
             e.printStackTrace();
             if (conn != null) {
