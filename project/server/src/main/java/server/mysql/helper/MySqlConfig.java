@@ -18,6 +18,7 @@ public class MySqlConfig {
     static final String COLUMN_STUDENT_NUMBER = "student_number";
     static final String COLUMN_STUDENT_NAME = "student_name";
     static final String COLUMN_STUDENT_GENDER = "student_gender";
+    static final String COLUMN_STUDENT_CLASSTIME = "student_classtime";
 
     static final String COLUMN_INSTRUCTOR_NUMBER = "instructor_number";
     static final String COLUMN_INSTRUCTOR_NAME = "instructor_name";
@@ -36,6 +37,7 @@ public class MySqlConfig {
     static final String SHOW_STUDENT_NUMBER = "Student Number";
     static final String SHOW_STUDENT_NAME = "Student Name";
     static final String SHOW_STUDENT_GENDER = "Student Gender";
+    static final String SHOW_STUDENT_CLASSTIME = "Student ClassTime";
 
     static final String SHOW_INSTRUCTOR_NUMBER = "Instructor Number";
     static final String SHOW_INSTRUCTOR_NAME = "Instructor Name";

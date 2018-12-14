@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.*;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 import static server.mysql.helper.PrepareStatementUtils.*;
 
@@ -29,6 +29,10 @@ public class CourseSelectionDBHelper {
     // query
     private PreparedStatement queryAllStudentStm = null;
     private PreparedStatement queryStudentByNumberStm = null;
+    // class time
+    private enum UpdateMode {
+        ADD, DELETE
+    }
 
     // Course
     // add
@@ -45,8 +49,8 @@ public class CourseSelectionDBHelper {
     private PreparedStatement deductCourseRemainSelectStm = null;
     private PreparedStatement deductCourseRemainUpdateStm = null;
     private PreparedStatement addSelectionStm = null;
-    private PreparedStatement queryStudentClasstimeStm = null;
-    private PreparedStatement querySelectionDuplicateStm = null;
+    private PreparedStatement studentClasstimeSelectStm = null;
+    private PreparedStatement studentClasstimeUpdateStm = null;
     // delete
     private PreparedStatement addCourseRemainSelectionStm = null;
     private PreparedStatement addCourseRemainUpdateStm = null;
@@ -54,6 +58,7 @@ public class CourseSelectionDBHelper {
     private PreparedStatement deleteSelectionByCourseStm = null;
     // query
     private PreparedStatement queryAllSelectionStm = null;
+    private PreparedStatement querySelectionByCourseStm = null;
     private PreparedStatement querySelectionByNumberStm = null;
     private PreparedStatement querySelectionByStudentStm = null;
     private PreparedStatement querySelectionByInstructorStm = null;
@@ -107,8 +112,8 @@ public class CourseSelectionDBHelper {
             addSelectionStm = conn.prepareStatement(ADD_SELECTION_STM_STRING);
             deductCourseRemainSelectStm = conn.prepareStatement(DEDUCT_COURSE_REMAIN_SELECTION_STM_STRING);
             deductCourseRemainUpdateStm = conn.prepareStatement(DEDUCT_COURSE_REMAIN_UPDATE_STM_STRING);
-            queryStudentClasstimeStm = conn.prepareStatement(QUERY_STUDENT_CLASSTIME_STM_STRING);
-            querySelectionDuplicateStm = conn.prepareStatement(QUERY_SELECTION_DUPLICATE_STM_STRING);
+            studentClasstimeSelectStm = conn.prepareStatement(STUDENT_CLASSTIME_SELECTION_STM_STRING);
+            studentClasstimeUpdateStm = conn.prepareStatement(STUDENT_CLASSTIME_UPDATE_STM_STRING);
             // delete
             addCourseRemainSelectionStm = conn.prepareStatement(ADD_COURSE_REMAIN_SELECTION_STM_STRING);
             addCourseRemainUpdateStm = conn.prepareStatement(ADD_COURSE_REMAIN_UPDATE_STM_STRING);
@@ -118,6 +123,7 @@ public class CourseSelectionDBHelper {
             queryAllSelectionStm = conn.prepareStatement(QUERY_ALL_SELECTION_STM_STRING);
             querySelectionByNumberStm = conn.prepareStatement(QUERY_SELECTION_BY_NUMBER_STM_STRING);
 
+            querySelectionByCourseStm = conn.prepareStatement(QUERY_SELECTION_BY_COURSE_STM_STRING);
             querySelectionByStudentStm = conn.prepareStatement(QUERY_SELECTION_BY_STUDENT_STM_STRING);
             querySelectionByInstructorStm = conn.prepareStatement(QUERY_SELECTION_BY_INSTRUCTOR_STM_STRING);
             querySelectionByStudentAndInstructorStm = conn.prepareStatement(QUERY_SELECTION_BY_STUDENT_AND_INSTRUCTOR_STM_STRING);
@@ -219,6 +225,7 @@ public class CourseSelectionDBHelper {
                 addStudentStm.setString(3, gender);
             else
                 addStudentStm.setNull(3, 0);
+            addStudentStm.setString(4, PrepareStatementUtils.STUDENT_DEFAULT_CLASSTIME);
             addStudentStm.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -240,6 +247,7 @@ public class CourseSelectionDBHelper {
                 obj.put(MySqlConfig.SHOW_STUDENT_NUMBER, rs.getInt(MySqlConfig.COLUMN_STUDENT_NUMBER));
                 obj.put(MySqlConfig.SHOW_STUDENT_NAME, rs.getString(MySqlConfig.COLUMN_STUDENT_NAME));
                 obj.put(MySqlConfig.SHOW_STUDENT_GENDER, rs.getString(MySqlConfig.COLUMN_STUDENT_GENDER));
+                obj.put(MySqlConfig.SHOW_STUDENT_CLASSTIME, rs.getString(MySqlConfig.COLUMN_STUDENT_CLASSTIME));
                 jsonArray.put(obj);
             }
             return jsonArray;
@@ -263,6 +271,7 @@ public class CourseSelectionDBHelper {
                 obj.put(MySqlConfig.SHOW_STUDENT_NUMBER, rs.getInt(MySqlConfig.COLUMN_STUDENT_NUMBER));
                 obj.put(MySqlConfig.SHOW_STUDENT_NAME, rs.getString(MySqlConfig.COLUMN_STUDENT_NAME));
                 obj.put(MySqlConfig.SHOW_STUDENT_GENDER, rs.getString(MySqlConfig.COLUMN_STUDENT_GENDER));
+                obj.put(MySqlConfig.SHOW_STUDENT_CLASSTIME, rs.getString(MySqlConfig.COLUMN_STUDENT_CLASSTIME));
             }
             return obj;
         } catch (SQLException e) {
@@ -302,23 +311,48 @@ public class CourseSelectionDBHelper {
 
     /**
      * Delete the course and course's selection data
+     * 1. Get selection number array
+     * 2. Delete selection by course number
+     * 3. Remove student class time
+     * 4. Delete course
      * @param courseNumber Course's number(Fixed to 5 char)
      * @return True: Success, False: Failed
      */
     public boolean deleteCourse(String courseNumber) {
         try {
+            // 1. Get selection number array
+            querySelectionByCourseStm.setString(1, courseNumber);
+            ResultSet selectionRs = querySelectionByCourseStm.executeQuery();
+            ArrayList<Integer> studentNumberArray = new ArrayList<>();
+            while (selectionRs.next()) {
+                studentNumberArray.add(selectionRs.getInt(MySqlConfig.COLUMN_STUDENT_NUMBER));
+            }
+
             conn.setAutoCommit(false);
 
-            // delete selection by course
-            deleteSelectionByCourse(courseNumber);
+            // 2. Delete selection by course number
+            deleteSelectionByCourseStm.setString(1, courseNumber);
+            deleteSelectionByCourseStm.executeUpdate();
 
-            // delete course
+            // 3. Remove student class time
+            for (int studentNumber : studentNumberArray) {
+                if(!updateClasstime(courseNumber, studentNumber, UpdateMode.DELETE)) {
+                    conn.rollback();
+                    conn.commit();
+                    return false;
+                }
+            }
+
+            // 4. Delete course
             deleteCourseStm.setString(1, courseNumber);
-            int affectedRow = deleteCourseStm.executeUpdate();
-
+            if(deleteCourseStm.executeUpdate() <= 0) {
+                conn.rollback();
+                conn.commit();
+                return false;
+            }
 
             conn.commit();
-            return affectedRow > 0;
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             if (conn != null) {
@@ -420,22 +454,6 @@ public class CourseSelectionDBHelper {
     }
 
     /**
-     * Delete  selection by course number
-     * @param courseNumber Course's number
-     * @return True: Success, False: Failed
-     */
-    private boolean deleteSelectionByCourse(String courseNumber) {
-        try {
-            deleteSelectionByCourseStm.setString(1, courseNumber);
-            deleteSelectionByCourseStm.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * Query all selection list
      * @return Selection JSONArray
      */
@@ -480,13 +498,46 @@ public class CourseSelectionDBHelper {
         return new JSONObject();
     }
 
+
+    /**
+     *  Verify course selection times do not conflict and merge selection class time
+     * @param currentClassTime Current class time string array
+     * @param selectionClassTime Selection class time string array
+     * @return Conflict: empty string,  Success: New class time string
+     */
+    private String mergeClasstimeString(String[] currentClassTime, String[] selectionClassTime) {
+        boolean[] classtimeOccupy = new boolean[8];
+        for(String classTime : currentClassTime) {
+            if(!classTime.equalsIgnoreCase(""))
+                classtimeOccupy[Integer.valueOf(classTime) - 1] = true;
+        }
+        for(String classTime : selectionClassTime) {
+            if(!classTime.equalsIgnoreCase("")) {
+                if (classtimeOccupy[Integer.valueOf(classTime) - 1])
+                    return "";
+                else
+                    classtimeOccupy[Integer.valueOf(classTime) - 1] = true;
+            }
+        }
+
+        String newClassTime = "";
+        for (int i = 0; i < classtimeOccupy.length; i++) {
+            if(classtimeOccupy[i]) {
+                if(newClassTime.equalsIgnoreCase(""))
+                    newClassTime += String.valueOf(i+1);
+                else
+                    newClassTime += "," + String.valueOf(i+1);
+            }
+        }
+        return newClassTime;
+    }
+
     /**
      * Add a selection
      * Using locking reads to ...
-     * 1. Check duplicate selection
-     * 2. Verify course selection times do not conflict
-     * 3. Deduct course remain
-     * 4. Insert a selection
+     * 1. Add  class time
+     * 2. Deduct course remain
+     * 3. Insert a selection
      * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
      * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
      * @param selectionNumber  Selection's number
@@ -498,71 +549,50 @@ public class CourseSelectionDBHelper {
         try {
             conn.setAutoCommit(false);
 
-            // 1. Check duplicate selection
-            querySelectionDuplicateStm.setInt(1, studentNumber);
-            querySelectionDuplicateStm.setString(2, courseNumber);
-            ResultSet rs = querySelectionDuplicateStm.executeQuery();
-            if(rs.next()) {
-                if (rs.getInt(1) > 0) {
-                    conn.commit();
-                    return false;
-                }
+            // 1. Add class time
+            if(!updateClasstime(courseNumber, studentNumber, UpdateMode.ADD)) {
+                conn.commit();
+                return false;
             }
 
-            // 2. Verify course selection times do not conflict
-            // Get student's current class time
-            JSONArray studenClasstime = queryStudentClasstime(studentNumber);
-            boolean[][] classtimeOccupy = new boolean[5][8];
-            for (boolean[] row: classtimeOccupy)
-                Arrays.fill(row, Boolean.FALSE);
-            for (int i = 0; i < studenClasstime.length(); i++) {
-                int weekday = studenClasstime.getJSONObject(i).getInt(MySqlConfig.SHOW_COURSE_WEEKDAY);
-                String[] classtime = studenClasstime.getJSONObject(i).getString(MySqlConfig.SHOW_COURSE_CLASSTIME).split(",");
-                for (String time: classtime) {
-                    classtimeOccupy[weekday - 1][Integer.valueOf(time) - 1] = Boolean.TRUE;
-                }
-            }
-            // Get selection class time
-            int selectiontWeekday = queryCourseByNumber(courseNumber).getInt(MySqlConfig.SHOW_COURSE_WEEKDAY);
-            String[] selectionClassTime = queryCourseByNumber(courseNumber).getString(MySqlConfig.SHOW_COURSE_CLASSTIME).split(",");
-            // Check class time occupy
-            for (String time: selectionClassTime) {
-                if(classtimeOccupy[selectiontWeekday - 1][Integer.valueOf(time) - 1]) {
-                    conn.commit();
-                    return false;
-                }
-            }
-
-            // 3. Deduct course remain
-            // Try to deduct course remain and check affect row number
+            // 2. Deduct course remain
             deductCourseRemainSelectStm.setString(1, courseNumber);
             deductCourseRemainUpdateStm.setString(1, courseNumber);
-            int deductAffectedRow = 0;
-            if(deductCourseRemainSelectStm.executeQuery().next()) {
-                deductAffectedRow =  deductCourseRemainUpdateStm.executeUpdate() ;
+
+            if (deductCourseRemainSelectStm.executeQuery().next()) {
+                if (deductCourseRemainUpdateStm.executeUpdate() <= 0) {
+                    conn.rollback();
+                    conn.commit();
+                    return false;
+                }
+            } else {
+                conn.rollback();
+                conn.commit();
+                return false;
             }
 
-            // 4. Insert selection
-            int selectionAffectedRow = 0;
-            if(deductAffectedRow > 0) {
-                if (selectionNumber > 0)
-                    addSelectionStm.setInt(1, selectionNumber);
-                else
-                    addSelectionStm.setNull(1, 0);
-                addSelectionStm.setString(2, courseNumber);
-                addSelectionStm.setInt(3, studentNumber);
-                selectionAffectedRow = addSelectionStm.executeUpdate();
+            // 3. Insert selection
+            if (selectionNumber > 0)
+                addSelectionStm.setInt(1, selectionNumber);
+            else
+                addSelectionStm.setNull(1, 0);
+            addSelectionStm.setString(2, courseNumber);
+            addSelectionStm.setInt(3, studentNumber);
+            if (addSelectionStm.executeUpdate() <= 0) {
+                conn.rollback();
+                conn.commit();
+                return false;
             }
 
             conn.commit();
-            return (deductAffectedRow > 0 && selectionAffectedRow > 0);
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             if (conn != null) {
                 try {
                     System.err.print("Transaction is being rolled back");
                     conn.rollback();
-                } catch(SQLException excep) {
+                } catch (SQLException excep) {
                     excep.printStackTrace();
                 }
             }
@@ -578,12 +608,96 @@ public class CourseSelectionDBHelper {
 
 
     /**
+     *  Remove selection class time from current class time string
+     * @param currentClassTime Current class time string array
+     * @param selectionClassTime Selection class time string array
+     * @return Conflict: empty string,  Success: New class time string
+     */
+    private String removeClasstimeString(String[] currentClassTime, String[] selectionClassTime) {
+        boolean[] classtimeOccupy = new boolean[8];
+        for(String classTime : currentClassTime) {
+            if(!classTime.equalsIgnoreCase(""))
+                classtimeOccupy[Integer.valueOf(classTime) - 1] = true;
+        }
+        for(String classTime : selectionClassTime) {
+            if(!classTime.equalsIgnoreCase("")) {
+                classtimeOccupy[Integer.valueOf(classTime) - 1] = false;
+            }
+        }
+
+        String newClassTime = "";
+        for (int i = 0; i < classtimeOccupy.length; i++) {
+            if(classtimeOccupy[i]) {
+                if(newClassTime.equalsIgnoreCase(""))
+                    newClassTime += String.valueOf(i+1);
+                else
+                    newClassTime += "," + String.valueOf(i+1);
+            }
+        }
+        return newClassTime;
+    }
+
+    /**
+     * Update class time
+     * @param courseNumber Course number you would like to add or drop
+     * @param studentNumber Student number
+     * @param mode Add or Delete mode
+     * @return True: Success, False: Failed
+     */
+    private boolean updateClasstime(String courseNumber, int studentNumber, UpdateMode mode) {
+        try {
+            // Get selection class time
+            JSONObject selectionCourseObj = queryCourseByNumber(courseNumber);
+            int selectiontWeekday = selectionCourseObj.getInt(MySqlConfig.SHOW_COURSE_WEEKDAY);
+            String[] selectionClassTime = selectionCourseObj.getString(MySqlConfig.SHOW_COURSE_CLASSTIME).split(",");
+
+            studentClasstimeSelectStm.setInt(1, studentNumber);
+            ResultSet rs = studentClasstimeSelectStm.executeQuery();
+            if (rs.next()) {
+                // Get current class time
+                JSONObject currentClasstimeObj = new JSONObject(rs.getString(MySqlConfig.COLUMN_STUDENT_CLASSTIME));
+                String[] currentClassTime = currentClasstimeObj.getString(String.valueOf(selectiontWeekday)).split(",");
+                String newClassTimeString = "";
+                // Update class time string
+                switch (mode) {
+                    case ADD:
+                        // Merge current and selection class time string
+                        newClassTimeString = mergeClasstimeString(currentClassTime, selectionClassTime);
+                        break;
+                    case DELETE:
+                        // Remove selection class time from current class time string
+                        newClassTimeString = removeClasstimeString(currentClassTime, selectionClassTime);
+                        break;
+                }
+                // Update new class time
+                currentClasstimeObj.put(String.valueOf(selectiontWeekday), newClassTimeString);
+                studentClasstimeUpdateStm.setString(1, currentClasstimeObj.toString());
+                studentClasstimeUpdateStm.setInt(2, studentNumber);
+                return studentClasstimeUpdateStm.executeUpdate() >= 0;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    conn.rollback();
+                } catch(SQLException excep) {
+                    excep.printStackTrace();
+                }
+            }
+            return false;
+        }
+    }
+
+    /**
      * Delete selection by selection number
-     * Using locking reads to ...
-     * 1. Get Student and Course's number
-     * 2. Check selection exist
+     * 1. Get course and student number by selection number
+     * Using locking read to...
+     * 2. Delete selection by selection number
      * 3. Add course remain
-     * 4. Delete selection
+     * 4. Remove class time
      * https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
      * https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html
      * @param selectionNumber Selection's number
@@ -591,49 +705,43 @@ public class CourseSelectionDBHelper {
      */
     public boolean deleteSelectionByNumber(int selectionNumber) {
         try {
-            conn.setAutoCommit(false);
-
-            // 1.  Get student and instructor's number
+            // 1. Get course and student number by selection number
             JSONObject obj = querySelectionByNumber(selectionNumber);
             if(obj.isEmpty()) {
-                conn.commit();
                 return false;
             }
-            int studentNumber = obj.getInt(MySqlConfig.SHOW_STUDENT_NUMBER);
             String courseNumber = obj.getString(MySqlConfig.SHOW_COURSE_NUMBER);
+            int studentNumber = obj.getInt(MySqlConfig.SHOW_STUDENT_NUMBER);
 
-            // 2. Check  selection exist
-            querySelectionDuplicateStm.setInt(1, studentNumber);
-            querySelectionDuplicateStm.setString(2, courseNumber);
-            ResultSet rs = querySelectionDuplicateStm.executeQuery();
-            if(rs.next()) {
-                if (rs.getInt(1) == 0) {
-                    conn.commit();
-                    return false;
-                }
-            } else {
+            conn.setAutoCommit(false);
+
+            // 2. Delete selection by selection number
+            deleteSelectionByNumberStm.setInt(1, selectionNumber);
+            if(deleteSelectionByNumberStm.executeUpdate() <= 0) {
                 conn.commit();
                 return false;
             }
 
             // 3. Add course remain
-            // Try to add course remain and check affect row number
             addCourseRemainSelectionStm.setString(1, courseNumber);
             addCourseRemainUpdateStm.setString(1, courseNumber);
-            int addAffectedRow = 0;
             if(addCourseRemainSelectionStm.executeQuery().next()) {
-                addAffectedRow =  addCourseRemainUpdateStm.executeUpdate() ;
+                if(addCourseRemainUpdateStm.executeUpdate() <= 0) {
+                    conn.rollback();
+                    conn.commit();
+                    return false;
+                }
             }
 
-            // 4. Delete selection by selection number
-            int deleteAffectedRow = 0;
-            if(addAffectedRow > 0) {
-                deleteSelectionByNumberStm.setInt(1, selectionNumber);
-                deleteAffectedRow = deleteSelectionByNumberStm.executeUpdate();
+            // 4. Remove class time
+            if(!updateClasstime(courseNumber, studentNumber, UpdateMode.DELETE)) {
+                conn.rollback();
+                conn.commit();
+                return false;
             }
 
             conn.commit();
-            return (addAffectedRow > 0 && deleteAffectedRow > 0);
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             if (conn != null) {
@@ -651,29 +759,6 @@ public class CourseSelectionDBHelper {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    /**
-     * Query student's all class time
-     * @param studentNumber Student's number
-     * @return Weekday and Class time JSONObject
-     */
-    public JSONArray queryStudentClasstime(int studentNumber) {
-        try {
-            queryStudentClasstimeStm.setInt(1, studentNumber);
-            ResultSet rs = queryStudentClasstimeStm.executeQuery();
-            JSONArray jsonArray = new JSONArray();
-            while (rs.next()) {
-                JSONObject obj = new JSONObject();
-                obj.put(MySqlConfig.SHOW_COURSE_WEEKDAY, rs.getInt(MySqlConfig.COLUMN_COURSE_WEEKDAY));
-                obj.put(MySqlConfig.SHOW_COURSE_CLASSTIME, rs.getString(MySqlConfig.COLUMN_COURSE_CLASSTIME));
-                jsonArray.put(obj);
-            }
-            return jsonArray;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new JSONArray();
         }
     }
 
@@ -685,6 +770,7 @@ public class CourseSelectionDBHelper {
             obj.put(MySqlConfig.SHOW_STUDENT_NUMBER, rs.getInt(MySqlConfig.COLUMN_STUDENT_NUMBER));
             obj.put(MySqlConfig.SHOW_STUDENT_NAME, rs.getString(MySqlConfig.COLUMN_STUDENT_NAME));
             obj.put(MySqlConfig.SHOW_STUDENT_GENDER, rs.getString(MySqlConfig.COLUMN_STUDENT_GENDER));
+            obj.put(MySqlConfig.SHOW_STUDENT_CLASSTIME, rs.getString(MySqlConfig.COLUMN_STUDENT_CLASSTIME));
             obj.put(MySqlConfig.SHOW_COURSE_NUMBER, rs.getString(MySqlConfig.COLUMN_COURSE_NUMBER));
             obj.put(MySqlConfig.SHOW_COURSE_TITLE, rs.getString(MySqlConfig.COLUMN_COURSE_TITLE));
             obj.put(MySqlConfig.SHOW_COURSE_SIZE, rs.getInt(MySqlConfig.COLUMN_COURSE_SIZE));

@@ -23,9 +23,11 @@ public class PrepareStatementUtils {
     // Student
 
     // ADD
+    static String STUDENT_DEFAULT_CLASSTIME = "{\"1\":\"\",\"2\":\"\",\"3\":\"\",\"4\":\"\",\"5\":\"\"}";
+
     static String ADD_STUDENT_STM_STRING =
-            "INSERT INTO course_selection.student(student_number, student_name, student_gender)" +
-                    "VALUES (?, ?, ?);";
+            "INSERT INTO course_selection.student(student_number, student_name, student_gender, student_classtime)" +
+                    "VALUES (?, ?, ?, ?);";
 
     // Query
     static String QUERY_ALL_STUDENT_STM_STRING =
@@ -67,19 +69,13 @@ public class PrepareStatementUtils {
 
     static String DEDUCT_COURSE_REMAIN_UPDATE_STM_STRING =  "UPDATE course_selection.course set course_remain = course_remain - 1 where course_number=? AND course_remain > 0;";
 
+    static String STUDENT_CLASSTIME_SELECTION_STM_STRING = "SELECT student_classtime FROM course_selection.student where student_number=? for UPDATE;";
+
+    static String STUDENT_CLASSTIME_UPDATE_STM_STRING =  "UPDATE course_selection.student set student_classtime =? where student_number=?;";
+
     static String ADD_SELECTION_STM_STRING =
             "INSERT INTO course_selection.selection(selection_number, course_number, student_number)" +
                     "VALUES (?, ?, ?);";
-
-    static String QUERY_SELECTION_DUPLICATE_STM_STRING =
-            "SELECT COUNT(course_selection.selection.student_number) " +
-                    "FROM course_selection.selection " +
-                    "WHERE course_selection.selection.student_number = ? AND course_selection.selection.course_number = ? FOR UPDATE;";
-
-    static String QUERY_STUDENT_CLASSTIME_STM_STRING = "SELECT course_selection.course.course_classtime, course_selection.course.course_weekday " +
-            "FROM (course_selection.selection " +
-            "JOIN course_selection.course ON course_selection.course.course_number=course_selection.selection.course_number) " +
-            "WHERE student_number= ? FOR UPDATE;";
 
     // Delete
     static String ADD_COURSE_REMAIN_SELECTION_STM_STRING = "SELECT course_remain FROM course_selection.course where course_number=? for UPDATE;";
@@ -101,6 +97,10 @@ public class PrepareStatementUtils {
     static String QUERY_SELECTION_BY_NUMBER_STM_STRING =
             "SELECT * FROM course_selection.selection " +
             "WHERE selection_number = ?; ";
+
+    static String QUERY_SELECTION_BY_COURSE_STM_STRING =
+            "SELECT * FROM course_selection.selection " +
+                    "WHERE course_number = ?; ";
 
     static String QUERY_SELECTION_BY_STUDENT_STM_STRING = "SELECT * " +
             "FROM (course_selection.selection " +
