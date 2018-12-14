@@ -104,15 +104,15 @@ class Course:
 
 class Selection:
 
-    def __add_selection(self, course_number, num):
-        data = {"Course_Number": course_number, "Student_Number": num}
+    def __add_selection(self, course_number, num, start):
+        data = {"Course_Number": course_number, "Student_Number": start + num}
         json_data = json.dumps(data)
         r = requests.post(local_host + url_api_selection, data=json_data)
         print(r.content)
 
-    def add_selection_task(self, course_number, num):
+    def add_selection_task(self, course_number, num, start):
         for i in range(num):
-            threading.Thread(target=self.__add_selection(course_number, i), args=(course_number, i,)).start()
+            threading.Thread(target=self.__add_selection(course_number, i, start), args=(course_number, i, start)).start()
 
     def delete_selection(self, selection_number):
         data = {"Selection_Number": selection_number}
@@ -147,7 +147,7 @@ if __name__ == '__main__':
     # Student
     student = Student()
     # ADD
-    # student.add_student_task(5)
+    #student.add_student_task(50)
     # Query
     # student.query_all()
     # student.query_by_number(1)
@@ -165,9 +165,9 @@ if __name__ == '__main__':
     # Course
     course = Course()
     # ADD
-    # course.add_course_task()
+    # course.add_course_task(5)
     # Delete
-    # course.delete_course("rhleQ")
+    #course.delete_course("jUfsN")
     # Query
     # course.query_all()
     # course.query_by_number("rhleQ")
@@ -175,9 +175,9 @@ if __name__ == '__main__':
     # Selection
     selection = Selection()
     # ADD
-    # selection.add_selection_task('pUNqg', 50)
+    selection.add_selection_task('uspde', 50, 146)
     # Delete
-    # selection.delete_selection(410)
+    # selection.delete_selection(465)
     # Query
     # selection.query_all()
     # selection.query_by_number(407)
