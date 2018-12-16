@@ -663,6 +663,8 @@ public class CourseSelectionDBHelper {
                     case ADD:
                         // Merge current and selection class time string
                         newClassTimeString = mergeClasstimeString(currentClassTime, selectionClassTime);
+                        if(newClassTimeString.equalsIgnoreCase(""))
+                            return false;
                         break;
                     case DELETE:
                         // Remove selection class time from current class time string
