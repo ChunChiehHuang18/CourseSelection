@@ -100,7 +100,7 @@ Example:
 
 #### query(@GET)
 
-* /instructor/all
+* /instructor
 
 Query all instructor list
 
