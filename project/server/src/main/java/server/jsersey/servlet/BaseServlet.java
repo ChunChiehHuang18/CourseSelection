@@ -1,10 +1,15 @@
 package server.jsersey.servlet;
 
+import server.mysql.helper.CourseSelectionDBHelper;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/")
 public abstract class BaseServlet {
+
+    CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+    ServletUtils servletUtils = ServletUtils.getInstance();
 
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)

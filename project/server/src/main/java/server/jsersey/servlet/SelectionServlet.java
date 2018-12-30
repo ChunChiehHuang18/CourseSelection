@@ -4,7 +4,6 @@ import org.eclipse.jetty.server.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import server.mysql.helper.CourseSelectionDBHelper;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -23,8 +22,6 @@ public class SelectionServlet extends BaseServlet {
      */
     @Override
     public String queryAll() {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
         return dbHelper.queryAllSelection().toString();
     }
 
@@ -36,8 +33,6 @@ public class SelectionServlet extends BaseServlet {
 
     @Override
     public String queryByNumber(String number) {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
         return dbHelper.querySelectionByNumber(Integer.valueOf(number)).toString();
     }
 
@@ -53,8 +48,6 @@ public class SelectionServlet extends BaseServlet {
     @GET
     public String queryByStudent(@QueryParam("studentid") int studentNumber,
                                  @QueryParam("instructorid") int instructorNumber) {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
         if (studentNumber != 0 && instructorNumber != 0)
             return dbHelper.querySelectionByStudentAndInstructor(studentNumber, instructorNumber).toString();
         else if (studentNumber != 0)
@@ -82,9 +75,8 @@ public class SelectionServlet extends BaseServlet {
             int studentNumber = selectionObj.getInt(KEY_STUDENT_NUMBER);
             String courseNumber = selectionObj.getString(KEY_COURSE_NUMBER);
 
-            if (ServletUtils.getInstance().validSelectionData(studentNumber, courseNumber)) {
+            if (servletUtils.validSelectionData(studentNumber, courseNumber)) {
                 // Insert selection into db
-                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
                 if (dbHelper.addSelection(selectionNumber, studentNumber, courseNumber))
                     return Response.SC_OK;
                 else
@@ -112,9 +104,8 @@ public class SelectionServlet extends BaseServlet {
             // Get value
             int selectionNumber = selectionObj.getInt(KEY_SELECTION_NUMBER);
 
-            if (ServletUtils.getInstance().validDeleteSelectionData(selectionNumber)) {
+            if (servletUtils.validDeleteSelectionData(selectionNumber)) {
                 // Delete selection
-                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
                 if (dbHelper.deleteSelectionByNumber(selectionNumber))
                     return Response.SC_OK;
                 else

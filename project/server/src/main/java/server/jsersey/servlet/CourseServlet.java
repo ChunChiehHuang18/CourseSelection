@@ -3,7 +3,6 @@ package server.jsersey.servlet;
 import org.eclipse.jetty.server.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
-import server.mysql.helper.CourseSelectionDBHelper;
 
 import static server.jsersey.servlet.ServletUtils.*;
 
@@ -20,8 +19,6 @@ public class CourseServlet extends BaseServlet {
      */
     @Override
     public String queryAll() {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
         return dbHelper.queryAllCourse().toString();
     }
 
@@ -33,8 +30,6 @@ public class CourseServlet extends BaseServlet {
      */
     @Override
     public String queryByNumber(String number) {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
         return dbHelper.queryCourseByNumber(number).toString();
     }
 
@@ -64,9 +59,8 @@ public class CourseServlet extends BaseServlet {
             courseClasstime = courseObj.getString(KEY_COURSE_CLASSTIME);
 
 
-            if (ServletUtils.getInstance().validCourseData(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime)) {
+            if (servletUtils.validCourseData(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime)) {
                 // Insert student into db
-                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
                 if (dbHelper.addCourse(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime))
                     return Response.SC_OK;
                 else
@@ -94,9 +88,8 @@ public class CourseServlet extends BaseServlet {
             courseNumber = courseObj.getString(KEY_COURSE_NUMBER);
 
 
-            if (ServletUtils.getInstance().validDeleteCourseData(courseNumber)) {
+            if (servletUtils.validDeleteCourseData(courseNumber)) {
                 // Delete the course
-                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
                 if (dbHelper.deleteCourse(courseNumber))
                     return Response.SC_OK;
                 else

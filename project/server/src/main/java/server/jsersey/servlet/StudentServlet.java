@@ -3,7 +3,6 @@ package server.jsersey.servlet;
 import org.eclipse.jetty.server.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
-import server.mysql.helper.CourseSelectionDBHelper;
 import server.mysql.helper.MySqlConfig;
 
 import javax.ws.rs.*;
@@ -23,8 +22,6 @@ public class StudentServlet extends BaseServlet {
      */
     @Override
     public String queryAll() {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
         return dbHelper.queryAllStudent().toString();
     }
 
@@ -36,8 +33,6 @@ public class StudentServlet extends BaseServlet {
      */
     @Override
     public String queryByNumber(String number) {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
         return dbHelper.queryStudentByNumber(Integer.valueOf(number)).toString();
     }
 
@@ -51,8 +46,6 @@ public class StudentServlet extends BaseServlet {
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     public String queryCourseByStudent(@PathParam("studentNumber") String studentNumber) {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
         return dbHelper.querySelectionByStudent(Integer.valueOf(studentNumber)).toString();
     }
 
@@ -77,9 +70,8 @@ public class StudentServlet extends BaseServlet {
                 studentGender = studentObj.getString(KEY_STUDENT_GENDER);
             studentName = studentObj.getString(KEY_STUDENT_NAME);
 
-            if (ServletUtils.getInstance().validStudentData(studentName, studentGender)) {
+            if (servletUtils.validStudentData(studentName, studentGender)) {
                 // Insert student into db
-                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
                 if (dbHelper.addStudent(studentNumber, studentName, studentGender))
                     return Response.SC_OK;
                 else

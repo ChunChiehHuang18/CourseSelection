@@ -3,7 +3,6 @@ package server.jsersey.servlet;
 import org.eclipse.jetty.server.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
-import server.mysql.helper.CourseSelectionDBHelper;
 import server.mysql.helper.MySqlConfig;
 
 import javax.ws.rs.GET;
@@ -27,8 +26,6 @@ public class InstructorServlet extends BaseServlet {
      */
     @Override
     public String queryAll() {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
         return dbHelper.queryAllInstructor().toString();
     }
 
@@ -40,8 +37,6 @@ public class InstructorServlet extends BaseServlet {
      */
     @Override
     public String queryByNumber(String number) {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
         return dbHelper.queryInstructorByNumber(Integer.valueOf(number)).toString();
     }
 
@@ -55,8 +50,6 @@ public class InstructorServlet extends BaseServlet {
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     public String queryCourseByInstructor(@PathParam("number") String number) {
-        CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
-
         return dbHelper.queryCourseByInstructor(Integer.valueOf(number)).toString();
     }
 
@@ -81,9 +74,8 @@ public class InstructorServlet extends BaseServlet {
                 instructorOffice = instructorObj.getString(KEY_INSTRUCTOR_OFFCIE);
             instructorName = instructorObj.getString(KEY_INSTRUCTOR_NAME);
 
-            if (ServletUtils.getInstance().validInstructorData(instructorName, instructorOffice)) {
+            if (servletUtils.validInstructorData(instructorName, instructorOffice)) {
                 // Insert student into db
-                CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
                 if (dbHelper.addInstructor(instructorNumber, instructorName, instructorOffice))
                     return Response.SC_OK;
                 else
