@@ -19,7 +19,7 @@ public class CourseServlet extends BaseServlet {
      */
     @Override
     public String queryAll() {
-        return dbHelper.queryAllCourse().toString();
+        return dbHelper.course().queryAll().toString();
     }
 
     /**
@@ -30,7 +30,7 @@ public class CourseServlet extends BaseServlet {
      */
     @Override
     public String queryByNumber(String number) {
-        return dbHelper.queryCourseByNumber(number).toString();
+        return dbHelper.course().queryByNumber(number).toString();
     }
 
     /**
@@ -61,7 +61,7 @@ public class CourseServlet extends BaseServlet {
 
             if (servletUtils.validCourseData(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime)) {
                 // Insert student into db
-                if (dbHelper.addCourse(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime))
+                if (dbHelper.course().add(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime))
                     return Response.SC_OK;
                 else
                     return Response.SC_BAD_REQUEST;
@@ -90,7 +90,7 @@ public class CourseServlet extends BaseServlet {
 
             if (servletUtils.validDeleteCourseData(courseNumber)) {
                 // Delete the course
-                if (dbHelper.deleteCourse(courseNumber))
+                if (dbHelper.course().delete(courseNumber))
                     return Response.SC_OK;
                 else
                     return Response.SC_BAD_REQUEST;

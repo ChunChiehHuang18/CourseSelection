@@ -26,7 +26,7 @@ public class InstructorServlet extends BaseServlet {
      */
     @Override
     public String queryAll() {
-        return dbHelper.queryAllInstructor().toString();
+        return dbHelper.instructor().queryAll().toString();
     }
 
     /**
@@ -37,7 +37,7 @@ public class InstructorServlet extends BaseServlet {
      */
     @Override
     public String queryByNumber(String number) {
-        return dbHelper.queryInstructorByNumber(Integer.valueOf(number)).toString();
+        return dbHelper.instructor().queryByNumber(number).toString();
     }
 
     /**
@@ -50,7 +50,7 @@ public class InstructorServlet extends BaseServlet {
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     public String queryCourseByInstructor(@PathParam("number") String number) {
-        return dbHelper.queryCourseByInstructor(Integer.valueOf(number)).toString();
+        return dbHelper.course().queryByInstructor(Integer.valueOf(number)).toString();
     }
 
     /**
@@ -76,7 +76,7 @@ public class InstructorServlet extends BaseServlet {
 
             if (servletUtils.validInstructorData(instructorName, instructorOffice)) {
                 // Insert student into db
-                if (dbHelper.addInstructor(instructorNumber, instructorName, instructorOffice))
+                if (dbHelper.instructor().add(instructorNumber, instructorName, instructorOffice))
                     return Response.SC_OK;
                 else
                     return Response.SC_BAD_REQUEST;

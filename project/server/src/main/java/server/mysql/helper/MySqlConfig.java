@@ -10,7 +10,7 @@ public class MySqlConfig {
 
     //  Database credentials
     static final String USER = "root";
-    static final String PASS = "imroot";
+    static final String PASS = "loveworld00";
 
     public static final String VALUE_NULL = "null";
 

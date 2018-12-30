@@ -1,6 +1,6 @@
 package server.jsersey.servlet;
 
-import server.mysql.helper.CourseSelectionDBHelper;
+import server.mysql.helper.MyDbHelper;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/")
 public abstract class BaseServlet {
 
-    CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+    MyDbHelper dbHelper = MyDbHelper.getInstance();
     ServletUtils servletUtils = ServletUtils.getInstance();
 
     @Path("/")

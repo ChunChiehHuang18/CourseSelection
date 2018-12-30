@@ -22,7 +22,7 @@ public class SelectionServlet extends BaseServlet {
      */
     @Override
     public String queryAll() {
-        return dbHelper.queryAllSelection().toString();
+        return dbHelper.selection().queryAll().toString();
     }
 
     /**
@@ -33,7 +33,7 @@ public class SelectionServlet extends BaseServlet {
 
     @Override
     public String queryByNumber(String number) {
-        return dbHelper.querySelectionByNumber(Integer.valueOf(number)).toString();
+        return dbHelper.selection().queryByNumber(number).toString();
     }
 
     /**
@@ -49,11 +49,11 @@ public class SelectionServlet extends BaseServlet {
     public String queryByStudent(@QueryParam("studentid") int studentNumber,
                                  @QueryParam("instructorid") int instructorNumber) {
         if (studentNumber != 0 && instructorNumber != 0)
-            return dbHelper.querySelectionByStudentAndInstructor(studentNumber, instructorNumber).toString();
+            return dbHelper.selection().queryByStudentAndInstructor(studentNumber, instructorNumber).toString();
         else if (studentNumber != 0)
-            return dbHelper.querySelectionByStudent(studentNumber).toString();
+            return dbHelper.selection().queryByStudent(studentNumber).toString();
         else if (instructorNumber != 0)
-            return dbHelper.querySelectionByInstructor(instructorNumber).toString();
+            return dbHelper.selection().queryByInstructor(instructorNumber).toString();
         else
             return new JSONArray().toString();
     }
@@ -77,7 +77,7 @@ public class SelectionServlet extends BaseServlet {
 
             if (servletUtils.validSelectionData(studentNumber, courseNumber)) {
                 // Insert selection into db
-                if (dbHelper.addSelection(selectionNumber, studentNumber, courseNumber))
+                if (dbHelper.selection().add(selectionNumber, studentNumber, courseNumber))
                     return Response.SC_OK;
                 else
                     return Response.SC_BAD_REQUEST;
@@ -106,7 +106,7 @@ public class SelectionServlet extends BaseServlet {
 
             if (servletUtils.validDeleteSelectionData(selectionNumber)) {
                 // Delete selection
-                if (dbHelper.deleteSelectionByNumber(selectionNumber))
+                if (dbHelper.selection().delete(String.valueOf(selectionNumber)))
                     return Response.SC_OK;
                 else
                     return Response.SC_BAD_REQUEST;

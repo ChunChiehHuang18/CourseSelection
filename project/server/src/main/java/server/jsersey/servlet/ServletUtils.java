@@ -1,6 +1,6 @@
 package server.jsersey.servlet;
 
-import server.mysql.helper.CourseSelectionDBHelper;
+import server.mysql.helper.MyDbHelper;
 import server.mysql.helper.MySqlConfig;
 
 import java.util.Arrays;
@@ -104,9 +104,9 @@ public class ServletUtils {
      */
     boolean validDeleteCourseData(String courseNumber) {
         if(courseNumber.length() == 5 ) {
-            CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
+            MyDbHelper dbHelper = MyDbHelper.getInstance();
 
-            return !dbHelper.queryCourseByNumber(courseNumber).isEmpty();
+            return !dbHelper.course().queryByNumber(courseNumber).isEmpty();
         } else
             return false;
     }
