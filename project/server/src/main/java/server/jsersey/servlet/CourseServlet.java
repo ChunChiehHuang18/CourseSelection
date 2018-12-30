@@ -5,25 +5,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import server.mysql.helper.CourseSelectionDBHelper;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-
 import static server.jsersey.servlet.ServletUtils.*;
 
 /**
  * CourseServlet handle course related request
  */
-@Path("/")
-public class CourseServlet {
+public class CourseServlet extends BaseServlet {
+
 
     /**
      * Query all course list
      *
      * @return Course JSON array
      */
-    @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
-    @GET
+    @Override
     public String queryAll() {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
@@ -33,16 +28,14 @@ public class CourseServlet {
     /**
      * Query  course by course number
      *
-     * @param courseNumber Course String type number
+     * @param number Course String type number
      * @return Course  JSON array
      */
-    @Path("{courseNumber}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @GET
-    public String queryByNumber(@PathParam("courseNumber") String courseNumber) {
+    @Override
+    public String queryByNumber(String number) {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-        return dbHelper.queryCourseByNumber(courseNumber).toString();
+        return dbHelper.queryCourseByNumber(number).toString();
     }
 
     /**
@@ -51,11 +44,8 @@ public class CourseServlet {
      * @param postData Course JSON data
      * @return Status code, 200: Success, 400: Failed
      */
-    @Path("/")
-    @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public int addCourse(String postData) {
+    @Override
+    public int add(String postData) {
         try {
             JSONObject courseObj = new JSONObject(postData);
             String courseNumber;
@@ -95,11 +85,8 @@ public class CourseServlet {
      * @param postData Course JSON data
      * @return Status code, 200: Success, 400: Failed
      */
-    @Path("/")
-    @DELETE
-    @Produces(MediaType.TEXT_PLAIN)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public int deleteCourse(String postData) {
+    @Override
+    public int delete(String postData) {
         try {
             JSONObject courseObj = new JSONObject(postData);
             String courseNumber;

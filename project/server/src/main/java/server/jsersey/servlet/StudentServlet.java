@@ -14,17 +14,14 @@ import static server.jsersey.servlet.ServletUtils.*;
 /**
  * StudentServlet handle student related request
  */
-@Path("/")
-public class StudentServlet {
+public class StudentServlet extends BaseServlet {
 
     /**
      * Query all student  list
      *
      * @return Student JSON array
      */
-    @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
-    @GET
+    @Override
     public String queryAll() {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
@@ -34,16 +31,14 @@ public class StudentServlet {
     /**
      * Query  student by student number
      *
-     * @param studentNumber Student integer type number
+     * @param number Student integer type number
      * @return Student  JSON array
      */
-    @Path("{studentNumber}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @GET
-    public String queryByNumber(@PathParam("studentNumber") String studentNumber) {
+    @Override
+    public String queryByNumber(String number) {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-        return dbHelper.queryStudentByNumber(Integer.valueOf(studentNumber)).toString();
+        return dbHelper.queryStudentByNumber(Integer.valueOf(number)).toString();
     }
 
     /**
@@ -67,11 +62,8 @@ public class StudentServlet {
      * @param postData Student JSON data
      * @return Status code, 200: Success, 400: Failed
      */
-    @Path("/")
-    @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public int addStudent(String postData) {
+    @Override
+    public int add(String postData) {
         try {
             JSONObject studentObj = new JSONObject(postData);
             int studentNumber = -1;
@@ -100,4 +92,8 @@ public class StudentServlet {
         }
     }
 
+    @Override
+    public int delete(String postData) {
+        return Response.SC_BAD_REQUEST;
+    }
 }

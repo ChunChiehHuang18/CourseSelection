@@ -6,7 +6,10 @@ import org.json.JSONObject;
 import server.mysql.helper.CourseSelectionDBHelper;
 import server.mysql.helper.MySqlConfig;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import static server.jsersey.servlet.ServletUtils.*;
@@ -15,17 +18,14 @@ import static server.jsersey.servlet.ServletUtils.*;
 /**
  * InstructorServlet handle instructor related request
  */
-@Path("/")
-public class InstructorServlet {
+public class InstructorServlet extends BaseServlet {
 
     /**
      * Query all instructor list
      *
      * @return Instructor JSON Array
      */
-    @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
-    @GET
+    @Override
     public String queryAll() {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
@@ -35,31 +35,29 @@ public class InstructorServlet {
     /**
      * Query  instructor by instructor number
      *
-     * @param instructorNumber Instructor integer type number
+     * @param number Instructor integer type number
      * @return Instructor  JSON array
      */
-    @Path("{instructorNumber}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @GET
-    public String queryByNumber(@PathParam("instructorNumber") String instructorNumber) {
+    @Override
+    public String queryByNumber(String number) {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-        return dbHelper.queryInstructorByNumber(Integer.valueOf(instructorNumber)).toString();
+        return dbHelper.queryInstructorByNumber(Integer.valueOf(number)).toString();
     }
 
     /**
      * Query  course offered by instructor number
      *
-     * @param instructorNumber Instructor integer type number
+     * @param number Instructor integer type number
      * @return Instructor  JSON array
      */
-    @Path("{instructorNumber}/course")
+    @Path("{number}/course")
     @Produces(MediaType.APPLICATION_JSON)
     @GET
-    public String queryCourseByInstructor(@PathParam("instructorNumber") String instructorNumber) {
+    public String queryCourseByInstructor(@PathParam("number") String number) {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-        return dbHelper.queryCourseByInstructor(Integer.valueOf(instructorNumber)).toString();
+        return dbHelper.queryCourseByInstructor(Integer.valueOf(number)).toString();
     }
 
     /**
@@ -68,11 +66,8 @@ public class InstructorServlet {
      * @param postData instructor JSON data
      * @return Status code, 200: Success, 400: Failed
      */
-    @Path("/")
-    @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public int addInstructor(String postData) {
+    @Override
+    public int add(String postData) {
         try {
             JSONObject instructorObj = new JSONObject(postData);
             int instructorNumber = -1;
@@ -99,6 +94,11 @@ public class InstructorServlet {
             e.printStackTrace();
             return Response.SC_BAD_REQUEST;
         }
+    }
+
+    @Override
+    public int delete(String postData) {
+        return Response.SC_BAD_REQUEST;
     }
 
 }

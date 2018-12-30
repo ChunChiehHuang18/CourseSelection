@@ -14,17 +14,14 @@ import static server.jsersey.servlet.ServletUtils.*;
 /**
  * SelectionServlet handle selection course related request
  */
-@Path("/")
-public class SelectionServlet {
+public class SelectionServlet extends BaseServlet {
 
     /**
      * Query all selection course list
      *
      * @return Course JSON array
      */
-    @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
-    @GET
+    @Override
     public String queryAll() {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
@@ -36,13 +33,12 @@ public class SelectionServlet {
      *
      * @return Course JSONObject
      */
-    @Path("/{selectionNumber}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @GET
-    public String queryByNumber(@PathParam("selectionNumber") int selectionNumber) {
+
+    @Override
+    public String queryByNumber(String number) {
         CourseSelectionDBHelper dbHelper = CourseSelectionDBHelper.getInstance();
 
-        return dbHelper.querySelectionByNumber(selectionNumber).toString();
+        return dbHelper.querySelectionByNumber(Integer.valueOf(number)).toString();
     }
 
     /**
@@ -75,11 +71,8 @@ public class SelectionServlet {
      * @param postData Select course JSON data
      * @return Status code, 200: Success, 400: Failed
      */
-    @Path("/")
-    @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public int addSelection(String postData) {
+    @Override
+    public int add(String postData) {
         try {
             JSONObject selectionObj = new JSONObject(postData);
             int selectionNumber = -1;
@@ -111,11 +104,8 @@ public class SelectionServlet {
      * @param postData Select course JSON data
      * @return Status code, 200: Success, 400: Failed
      */
-    @Path("/")
-    @DELETE
-    @Produces(MediaType.TEXT_PLAIN)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public int deleteSelection(String postData) {
+    @Override
+    public int delete(String postData) {
         try {
             JSONObject selectionObj = new JSONObject(postData);
 
