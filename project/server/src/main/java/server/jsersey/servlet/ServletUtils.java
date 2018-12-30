@@ -1,5 +1,7 @@
 package server.jsersey.servlet;
 
+import org.eclipse.jetty.server.Response;
+import server.mysql.helper.IDbHelper;
 import server.mysql.helper.MyDbHelper;
 import server.mysql.helper.MySqlConfig;
 
@@ -156,5 +158,22 @@ public class ServletUtils {
         return selectionNumber > 0;
     }
 
+
+    // IDbHelper polymorphism API
+
+    String queryAll(IDbHelper dbHelper) {
+        return dbHelper.queryAll().toString();
+    }
+
+    String queryByNumber(IDbHelper dbHelper, String number) {
+        return dbHelper.queryByNumber(number).toString();
+    }
+
+    int delete(IDbHelper dbHelper, String number) {
+        if (dbHelper.delete(number))
+            return Response.SC_OK;
+        else
+            return Response.SC_BAD_REQUEST;
+    }
 
 }

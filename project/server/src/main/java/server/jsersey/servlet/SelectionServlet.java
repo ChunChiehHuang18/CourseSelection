@@ -22,7 +22,7 @@ public class SelectionServlet extends BaseServlet {
      */
     @Override
     public String queryAll() {
-        return dbHelper.selection().queryAll().toString();
+        return servletUtils.queryAll(dbHelper.selection());
     }
 
     /**
@@ -33,7 +33,7 @@ public class SelectionServlet extends BaseServlet {
 
     @Override
     public String queryByNumber(String number) {
-        return dbHelper.selection().queryByNumber(number).toString();
+        return servletUtils.queryByNumber(dbHelper.selection(), number);
     }
 
     /**
@@ -105,11 +105,7 @@ public class SelectionServlet extends BaseServlet {
             int selectionNumber = selectionObj.getInt(KEY_SELECTION_NUMBER);
 
             if (servletUtils.validDeleteSelectionData(selectionNumber)) {
-                // Delete selection
-                if (dbHelper.selection().delete(String.valueOf(selectionNumber)))
-                    return Response.SC_OK;
-                else
-                    return Response.SC_BAD_REQUEST;
+                return servletUtils.delete(dbHelper.selection(), String.valueOf(selectionNumber));
             } else
                 return Response.SC_BAD_REQUEST;
         } catch (JSONException e) {
