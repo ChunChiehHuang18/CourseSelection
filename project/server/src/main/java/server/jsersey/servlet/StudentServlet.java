@@ -22,7 +22,7 @@ public class StudentServlet extends BaseServlet {
      */
     @Override
     public String queryAll() {
-        return servletUtils.queryAll(dbHelper.student());
+        return queryAll(dbHelper.student());
     }
 
     /**
@@ -33,7 +33,7 @@ public class StudentServlet extends BaseServlet {
      */
     @Override
     public String queryByNumber(String number) {
-        return servletUtils.queryByNumber(dbHelper.student(), number);
+        return queryByNumber(dbHelper.student(), number);
     }
 
     /**

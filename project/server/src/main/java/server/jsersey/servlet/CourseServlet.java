@@ -19,7 +19,7 @@ public class CourseServlet extends BaseServlet {
      */
     @Override
     public String queryAll() {
-        return servletUtils.queryAll(dbHelper.course());
+        return queryAll(dbHelper.course());
     }
 
     /**
@@ -30,7 +30,7 @@ public class CourseServlet extends BaseServlet {
      */
     @Override
     public String queryByNumber(String number) {
-        return servletUtils.queryByNumber(dbHelper.course(), number);
+        return queryByNumber(dbHelper.course(), number);
     }
 
     /**
@@ -87,11 +87,7 @@ public class CourseServlet extends BaseServlet {
             // Get value
             courseNumber = courseObj.getString(KEY_COURSE_NUMBER);
 
-
-            if (servletUtils.validDeleteCourseData(courseNumber)) {
-                return servletUtils.delete(dbHelper.course(), courseNumber);
-            } else
-                return Response.SC_BAD_REQUEST;
+            return delete(dbHelper.course(), courseNumber);
         } catch (JSONException e) {
             e.printStackTrace();
             return Response.SC_BAD_REQUEST;

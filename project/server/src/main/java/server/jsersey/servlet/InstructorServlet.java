@@ -26,7 +26,7 @@ public class InstructorServlet extends BaseServlet {
      */
     @Override
     public String queryAll() {
-        return servletUtils.queryAll(dbHelper.instructor());
+        return queryAll(dbHelper.instructor());
     }
 
     /**
@@ -37,7 +37,7 @@ public class InstructorServlet extends BaseServlet {
      */
     @Override
     public String queryByNumber(String number) {
-        return servletUtils.queryByNumber(dbHelper.instructor(), number);
+        return queryByNumber(dbHelper.instructor(), number);
     }
 
     /**

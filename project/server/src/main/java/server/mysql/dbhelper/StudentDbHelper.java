@@ -3,7 +3,6 @@ package server.mysql.dbhelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import server.mysql.utils.MySqlConfig;
-import server.mysql.utils.PrepareStatementUtils;
 
 import java.sql.*;
 
@@ -112,6 +111,11 @@ public class StudentDbHelper implements IDbHelper {
 
     @Override
     public boolean delete(String number) {
+        return false;
+    }
+
+    @Override
+    public boolean validDeleteData(String number) {
         return false;
     }
 }

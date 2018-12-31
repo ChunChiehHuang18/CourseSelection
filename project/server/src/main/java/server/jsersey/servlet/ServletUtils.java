@@ -1,8 +1,5 @@
 package server.jsersey.servlet;
 
-import org.eclipse.jetty.server.Response;
-import server.mysql.dbhelper.IDbHelper;
-import server.mysql.MyDbHelper;
 import server.mysql.utils.MySqlConfig;
 
 import java.util.Arrays;
@@ -99,21 +96,6 @@ public class ServletUtils {
     }
 
     /**
-     * 1.Check course number length, fixed to 5 char
-     * 2.Check course exist
-     * @param courseNumber Course's number
-     * @return True: Valid, False: Invalid
-     */
-    boolean validDeleteCourseData(String courseNumber) {
-        if(courseNumber.length() == 5 ) {
-            MyDbHelper dbHelper = MyDbHelper.getInstance();
-
-            return !dbHelper.course().queryByNumber(courseNumber).isEmpty();
-        } else
-            return false;
-    }
-
-    /**
      * Check class time string is valid
      * @param classTime Class time can be between 1 and 8 and cannot be repeated
      * @return True: Valid, False: Invalid
@@ -146,34 +128,6 @@ public class ServletUtils {
      */
     boolean validSelectionData(int studentNumber, String courseNumber) {
         return (studentNumber > 0 && courseNumber.length() == 5);
-    }
-
-
-    /**
-     * Check basic selection number is legal
-     * @param selectionNumber Selection's number
-     * @return True: Valid, False: Invalid
-     */
-    boolean validDeleteSelectionData(int selectionNumber) {
-        return selectionNumber > 0;
-    }
-
-
-    // IDbHelper polymorphism API
-
-    String queryAll(IDbHelper dbHelper) {
-        return dbHelper.queryAll().toString();
-    }
-
-    String queryByNumber(IDbHelper dbHelper, String number) {
-        return dbHelper.queryByNumber(number).toString();
-    }
-
-    int delete(IDbHelper dbHelper, String number) {
-        if (dbHelper.delete(number))
-            return Response.SC_OK;
-        else
-            return Response.SC_BAD_REQUEST;
     }
 
 }

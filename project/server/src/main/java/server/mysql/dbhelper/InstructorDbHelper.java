@@ -112,4 +112,9 @@ public class InstructorDbHelper implements IDbHelper {
     public boolean delete(String number) {
         return false;
     }
+
+    @Override
+    public boolean validDeleteData(String number) {
+        return false;
+    }
 }

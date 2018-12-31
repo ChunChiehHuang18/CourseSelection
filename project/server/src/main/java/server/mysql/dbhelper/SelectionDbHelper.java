@@ -3,7 +3,6 @@ package server.mysql.dbhelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import server.mysql.utils.MySqlConfig;
-import server.mysql.utils.PrepareStatementUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -357,4 +356,13 @@ public class SelectionDbHelper implements IDbHelper {
         }
     }
 
+    /**
+     * Check basic selection number is legal
+     * @param number Selection's number
+     * @return True: Valid, False: Invalid
+     */
+    @Override
+    public boolean validDeleteData(String number) {
+        return Integer.valueOf(number) > 0;
+    }
 }

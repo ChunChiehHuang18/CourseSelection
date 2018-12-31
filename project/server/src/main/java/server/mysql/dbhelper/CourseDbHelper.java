@@ -228,4 +228,19 @@ public class CourseDbHelper implements IDbHelper {
             }
         }
     }
+
+    /**
+     * 1.Check course number length, fixed to 5 char
+     * 2.Check course exist
+     * @param number Course's number
+     * @return True: Valid, False: Invalid
+     */
+    @Override
+    public boolean validDeleteData(String number) {
+        if(number.length() == 5 ) {
+
+            return !queryByNumber(number).isEmpty();
+        } else
+            return false;
+    }
 }
