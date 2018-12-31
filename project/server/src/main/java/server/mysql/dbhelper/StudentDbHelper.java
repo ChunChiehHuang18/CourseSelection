@@ -109,6 +109,27 @@ public class StudentDbHelper implements IDbHelper {
         }
     }
 
+    /**
+     * Check student insert data is valid
+     * @param studentName Student's number
+     * @param gender Student's gender
+     * @return True: Valid, False: Invalid
+     */
+    public boolean validAddData(String studentName, String gender) {
+        return (studentName.length() <= 45 && validGender(gender));
+    }
+
+    /**
+     * Check gender string is valid
+     * @param gender Gender can be Male or Female or Bisexual
+     * @return True: Valid, False: Invalid
+     */
+    private boolean validGender(String gender) {
+        return (gender.equalsIgnoreCase("Male") ||
+                gender.equalsIgnoreCase("Female") ||
+                gender.equalsIgnoreCase("Bisexual"));
+    }
+
     @Override
     public boolean delete(String number) {
         return false;

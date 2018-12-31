@@ -70,12 +70,12 @@ public class InstructorServlet extends BaseServlet {
             // Get value
             if (instructorObj.has(KEY_INSTRUCTOR_NUMBER))
                 instructorNumber = instructorObj.getInt(KEY_INSTRUCTOR_NUMBER);
-            if (instructorObj.has(KEY_INSTRUCTOR_OFFCIE))
-                instructorOffice = instructorObj.getString(KEY_INSTRUCTOR_OFFCIE);
+            if (instructorObj.has(KEY_INSTRUCTOR_OFFICE))
+                instructorOffice = instructorObj.getString(KEY_INSTRUCTOR_OFFICE);
             instructorName = instructorObj.getString(KEY_INSTRUCTOR_NAME);
 
-            if (servletUtils.validInstructorData(instructorName, instructorOffice)) {
-                // Insert student into db
+            // Insert instructor into db
+            if (dbHelper.instructor().validAddData(instructorName, instructorOffice)) {
                 if (dbHelper.instructor().add(instructorNumber, instructorName, instructorOffice))
                     return Response.SC_OK;
                 else

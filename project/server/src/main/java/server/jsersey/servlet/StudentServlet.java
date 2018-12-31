@@ -70,8 +70,8 @@ public class StudentServlet extends BaseServlet {
                 studentGender = studentObj.getString(KEY_STUDENT_GENDER);
             studentName = studentObj.getString(KEY_STUDENT_NAME);
 
-            if (servletUtils.validStudentData(studentName, studentGender)) {
-                // Insert student into db
+            // Insert student into db
+            if (dbHelper.student().validAddData(studentName, studentGender)) {
                 if (dbHelper.student().add(studentNumber, studentName, studentGender))
                     return Response.SC_OK;
                 else

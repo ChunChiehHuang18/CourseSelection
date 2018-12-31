@@ -58,9 +58,8 @@ public class CourseServlet extends BaseServlet {
             courseWeekday = courseObj.getInt(KEY_COURSE_WEEKDAY);
             courseClasstime = courseObj.getString(KEY_COURSE_CLASSTIME);
 
-
-            if (servletUtils.validCourseData(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime)) {
-                // Insert student into db
+            // Insert Course into db
+            if (dbHelper.course().validAddData(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime)) {
                 if (dbHelper.course().add(courseNumber, courseTitle, instructorNumber, courseSize, courseWeekday, courseClasstime))
                     return Response.SC_OK;
                 else

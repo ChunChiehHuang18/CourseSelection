@@ -75,8 +75,8 @@ public class SelectionServlet extends BaseServlet {
             int studentNumber = selectionObj.getInt(KEY_STUDENT_NUMBER);
             String courseNumber = selectionObj.getString(KEY_COURSE_NUMBER);
 
-            if (servletUtils.validSelectionData(studentNumber, courseNumber)) {
-                // Insert selection into db
+            // Insert selection into db
+            if (dbHelper.selection().validAddData(studentNumber, courseNumber)) {
                 if (dbHelper.selection().add(selectionNumber, studentNumber, courseNumber))
                     return Response.SC_OK;
                 else

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static server.mysql.utils.PrepareStatementUtils.*;
 
@@ -159,6 +160,46 @@ public class CourseDbHelper implements IDbHelper {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check course insert data is valid
+     * @param courseNumber Course's number, fixed to 5 char
+     * @param courseTitle Course's title
+     * @param instructorNumber Instructor's number
+     * @param courseSize Course's course size (10 ~ 255)
+     * @param courseWeekday  Course's week day(1~5)
+     * @param courseClasstime  Course's class time (1~8), can be multiple(2,3,4)
+     * @return True: Valid, False: Invalid
+     */
+    public boolean validAddData(String courseNumber, String courseTitle, int instructorNumber,
+                            int courseSize, int courseWeekday, String courseClasstime) {
+
+        return (courseNumber.length() == 5 && courseTitle.length() <= 45 &&
+                instructorNumber > 0 && courseSize >= 10 && courseSize <= 255 &&
+                courseWeekday >= 1 && courseWeekday <= 5 && validClasstimeString(courseClasstime));
+    }
+
+    /**
+     * Check class time string is valid
+     * @param classTime Class time can be between 1 and 8 and cannot be repeated
+     * @return True: Valid, False: Invalid
+     */
+    private boolean validClasstimeString(String classTime) {
+        boolean[] classtimeOccupy = new boolean[8];
+        Arrays.fill(classtimeOccupy, Boolean.FALSE);
+        String[] timeArray = classTime.split(",");
+        for (String timeString : timeArray) {
+            int value = Integer.valueOf(timeString);
+            if (!(value >= 1 && value <= 8))
+                return false;
+            else if (!classtimeOccupy[value - 1]) {
+                classtimeOccupy[value - 1] = Boolean.TRUE;
+            } else {
+                return false;
+            }
         }
         return true;
     }

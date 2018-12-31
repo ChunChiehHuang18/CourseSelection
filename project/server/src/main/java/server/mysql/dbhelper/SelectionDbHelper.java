@@ -284,6 +284,16 @@ public class SelectionDbHelper implements IDbHelper {
     }
 
     /**
+     * Check basic student number and course course  is legal
+     * @param courseNumber Course's number
+     * @param studentNumber Student's number
+     * @return True: Valid, False: Invalid
+     */
+    public boolean validAddData(int studentNumber, String courseNumber) {
+        return (studentNumber > 0 && courseNumber.length() == 5);
+    }
+
+    /**
      * Delete selection by selection number
      * 1. Get course and student number by selection number
      * Using locking read to...

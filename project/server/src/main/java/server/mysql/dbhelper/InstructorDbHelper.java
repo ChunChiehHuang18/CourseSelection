@@ -108,6 +108,16 @@ public class InstructorDbHelper implements IDbHelper {
         }
     }
 
+    /**
+     * Check instructor insert data is valid
+     * @param instructorName Instructor's name
+     * @param office Instructor's office, fixed to 4 char
+     * @return True: Valid, False: Invalid
+     */
+    public boolean validAddData(String instructorName, String office) {
+        return (instructorName.length() <= 45 && (office.equalsIgnoreCase(MySqlConfig.VALUE_NULL) || office.length() == 4));
+    }
+
     @Override
     public boolean delete(String number) {
         return false;

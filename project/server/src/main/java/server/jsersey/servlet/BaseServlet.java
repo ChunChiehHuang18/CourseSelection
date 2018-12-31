@@ -11,7 +11,6 @@ import javax.ws.rs.core.MediaType;
 public abstract class BaseServlet {
 
     MyDbHelper dbHelper = MyDbHelper.getInstance();
-    ServletUtils servletUtils = ServletUtils.getInstance();
 
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
