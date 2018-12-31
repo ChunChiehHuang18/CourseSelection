@@ -1,7 +1,8 @@
-package server.mysql.helper;
+package server.mysql.dbhelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import server.mysql.utils.MySqlConfig;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static server.mysql.helper.PrepareStatementUtils.*;
+import static server.mysql.utils.PrepareStatementUtils.*;
 
 /**
  * Providing course related JDBC API
@@ -30,20 +31,20 @@ public class CourseDbHelper implements IDbHelper {
     private PreparedStatement queryCourseByInstructorStm = null;
     private PreparedStatement querySelectionByCourseStm = null;
 
-    CourseDbHelper(Connection conn) {
+    public CourseDbHelper(Connection conn) {
         try {
             this.conn = conn;
 
             // add
-            addCourseStm = conn.prepareStatement(ADD_COURSE_STM_STRING);
+            addCourseStm = conn.prepareStatement(Course.ADD);
             // delete
-            deleteCourseStm = conn.prepareStatement(DELETE_COURSE_STM_STRING);
-            deleteSelectionByCourseStm = conn.prepareStatement(DELETE_SELECTION_BY_COURSE_STM_STRING);
+            deleteCourseStm = conn.prepareStatement(Course.DELETE);
+            deleteSelectionByCourseStm = conn.prepareStatement(Selection.DELETE_BY_COURSE);
             // query
-            queryAllCourseStm = conn.prepareStatement(QUERY_ALL_COURSE_STM_STRING);
-            queryCourseByNumberStm = conn.prepareStatement(QUERY_COURSE_BY_NUMBER_STM_STRING);
-            queryCourseByInstructorStm = conn.prepareStatement(QUERY_COURSE_BY_INSTRUCTOR_STM_STRING);
-            querySelectionByCourseStm = conn.prepareStatement(QUERY_SELECTION_BY_COURSE_STM_STRING);
+            queryAllCourseStm = conn.prepareStatement(Course.QUERY_ALL);
+            queryCourseByNumberStm = conn.prepareStatement(Course.QUERY_BY_NUMBER);
+            queryCourseByInstructorStm = conn.prepareStatement(Course.QUERY_BY_INSTRUCTOR);
+            querySelectionByCourseStm = conn.prepareStatement(Selection.QUERY_BY_COURSE);
         } catch (SQLException e) {
             e.printStackTrace();
         }

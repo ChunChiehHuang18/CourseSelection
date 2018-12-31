@@ -1,11 +1,13 @@
-package server.mysql.helper;
+package server.mysql.dbhelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import server.mysql.utils.MySqlConfig;
+import server.mysql.utils.PrepareStatementUtils;
 
 import java.sql.*;
 
-import static server.mysql.helper.PrepareStatementUtils.*;
+import static server.mysql.utils.PrepareStatementUtils.*;
 
 /**
  * Providing student related JDBC API
@@ -18,14 +20,14 @@ public class StudentDbHelper implements IDbHelper {
     private PreparedStatement queryAllStudentStm = null;
     private PreparedStatement queryStudentByNumberStm = null;
 
-    StudentDbHelper(Connection conn) {
+    public StudentDbHelper(Connection conn) {
         try {
 
             // add
-            addStudentStm = conn.prepareStatement(ADD_STUDENT_STM_STRING);
+            addStudentStm = conn.prepareStatement(Student.ADD);
             // query
-            queryAllStudentStm = conn.prepareStatement(QUERY_ALL_STUDENT_STM_STRING);
-            queryStudentByNumberStm = conn.prepareStatement(QUERY_STUDENT_BY_NUMBER_STM_STRING);
+            queryAllStudentStm = conn.prepareStatement(Student.QUERY_ALL);
+            queryStudentByNumberStm = conn.prepareStatement(Student.QUERY_BY_NUMBER);
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -99,7 +101,7 @@ public class StudentDbHelper implements IDbHelper {
                 addStudentStm.setString(3, gender);
             else
                 addStudentStm.setNull(3, 0);
-            addStudentStm.setString(4, PrepareStatementUtils.STUDENT_DEFAULT_CLASSTIME);
+            addStudentStm.setString(4, Student.STUDENT_DEFAULT_CLASSTIME);
             addStudentStm.executeUpdate();
             return true;
         } catch (SQLException e) {

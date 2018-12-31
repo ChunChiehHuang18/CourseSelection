@@ -1,14 +1,15 @@
-package server.mysql.helper;
+package server.mysql.dbhelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import server.mysql.utils.MySqlConfig;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static server.mysql.helper.PrepareStatementUtils.*;
+import static server.mysql.utils.PrepareStatementUtils.*;
 
 /**
  * Providing instructor related JDBC API
@@ -22,14 +23,14 @@ public class InstructorDbHelper implements IDbHelper {
     private PreparedStatement queryInstructorByNumberStm = null;
 
 
-    InstructorDbHelper(Connection conn) {
+    public InstructorDbHelper(Connection conn) {
         try {
 
             // add
-            addInstructorStm = conn.prepareStatement(ADD_INSTRUCTOR_STM_STRING);
+            addInstructorStm = conn.prepareStatement(Instructor.ADD);
             // query
-            queryAllInstructorStm = conn.prepareStatement(QUERY_ALL_INSTRUCTOR_STM_STRING);
-            queryInstructorByNumberStm = conn.prepareStatement(QUERY_INSTRUCTOR_BY_NUMBER_STM_STRING);
+            queryAllInstructorStm = conn.prepareStatement(Instructor.QUERY_ALL);
+            queryInstructorByNumberStm = conn.prepareStatement(Instructor.QUERY_BY_NUMBER);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -1,9 +1,9 @@
 package server.jsersey.servlet;
 
 import org.eclipse.jetty.server.Response;
-import server.mysql.helper.IDbHelper;
-import server.mysql.helper.MyDbHelper;
-import server.mysql.helper.MySqlConfig;
+import server.mysql.dbhelper.IDbHelper;
+import server.mysql.MyDbHelper;
+import server.mysql.utils.MySqlConfig;
 
 import java.util.Arrays;
 

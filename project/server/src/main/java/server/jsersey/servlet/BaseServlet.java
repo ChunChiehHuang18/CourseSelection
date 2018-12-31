@@ -1,6 +1,6 @@
 package server.jsersey.servlet;
 
-import server.mysql.helper.MyDbHelper;
+import server.mysql.MyDbHelper;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

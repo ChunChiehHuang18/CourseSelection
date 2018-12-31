@@ -3,7 +3,7 @@ package server.jsersey.servlet;
 import org.eclipse.jetty.server.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
-import server.mysql.helper.MySqlConfig;
+import server.mysql.utils.MySqlConfig;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

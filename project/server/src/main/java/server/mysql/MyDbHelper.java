@@ -1,4 +1,7 @@
-package server.mysql.helper;
+package server.mysql;
+
+import server.mysql.dbhelper.*;
+import server.mysql.utils.MySqlConfig;
 
 import java.sql.*;
 

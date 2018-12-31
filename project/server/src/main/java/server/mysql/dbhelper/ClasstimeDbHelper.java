@@ -1,13 +1,14 @@
-package server.mysql.helper;
+package server.mysql.dbhelper;
 
 import org.json.JSONObject;
+import server.mysql.utils.MySqlConfig;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static server.mysql.helper.PrepareStatementUtils.*;
+import server.mysql.utils.PrepareStatementUtils.*;
 
 /**
  * Providing update class time JDBC API
@@ -25,12 +26,12 @@ public class ClasstimeDbHelper {
 
     private CourseDbHelper courseDbHelper;
 
-    ClasstimeDbHelper(Connection conn, CourseDbHelper courseDbHelper) {
+    public ClasstimeDbHelper(Connection conn, CourseDbHelper courseDbHelper) {
         try {
             this.conn = conn;
 
-            studentClasstimeSelectStm = conn.prepareStatement(STUDENT_CLASSTIME_SELECTION_STM_STRING);
-            studentClasstimeUpdateStm = conn.prepareStatement(STUDENT_CLASSTIME_UPDATE_STM_STRING);
+            studentClasstimeSelectStm = conn.prepareStatement(Student.STUDENT_CLASSTIME_SELECTION);
+            studentClasstimeUpdateStm = conn.prepareStatement(Student.STUDENT_CLASSTIME_UPDATE);
 
             this.courseDbHelper = courseDbHelper;
 

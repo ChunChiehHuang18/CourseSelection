@@ -1,14 +1,16 @@
-package server.mysql.helper;
+package server.mysql.dbhelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import server.mysql.utils.MySqlConfig;
+import server.mysql.utils.PrepareStatementUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static server.mysql.helper.PrepareStatementUtils.*;
+import static server.mysql.utils.PrepareStatementUtils.*;
 
 /**
  * Providing selection related JDBC API
@@ -34,26 +36,25 @@ public class SelectionDbHelper implements IDbHelper {
     private PreparedStatement querySelectionByInstructorStm = null;
     private PreparedStatement querySelectionByStudentAndInstructorStm = null;
 
-    SelectionDbHelper(Connection conn) {
+    public SelectionDbHelper(Connection conn) {
         try {
 
             this.conn = conn;
 
             // add
-            addSelectionStm = conn.prepareStatement(ADD_SELECTION_STM_STRING);
-            deductCourseRemainSelectStm = conn.prepareStatement(DEDUCT_COURSE_REMAIN_SELECTION_STM_STRING);
-            deductCourseRemainUpdateStm = conn.prepareStatement(DEDUCT_COURSE_REMAIN_UPDATE_STM_STRING);
+            addSelectionStm = conn.prepareStatement(Selection.ADD);
+            deductCourseRemainSelectStm = conn.prepareStatement(Course.DEDUCT_COURSE_REMAIN_SELECTION);
+            deductCourseRemainUpdateStm = conn.prepareStatement(Course.DEDUCT_COURSE_REMAIN_UPDATE);
             // delete
-            addCourseRemainSelectionStm = conn.prepareStatement(ADD_COURSE_REMAIN_SELECTION_STM_STRING);
-            addCourseRemainUpdateStm = conn.prepareStatement(ADD_COURSE_REMAIN_UPDATE_STM_STRING);
-            deleteSelectionByNumberStm = conn.prepareStatement(DELETE_SELECTION_BY_NUMBER_STM_STRING);
+            addCourseRemainSelectionStm = conn.prepareStatement(Course.ADD_COURSE_REMAIN_SELECTION);
+            addCourseRemainUpdateStm = conn.prepareStatement(Course.ADD_COURSE_REMAIN_UPDATE);
+            deleteSelectionByNumberStm = conn.prepareStatement(Selection.DELETE_BY_NUMBER);
             // query
-            queryAllSelectionStm = conn.prepareStatement(QUERY_ALL_SELECTION_STM_STRING);
-            querySelectionByNumberStm = conn.prepareStatement(QUERY_SELECTION_BY_NUMBER_STM_STRING);
-
-            querySelectionByStudentStm = conn.prepareStatement(QUERY_SELECTION_BY_STUDENT_STM_STRING);
-            querySelectionByInstructorStm = conn.prepareStatement(QUERY_SELECTION_BY_INSTRUCTOR_STM_STRING);
-            querySelectionByStudentAndInstructorStm = conn.prepareStatement(QUERY_SELECTION_BY_STUDENT_AND_INSTRUCTOR_STM_STRING);
+            queryAllSelectionStm = conn.prepareStatement(Selection.QUERY_ALL);
+            querySelectionByNumberStm = conn.prepareStatement(Selection.QUERY_BY_NUMBER);
+            querySelectionByStudentStm = conn.prepareStatement(Selection.QUERY_BY_STUDENT);
+            querySelectionByInstructorStm = conn.prepareStatement(Selection.QUERY_BY_INSTRUCTOR);
+            querySelectionByStudentAndInstructorStm = conn.prepareStatement(Selection.QUERY_BY_STUDENT_AND_INSTRUCTOR);
         } catch (SQLException e) {
             e.printStackTrace();
         }

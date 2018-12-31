@@ -1,4 +1,4 @@
-package server.mysql.helper;
+package server.mysql.dbhelper;
 
 
 import org.json.JSONArray;
