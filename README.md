@@ -10,7 +10,7 @@ And modify config in MySqlConfig.java if you need.
 You can find this Project's Java doc in doc folder
 
 ## Test Script
-You can find the Python version of test script in the test-script folder. It allows you to insert multiple data at once and includes test script of all available API.
+You can find the Python version of test script in the test-script folder. It includes unit test script of all available API and simulated mass query.
 
 Start test script
 1. pip install -r requirements.txt
