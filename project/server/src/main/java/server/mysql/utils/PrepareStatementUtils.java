@@ -20,7 +20,7 @@ public class PrepareStatementUtils {
 
         public static String QUERY_BY_NUMBER =
                 "SELECT * FROM course_selection.instructor " +
-                        "WHERE instructor_number= ?;";
+                        "WHERE instructor_number= ? LIMIT 1;";
     }
 
 
@@ -41,7 +41,7 @@ public class PrepareStatementUtils {
 
         public static String QUERY_BY_NUMBER =
                 "SELECT * FROM course_selection.student " +
-                        "WHERE student_number= ?;";
+                        "WHERE student_number= ? LIMIT 1;";
 
         // Update
         public static String STUDENT_CLASSTIME_SELECTION = "SELECT student_classtime FROM course_selection.student where student_number=? for UPDATE;";
@@ -69,7 +69,7 @@ public class PrepareStatementUtils {
         // Query
         public static String QUERY_BY_NUMBER =
                 "SELECT * FROM course_selection.course " +
-                        "WHERE course_number = ?;";
+                        "WHERE course_number = ? LIMIT 1;";
 
         public static String QUERY_BY_INSTRUCTOR =
                 "SELECT * FROM course_selection.course " +
@@ -114,7 +114,7 @@ public class PrepareStatementUtils {
 
         public static String QUERY_BY_NUMBER =
                 "SELECT * FROM course_selection.selection " +
-                        "WHERE selection_number = ?; ";
+                        "WHERE selection_number = ? LIMIT 1; ";
 
         public static String QUERY_BY_COURSE =
                 "SELECT * FROM course_selection.selection " +
