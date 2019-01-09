@@ -1,3 +1,5 @@
 server
 server.jsersey.servlet
-server.mysql.helper
+server.mysql
+server.mysql.dbhelper
+server.mysql.utils
